@@ -390,15 +390,19 @@ function googlyEyes(){
 
   e.radius = 4;
   for (var i = 1; i < 5; i++) {
-    e.x += e.vx;
-    e.y += e.vy;
-    e.x -= e.vx;
-    e.y -= e.vy;
-    e.radius *= Math.sin(time);
+    e.x += (e.vx * .05 * Math.cos(time));
+    e.y -= (e.vy * .05 * Math.cos(time));
+    
+    // e.x -= e.vx;
+    // e.y += e.vy;
+    // e.x = e.vx * Math.sin(time);
+    // e.y = e.vy * Math.sin(time);
+    
+    // e.radius *= (1.1 * Math.sin(time));
   };
 
-    e.isVisible = true;
-    draw();
+  e.isVisible = true;
+  draw();
 }
 
 document.getElementById('tap').addEventListener('click', function() {
