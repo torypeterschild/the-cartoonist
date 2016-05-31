@@ -392,6 +392,8 @@ function googlyEyes(){
   for (var i = 1; i < 5; i++) {
     e.x += e.vx;
     e.y += e.vy;
+    e.x -= e.vx;
+    e.y -= e.vy;
     e.radius *= Math.sin(time);
   };
 
