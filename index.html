@@ -43,12 +43,42 @@
       ctx.ellipse(this.x, this.y, this.radiusX, this.radiusY, 1 * Math.PI/180, 0, 2 * Math.PI);
       ctx.closePath();
       ctx.stroke();
+      ctx.closePath();
+    }
+  };
+
+  var hair = {
+    x: head.x,
+    y: head.y - head.radiusY,
+    color: 'purple',
+    draw: function() {
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "purple";
+      ctx.beginPath();
+
+      // left hair
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x-5, this.y-5);
+      ctx.lineTo(this.x-4, this.y-12);
+
+      // right hair
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x+7, this.y-10);
+      ctx.lineTo(this.x+5, this.y-12);
+
+      // middle hair
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x, this.y-10);
+      ctx.lineTo(this.x+2, this.y-15);
+      ctx.lineTo(this.x-2, this.y-18);
+      ctx.stroke();
+      ctx.closePath();
     }
   };
 
   var eyes = {
     x: head.x, // 200
-    y: head.y - 5, // 65
+    y: head.y - (head.y/5), // 65
     vx: 1,
     vy: 1,
     radius: 2,
@@ -77,6 +107,7 @@
     isVisible: true,
     draw: function() {
       ctx.beginPath();
+      ctx.lineWidth = 1;
       ctx.strokeStyle = "black";
       ctx.ellipse(this.x-10, this.y, this.radiusX, this.radiusY, 1 * Math.PI/180, 0, 2 * Math.PI);
       ctx.stroke();
@@ -84,12 +115,13 @@
       ctx.strokeStyle = "black";
       ctx.ellipse(this.x+10, this.y, this.radiusX, this.radiusY, 1 * Math.PI/180, 0, 2 * Math.PI);
       ctx.stroke();
+      ctx.closePath();
     }
   };
 
   var mouth = {
     x: head.x,
-    y: head.y,
+    y: head.y + 5,
     vx: 5,
     vy: 1,
     radius: 20,
@@ -100,7 +132,7 @@
     draw: function() {
       ctx.beginPath();
       ctx.beginPath();
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 1;
       ctx.arc(this.x, this.y, this.radius, this.angle, this.length, false);
       ctx.stroke();
     }
@@ -276,6 +308,7 @@ function clear() {
 function draw() {
   ctx.clearRect(0,0,canvas.width,canvas.height);
   head.draw();
+  hair.draw();
   eyeballs.draw();
   ctx.save();
 
@@ -395,6 +428,7 @@ function reset(){
 
 
 head.draw();
+hair.draw();
 eyeballs.draw();
 eyes.draw();
 mouth.draw();
