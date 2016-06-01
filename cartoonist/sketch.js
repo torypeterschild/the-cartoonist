@@ -31,6 +31,17 @@ var head = {
   y4: 140,
 };
 
+var eyes = {
+  x: (head.x1 + head.x2)/2,
+  y: head.y1 + 20,
+  radiusX: (head.x2-head.x1)/6,
+  radiusY: (head.y3-head.y4)*2,
+  draw: function() {
+    ellipse(this.x-10, this.y, this.radiusX, this.radiusY);
+    ellipse(this.x+10, this.y, this.radiusX, this.radiusY);
+  }
+};
+
 var hairs = {
   x1: (head.x1 + head.x2)/2,
   y1: head.y1,
@@ -48,7 +59,8 @@ function draw() {
   for (var i = 0; i < 200; i += 20) {
     bezier(hairs.x1, hairs.y1, hairs.x2 + (i/2), hairs.y2 - (i/2), hairs.x3, hairs.y3, hairs.x4 + (mouseX/2), hairs.y4 - (mouseY/10));
   }
-
+  eyes.draw();
+  // ellipse(eyes.x-10, eyes.y, eyes.radiusX, eyes.radiusY);
   quad(head.x1, head.y1, head.x2, head.y2, head.x3, head.y3, head.x4, head.y4);
 
   s = "Imagine you're reading a really really cool and funny caption.";
