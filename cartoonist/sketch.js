@@ -1,4 +1,5 @@
 var amaticBold, amaticRegular, jinky, trashHand;
+var fr = 30;
 
 // Preload all fonts.
 function preload() {
@@ -10,11 +11,14 @@ function preload() {
 
 function setup() {
   createCanvas(720, 400);
+  frameRate(fr);
   stroke(255);
   noFill();
 }
 
-/* Define parts of figure */
+/*
+Define parts of figure 
+*/
 
 var head = {
   x1: 290,
@@ -42,12 +46,10 @@ var hairs = {
 function draw() {
   background(0);
   for (var i = 0; i < 200; i += 20) {
-    bezier(hairs.x1, hairs.y1, hairs.x2, hairs.y2, hairs.x3, hairs.y3, hairs.x4 + (i), hairs.y4 + (i/5));
+    bezier(hairs.x1, hairs.y1, hairs.x2 + (i/2), hairs.y2 - (i/2), hairs.x3, hairs.y3, hairs.x4 + (mouseX/2), hairs.y4 - (mouseY/10));
   }
 
   quad(head.x1, head.y1, head.x2, head.y2, head.x3, head.y3, head.x4, head.y4);
-
-
 
   s = "Imagine you're reading a really really cool and funny caption.";
   fill(255);
@@ -56,3 +58,5 @@ function draw() {
   textLeading(25);
   text(s, 20, 10, 200, 300); // Text wraps within text box
 }
+
+
