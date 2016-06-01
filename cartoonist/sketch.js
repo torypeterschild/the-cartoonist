@@ -15,9 +15,8 @@ function setup() {
 }
 
 /* Define parts of figure */
+
 var head = {
-  width: 50,
-  height: 20,
   x1: 290,
   y1: 80,
   x2: 350,
@@ -28,11 +27,22 @@ var head = {
   y4: 140,
 };
 
+var hairs = {
+  x1: (head.x1 + head.x2)/2,
+  y1: head.y1,
+  x2: head.x1,
+  y2: head.y1 - 20,
+  x3: head.x2,
+  y3: head.y1 - 25,
+  x4: head.x1,
+  y4: head.y1 - 20,
+};
+
 /* Main draw function */
 function draw() {
   background(0);
   for (var i = 0; i < 200; i += 20) {
-    bezier(mouseX-(i/2.0), 40+i, 410, 20, 440, 300, 240-(i/16.0), 300+(i/8.0));
+    bezier(hairs.x1, hairs.y1, hairs.x2, hairs.y2, hairs.x3, hairs.y3, hairs.x4 + (i), hairs.y4 + (i/5));
   }
 
   quad(head.x1, head.y1, head.x2, head.y2, head.x3, head.y3, head.x4, head.y4);
