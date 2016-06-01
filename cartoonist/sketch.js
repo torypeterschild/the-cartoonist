@@ -16,10 +16,16 @@ function setup() {
 
 /* Define parts of figure */
 var head = {
-  x: 300,
-  y: 100,
-  radiusX: 60,
-  radiusY: 70,
+  width: 50,
+  height: 20,
+  x1: 290,
+  y1: 80,
+  x2: 350,
+  y2: 80,
+  x3: 350,
+  y3: 130,
+  x4: 300,
+  y4: 140,
 };
 
 /* Main draw function */
@@ -29,9 +35,8 @@ function draw() {
     bezier(mouseX-(i/2.0), 40+i, 410, 20, 440, 300, 240-(i/16.0), 300+(i/8.0));
   }
 
-  ellipse(head.x, head.y, head.radiusX, head.radiusY);
+  quad(head.x1, head.y1, head.x2, head.y2, head.x3, head.y3, head.x4, head.y4);
 
-  // head.draw();
 
 
   s = "Imagine you're reading a really really cool and funny caption.";
