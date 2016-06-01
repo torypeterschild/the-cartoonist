@@ -1,9 +1,11 @@
-var amaticBold, amaticRegular, jinky;
+var amaticBold, amaticRegular, jinky, trashHand;
 
+// Preload all fonts.
 function preload() {
   amaticBold = loadFont("assets/amatic/Amatic-Bold.ttf");
   amaticRegular = loadFont("assets/amatic/AmaticSC-Regular.ttf");
   jinky = loadFont("assets/Jinky/JINKY.ttf");
+  trashHand = loadFont("assets/TrashHand/TrashHand.ttf");
 }
 
 function setup() {
@@ -20,7 +22,7 @@ function draw() {
 
   s = "Imagine you're reading a really really cool and funny caption.";
   fill(255);
-  textFont(amaticRegular);
+  textFont(trashHand);
   textSize(30);
-  text(s, 20, 10, 150, 150); // Text wraps within text box
+  text(s, 20, 10, 200, 300); // Text wraps within text box
 }
