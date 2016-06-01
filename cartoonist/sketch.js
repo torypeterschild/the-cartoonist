@@ -120,6 +120,17 @@ var arms = {
   }
 };
 
+var hands = {
+  x1: arms.x2,
+  y1: arms.y2,
+  x2: arms.x4,
+  y2: arms.y4,
+  draw: function() {
+    quad(this.x1, this.y1, this.x1 + 5, this.y1, this.x1 + 5, this.y1 + 5, this.x1, this.y1 + 5);
+    quad(this.x2, this.y2, this.x2 - 5, this.y2, this.x2 - 5, this.y2 + 5, this.x2, this.y2 + 5);
+  }
+};
+
 /* Main draw function */
 function draw() {
   background(0);
@@ -132,6 +143,7 @@ function draw() {
   torso.draw();
   arms.draw();
   legs.draw();
+  hands.draw();
 
   // Render text
   s = "Imagine you're reading a really really cool and funny caption.";
