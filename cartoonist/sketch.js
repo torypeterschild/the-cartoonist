@@ -29,6 +29,9 @@ var head = {
   y3: 130,
   x4: 300,
   y4: 140,
+  draw: function() {
+    quad(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3, this.x4, this.y4);
+  }
 };
 
 var eyes = {
@@ -36,6 +39,17 @@ var eyes = {
   y: head.y1 + 20,
   radiusX: (head.x2-head.x1)/6,
   radiusY: (head.y3-head.y4)*2,
+  draw: function() {
+    ellipse(this.x-10, this.y, this.radiusX, this.radiusY);
+    ellipse(this.x+10, this.y, this.radiusX, this.radiusY);
+  }
+};
+
+var pupils = {
+  x: eyes.x,
+  y: eyes.y,
+  radiusX: eyes.radiusX/3,
+  radiusY: eyes.radiusY/3,
   draw: function() {
     ellipse(this.x-10, this.y, this.radiusX, this.radiusY);
     ellipse(this.x+10, this.y, this.radiusX, this.radiusY);
@@ -51,21 +65,29 @@ var hairs = {
   y3: head.y1 - 25,
   x4: head.x1,
   y4: head.y1 - 20,
+  draw: function() {
+    for (var i = 0; i < 200; i += 20) {
+      bezier(this.x1, this.y1, this.x2 + (i/2), this.y2 - (i/2), this.x3, this.y3, this.x4 + (mouseX/2), this.y4 - (mouseY/10));
+    }
+  }
 };
 
 /* Main draw function */
 function draw() {
   background(0);
-  for (var i = 0; i < 200; i += 20) {
-    bezier(hairs.x1, hairs.y1, hairs.x2 + (i/2), hairs.y2 - (i/2), hairs.x3, hairs.y3, hairs.x4 + (mouseX/2), hairs.y4 - (mouseY/10));
-  }
+  // for (var i = 0; i < 200; i += 20) {
+  //   bezier(hairs.x1, hairs.y1, hairs.x2 + (i/2), hairs.y2 - (i/2), hairs.x3, hairs.y3, hairs.x4 + (mouseX/2), hairs.y4 - (mouseY/10));
+  // }
+  // Draw each part
   eyes.draw();
-  // ellipse(eyes.x-10, eyes.y, eyes.radiusX, eyes.radiusY);
-  quad(head.x1, head.y1, head.x2, head.y2, head.x3, head.y3, head.x4, head.y4);
+  pupils.draw();
+  head.draw();
+  hairs.draw();
 
+  // Render text
   s = "Imagine you're reading a really really cool and funny caption.";
   fill(255);
-  textFont(trashHand);
+  textFont(amaticRegular);
   textSize(30);
   textLeading(25);
   text(s, 20, 10, 200, 300); // Text wraps within text box
