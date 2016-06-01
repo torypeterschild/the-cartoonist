@@ -88,6 +88,22 @@ var torso = {
   }
 };
 
+var legs = {
+  x1: (torso.x2 + torso.x3)/2,
+  y1: torso.y3,
+  x2: torso.x2,
+  y2: torso.y2 + 40,
+  x3: (torso.x2 + torso.x3)/2 - 10,
+  y3: torso.y3,
+  x4: torso.x3,
+  y4: torso.y2 + 40,
+  draw: function() {
+    noFill();
+    line(this.x1, this.y1, this.x2, this.y2);
+    line(this.x3, this.y3, this.x4, this.y4);
+  }
+};
+
 var arms = {
   x1: torso.x1 + 10,
   y1: torso.y1 + 40,
@@ -115,6 +131,7 @@ function draw() {
   hairs.draw();
   torso.draw();
   arms.draw();
+  legs.draw();
 
   // Render text
   s = "Imagine you're reading a really really cool and funny caption.";
