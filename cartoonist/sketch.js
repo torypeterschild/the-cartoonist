@@ -30,6 +30,7 @@ var head = {
   x4: 300,
   y4: 140,
   draw: function() {
+    noFill();
     quad(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3, this.x4, this.y4);
   }
 };
@@ -47,10 +48,11 @@ var eyes = {
 
 var pupils = {
   x: eyes.x,
-  y: eyes.y,
+  y: eyes.y+3,
   radiusX: eyes.radiusX/3,
   radiusY: eyes.radiusY/3,
   draw: function() {
+    fill(255);
     ellipse(this.x-10, this.y, this.radiusX, this.radiusY);
     ellipse(this.x+10, this.y, this.radiusX, this.radiusY);
   }
@@ -66,23 +68,36 @@ var hairs = {
   x4: head.x1,
   y4: head.y1 - 20,
   draw: function() {
+    noFill();
     for (var i = 0; i < 200; i += 20) {
       bezier(this.x1, this.y1, this.x2 + (i/2), this.y2 - (i/2), this.x3, this.y3, this.x4 + (mouseX/2), this.y4 - (mouseY/10));
     }
   }
 };
 
+var torso = {
+  x1: (head.x3 + head.x4)/2,
+  y1: head.y4,
+  x2: head.x3,
+  y2: head.y4 + 90,
+  x3: head.x4,
+  y3: head.y4 + 80,
+  draw: function() {
+    noFill();
+    triangle(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3);
+  }
+};
+
 /* Main draw function */
 function draw() {
   background(0);
-  // for (var i = 0; i < 200; i += 20) {
-  //   bezier(hairs.x1, hairs.y1, hairs.x2 + (i/2), hairs.y2 - (i/2), hairs.x3, hairs.y3, hairs.x4 + (mouseX/2), hairs.y4 - (mouseY/10));
-  // }
+
   // Draw each part
   eyes.draw();
   pupils.draw();
   head.draw();
   hairs.draw();
+  torso.draw();
 
   // Render text
   s = "Imagine you're reading a really really cool and funny caption.";
