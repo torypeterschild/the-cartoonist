@@ -1,0 +1,10 @@
+.DS_Store
+.idea
+public
+site/
+bleed/
+docs/
+obsolete/
+test/
+src/index.js
+node_modules/

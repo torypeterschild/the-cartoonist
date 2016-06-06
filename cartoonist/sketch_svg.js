@@ -1,5 +1,6 @@
 var amaticBold, amaticRegular, jinky, trashHand;
-var fr = 30;
+var fr = 20;
+var dog, path, y;
 
 // Preload all fonts.
 function preload() {
@@ -7,13 +8,19 @@ function preload() {
   amaticRegular = loadFont("assets/amatic/AmaticSC-Regular.ttf");
   jinky = loadFont("assets/Jinky/JINKY.ttf");
   trashHand = loadFont("assets/TrashHand/TrashHand.ttf");
+  dog = loadImage("svg/dog.svg");
+  y = loadImage("svg/y.svg");
+  frameRate(fr);
 }
 
 function setup() {
-  createCanvas(720, 400);
-  frameRate(fr);
-  stroke(255);
-  noFill();
+  background(100);
+  createCanvas(750, 600);
+  // path = querySVG('svg')[0];
+  // frameRate(fr);
+  // stroke(255);
+  // // noFill();
+  // fill(150);
 }
 
 /*
@@ -145,26 +152,32 @@ var hands = {
 
 /* Main draw function */
 function draw() {
-  background(0);
+  image(y,0,0);
+  draw.svg('<g><path d="M117 1003 c-8 -13 11 -176 25 -219 23 -69 72 -52 113 40 l22 50 7
+-369 c4 -206 11 -377 17 -387 20 -36 32 -20 26 35 -4 28 -9 198 -12 377 -7
+366 -11 430 -29 430 -7 0 -20 -26 -29 -57 -20 -65 -56 -135 -73 -140 -18 -6
+-35 54 -41 150 -6 80 -14 110 -26 90z"/></g>');
+  // background(0);
 
-  // Draw each part
-  eyes.draw();
-  pupils.draw();
-  head.draw();
-  hairs.draw();
-  torso.draw();
-  arms.draw();
-  legs.draw();
-  hands.draw();
-  feet.draw();
+  // // Draw each part
+  // eyes.draw();
+  // pupils.draw();
+  // head.draw();
+  // hairs.draw();
+  // torso.draw();
+  // arms.draw();
+  // legs.draw();
+  // hands.draw();
+  // feet.draw();
 
-  // Render text
-  s = "Imagine you're reading a really really cool and funny caption.";
-  fill(255);
-  textFont(trashHand);
-  textSize(30);
-  textLeading(25);
-  text(s, 20, 10, 200, 300); // Text wraps within text box
+  // // Render text
+  // t = "you can say anything you want here";
+  // s = "Imagine you're reading a really really cool and funny caption.";
+  // fill(255);
+  // textFont(amaticRegular);
+  // textSize(30);
+  // textLeading(25);
+  // text(s, 20, 10, 200, 300); // Text wraps within text box
 }
 
 
