@@ -203,7 +203,7 @@ var a;
 function loadAlphabetLetter(letter) {
   var path;
   if (letter === " ") {
-    path = "svg/svg_alphabet/y.min.svg"
+    path = "svg/svg_alphabet/blank.svg";
   } else {
     path = "svg/svg_alphabet/" + letter + ".min.svg";
   }
