@@ -1,1 +1,1 @@
-Generate a cartoon using p5js.
+Draw and animate a cartoon using SVG.
