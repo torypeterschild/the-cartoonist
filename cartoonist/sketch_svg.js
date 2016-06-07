@@ -15,12 +15,9 @@ eyeAnimation();
 
 function eyeAnimation(){
   eye.stop().animate(
-    { transform: 'r90,256,256'},
+    { transform: 'r360,210,80'},
     1000,
-    function(){
-      eye.attr({ transform: 'rotate(256,256,256'});
-      eyeAnimation();
-    });
+    mina.bounce );
 }
 
 
