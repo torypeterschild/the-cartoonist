@@ -195,7 +195,7 @@ function faceAnimation(){
 
 var t = Snap("#text-container");
 
-var capt = "caption";
+var capt = "thecaption";
 var chars = capt.split('');
 console.log(chars);
 var a;
@@ -205,9 +205,10 @@ function loadAlphabetLetter(letter) {
   var name = letter;
   Snap.load(path, function(response) {
     name = response;
-    t. append(name);
-  })
+    t.append(name);
+  });
 }
+
 
 for (var i = 0; i < chars.length; i++) {
   loadAlphabetLetter(chars[i]);
