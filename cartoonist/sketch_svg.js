@@ -9,7 +9,7 @@ var ear = dog.select('#ear');
 var eye = dog.select('#eye');
 var frontleg = dog.select('#frontleg');
 var face = dog.select('#face');
-s.attr({ viewBox: "0 0 600 600" });
+// s.attr({ viewBox: "0 0 600 600" });
 
 eyeAnimation();
 
@@ -17,8 +17,11 @@ function eyeAnimation(){
   eye.stop().animate(
     { transform: 'r360,210,80'},
     1000,
-    mina.bounce );
+    mina.bounce, function() {
+      eyeAnimation();
+    } );
 }
+
 
 
 // var dog = s.select('.dog'),
