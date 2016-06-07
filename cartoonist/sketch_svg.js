@@ -11,6 +11,8 @@ var frontleg = dog.select('#frontleg');
 var face = dog.select('#face');
 var earandtail = dog.select('#earandtail');
 var faceblob = dog.select('#faceblob');
+var frontface = dog.select('#frontface');
+var bodyandchin = dog.select('#bodyandchin');
 // s.attr({ viewBox: "0 0 600 600" });
 
 // var wholeEar = s.group(ear,earandtail);
@@ -18,7 +20,6 @@ var faceblob = dog.select('#faceblob');
 
 eyeAnimation();
 earAnimation();
-innerEarAnimation();
 faceAnimation();
 
 function eyeAnimation(){
@@ -43,16 +44,22 @@ function earAnimation(){
       earAnimation();
     }
   );
-}
-
-function innerEarAnimation(){
+  bodyandchin.stop().animate(
+    { transform: 't0,3'},
+    1000,
+    mina.bounce,
+    function(){
+      bodyandchin.attr({ transform: 'rotate(0 256 256'});
+      earAnimation();
+    }
+  );
   ear.stop().animate(
     { transform: 't0,3'},
     1000,
     mina.bounce,
     function(){
       ear.attr({ transform: 'rotate(0 256 256'});
-      innerEarAnimation();
+      earAnimation();
     }
   );
 }
@@ -73,6 +80,15 @@ function faceAnimation(){
     mina.bounce,
     function(){
       faceblob.attr({ transform: 'rotate(0 256 256'});
+      faceAnimation();
+    }
+  );
+  frontface.stop().animate(
+    { transform: 't0,3'},
+    1000,
+    mina.bounce,
+    function(){
+      frontface.attr({ transform: 'rotate(0 256 256'});
       faceAnimation();
     }
   );
