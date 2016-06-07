@@ -195,13 +195,18 @@ function faceAnimation(){
 
 var t = Snap("#text-container");
 
-var capt = "thecaption";
+var capt = "the caption";
 var chars = capt.split('');
 console.log(chars);
 var a;
 
 function loadAlphabetLetter(letter) {
-  var path = "svg/svg_alphabet/" + letter + ".min.svg";
+  var path;
+  if (letter === " ") {
+    path = "svg/svg_alphabet/y.min.svg"
+  } else {
+    path = "svg/svg_alphabet/" + letter + ".min.svg";
+  }
   var name = letter;
   Snap.load(path, function(response) {
     name = response;
