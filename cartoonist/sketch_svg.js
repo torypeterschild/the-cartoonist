@@ -1,4 +1,4 @@
-var s = new Snap(800,800);
+var s = new Snap("#dog-container");
 
 var dog = Snap.select('#dog'),
   dogStartMatrix = new Snap.Matrix(),
@@ -192,6 +192,8 @@ function faceAnimation(){
   );
 }
 
+var capt = "this is a caption";
+
 var t = Snap("#text-container");
 
 Snap.load("svg/svg_alphabet/a.min.svg", function(response) {
@@ -202,4 +204,74 @@ Snap.load("svg/svg_alphabet/a.min.svg", function(response) {
 Snap.load("svg/svg_alphabet/b.min.svg", function(response) {
   var b = response;
   t.append(b);
+});
+
+Snap.load("svg/svg_alphabet/c.min.svg", function(response) {
+  var c = response;
+  t.append(c);
+});
+
+Snap.load("svg/svg_alphabet/d.min.svg", function(response) {
+  var d = response;
+  t.append(d);
+});
+
+Snap.load("svg/svg_alphabet/e.min.svg", function(response) {
+  var e = response;
+  t.append(e);
+});
+
+Snap.load("svg/svg_alphabet/f.min.svg", function(response) {
+  var f = response;
+  t.append(f);
+});
+
+Snap.load("svg/svg_alphabet/g.min.svg", function(response) {
+  var g = response;
+  t.append(g);
+});
+
+Snap.load("svg/svg_alphabet/h.min.svg", function(response) {
+  var h = response;
+  t.append(h);
+});
+
+Snap.load("svg/svg_alphabet/i.min.svg", function(response) {
+  var i = response;
+  t.append(i);
+});
+
+Snap.load("svg/svg_alphabet/j.min.svg", function(response) {
+  var j = response;
+  t.append(j);
+});
+
+Snap.load("svg/svg_alphabet/k.min.svg", function(response) {
+  var k = response;
+  t.append(k);
+});
+
+Snap.load("svg/svg_alphabet/l.min.svg", function(response) {
+  var l = response;
+  t.append(l);
+});
+
+Snap.load("svg/svg_alphabet/m.min.svg", function(response) {
+  var m = response;
+  t.append(m);
+});
+
+Snap.load("svg/svg_alphabet/n.min.svg", function(response) {
+  var n = response;
+  t.append(n);
+});
+
+Snap.load("svg/svg_alphabet/o.min.svg", function(response) {
+  var o = response;
+  t.append(o);
+});
+
+Snap.load("svg/svg_alphabet/p.min.svg", function(response) {
+  var p = response;
+  t.append(p);
 });
