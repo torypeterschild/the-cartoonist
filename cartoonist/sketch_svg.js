@@ -195,7 +195,7 @@ function faceAnimation(){
 
 var t = Snap("#text-container");
 
-var capt = "a test this is a caption";
+var capt = "caption";
 var chars = capt.split('');
 console.log(chars);
 var a;
