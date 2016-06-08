@@ -5,38 +5,20 @@ var dog = Snap.select('#dog'),
   dogStartMatrix = new Snap.Matrix(),
   dogMidMatrix = new Snap.Matrix();
 console.log(dog);
-var topOfNose = dog.select('#topOfNose');
-var ear = dog.select('#ear');
 var eye = dog.select('#eye');
-var frontleg = dog.select('#frontleg');
-var hindleg = dog.select('#hindleg');
-var face = dog.select('#face');
-var earandtail = dog.select('#earandtail');
-var faceblob = dog.select('#faceblob');
-var frontface = dog.select('#frontface');
-var bodyandchin = dog.select('#bodyandchin');
-var stomach = dog.select('#stomach');
-var crookOfLeg = dog.select('#crookOfLeg');
-var drumstick = dog.select('#drumstick');
-var thigh = dog.select('#thigh');
-var bottomline = dog.select('#bottomline');
-var butt = dog.select('#butt');
-var partOfEar = dog.select('#partOfEar');
+var tail = dog.select('#tail');
+var tailShading = dog.select('#tailShading');
+var ear = dog.select('#ear');
+var earShading = dog.select('#earShading');
+var lowerSnoutShading = dog.select('#lowerSnoutShading');
+
 // s.attr({ viewBox: "0 0 600 600" });
 
-// var wholeEar = s.group(ear,earandtail);
-// console.log(wholeEar);
-
+tailAnimation();
+tailShadingAnimation();
 eyeAnimation();
-earAnimation();
-bodyandchinAnimation();
-faceAnimation();
-frontlegAnimation();
-hindlegAnimation();
-thighAnimation();
-stomachAnimation();
-bottomlineAnimation();
-buttAnimation();
+earAnimation()
+earShadingAnimation();
 
 function eyeAnimation(){
   eye.stop().animate(
@@ -50,62 +32,26 @@ function eyeAnimation(){
   );
 }
 
-function frontlegAnimation(){
-  frontleg.stop().animate(
-    { transform: 't5,0'},
+function tailAnimation(){
+  tail.stop().animate(
+    { transform: 't5,15'},
     1000,
     mina.bounce,
     function(){
-      frontleg.attr({ transform: 'rotate(0 256 256'});
-      frontlegAnimation();
+      tail.attr({ transform: 'rotate(0 256 256'});
+      tailAnimation();
     }
   );
 }
 
-function hindlegAnimation(){
-  hindleg.stop().animate(
-    { transform: 't5,0'},
+function tailShadingAnimation(){
+  tailShading.stop().animate(
+    { transform: 't5,15'},
     1000,
     mina.bounce,
     function(){
-      hindleg.attr({ transform: 'rotate(0 256 256'});
-      hindlegAnimation();
-    }
-  );
-}
-
-function bottomlineAnimation(){
-  bottomline.stop().animate(
-    { transform: 't5,0'},
-    1000,
-    mina.bounce,
-    function(){
-      bottomline.attr({ transform: 'rotate(0 256 256'});
-      bottomlineAnimation();
-    }
-  );
-}
-
-function buttAnimation(){
-  butt.stop().animate(
-    { transform: 't5,0'},
-    1000,
-    mina.bounce,
-    function(){
-      butt.attr({ transform: 'rotate(0 256 256'});
-      buttAnimation();
-    }
-  );
-}
-
-function thighAnimation(){
-  thigh.stop().animate(
-    { transform: 't5,0'},
-    1000,
-    mina.bounce,
-    function(){
-      thigh.attr({ transform: 'rotate(0 256 256'});
-      thighAnimation();
+      tailShading.attr({ transform: 'rotate(0 256 256'});
+      tailShadingAnimation();
     }
   );
 }
@@ -135,15 +81,6 @@ function bodyandchinAnimation(){
 }
 
 function earAnimation(){
-  earandtail.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      earandtail.attr({ transform: 'rotate(0 256 256'});
-      earAnimation();
-    }
-  );
   ear.stop().animate(
     { transform: 't0,3'},
     1000,
@@ -151,6 +88,18 @@ function earAnimation(){
     function(){
       ear.attr({ transform: 'rotate(0 256 256'});
       earAnimation();
+    }
+  );
+}
+
+function earShadingAnimation(){
+  earShading.stop().animate(
+    { transform: 't0,3'},
+    1000,
+    mina.bounce,
+    function(){
+      earShading.attr({ transform: 'rotate(0 256 256'});
+      earShadingAnimation();
     }
   );
 }
