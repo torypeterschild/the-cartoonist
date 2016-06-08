@@ -21,6 +21,7 @@ var drumstick = dog.select('#drumstick');
 var thigh = dog.select('#thigh');
 var bottomline = dog.select('#bottomline');
 var butt = dog.select('#butt');
+var partOfEar = dog.select('#partOfEar');
 // s.attr({ viewBox: "0 0 600 600" });
 
 // var wholeEar = s.group(ear,earandtail);
@@ -193,12 +194,14 @@ function faceAnimation(){
   );
 }
 
-var t = Snap("#text-container");
+
 
 var capt = "ilovemydogalot";
 var chars = capt.split('');
+var t = Snap('#text-container');
 console.log(chars);
 var a;
+var listOfLetters = [];
 
 function loadAlphabetLetter(letter) {
   var path;
@@ -210,14 +213,64 @@ function loadAlphabetLetter(letter) {
   var name = letter;
   Snap.load(path, function(response) {
     name = response;
+    listOfLetters.push(name);
+    console.log(listOfLetters);
     t.append(name);
   });
 }
 
+// function loadCaption(caption) {
+//   var listOfLetters = [];
+//   chars = caption.split('');
+//   console.log(chars);
+
+//   function loadAlphabetLetter(letter) {
+//     var path;
+//     console.log("Inside load alph letter");
+//     console.log(letter);
+//     if (letter === " ") {
+//       path = "svg/svg_alphabet/blank.svg";
+//     } else {
+//       console.log("inside else");
+//       path = "svg/svg_alphabet/" + letter + ".min.svg";
+//     }
+//     console.log("path");
+//     console.log(path);
+//     var name = letter;
+//     Snap.load(path, function(response) {
+//       name = response;
+//       listOfLetters.push(name);
+//       console.log(listOfLetters);
+//     });
+//   }
+
+//   function appendLetters(list) {
+//     for (var j = 0; j < list.length; j++) {
+//       t.append(listOfLetters[j]);
+//       console.log(t);
+//     }
+//   }
+
+//   for (var i = 0; i < chars.length; i++) {
+//     loadAlphabetLetter(chars[i]);
+//   }
+
+//   var t = Snap("#text-container");
+//   t.appendLetters(listOfLetters);
+
+// }
 
 for (var i = 0; i < chars.length; i++) {
   loadAlphabetLetter(chars[i]);
 }
+
+for (var j = 0; j < listOfLetters.length; j++) {
+  console.log("inside append loop");
+  console.log(listOfLetters[j]);
+  t.append(listOfLetters[j]);
+}
+
+// loadCaption(capt);
 
 
 
@@ -231,78 +284,3 @@ for (var i = 0; i < chars.length; i++) {
 // });
 
 // console.log(this.alphabet[0]);
-
-// Snap.load("svg/svg_alphabet/b.min.svg", function(response) {
-//   var b = response;
-//   t.append(b);
-// });
-
-// Snap.load("svg/svg_alphabet/c.min.svg", function(response) {
-//   var c = response;
-//   t.append(c);
-// });
-
-// Snap.load("svg/svg_alphabet/d.min.svg", function(response) {
-//   var d = response;
-//   t.append(d);
-// });
-
-// Snap.load("svg/svg_alphabet/e.min.svg", function(response) {
-//   var e = response;
-//   t.append(e);
-// });
-
-// Snap.load("svg/svg_alphabet/f.min.svg", function(response) {
-//   var f = response;
-//   t.append(f);
-// });
-
-// Snap.load("svg/svg_alphabet/g.min.svg", function(response) {
-//   var g = response;
-//   t.append(g);
-// });
-
-// Snap.load("svg/svg_alphabet/h.min.svg", function(response) {
-//   var h = response;
-//   t.append(h);
-// });
-
-// Snap.load("svg/svg_alphabet/i.min.svg", function(response) {
-//   var i = response;
-//   t.append(i);
-// });
-
-// Snap.load("svg/svg_alphabet/j.min.svg", function(response) {
-//   var j = response;
-//   t.append(j);
-// });
-
-// Snap.load("svg/svg_alphabet/k.min.svg", function(response) {
-//   var k = response;
-//   t.append(k);
-// });
-
-// Snap.load("svg/svg_alphabet/l.min.svg", function(response) {
-//   var l = response;
-//   t.append(l);
-// });
-
-// Snap.load("svg/svg_alphabet/m.min.svg", function(response) {
-//   var m = response;
-//   t.append(m);
-// });
-
-// Snap.load("svg/svg_alphabet/n.min.svg", function(response) {
-//   var n = response;
-//   t.append(n);
-// });
-
-// Snap.load("svg/svg_alphabet/o.min.svg", function(response) {
-//   var o = response;
-//   t.append(o);
-// });
-
-// Snap.load("svg/svg_alphabet/p.min.svg", function(response) {
-//   var p = response;
-//   t.append(p);
-// });
