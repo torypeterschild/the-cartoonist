@@ -68,18 +68,6 @@ function stomachAnimation(){
   );
 }
 
-function bodyandchinAnimation(){
-  bodyandchin.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      bodyandchin.attr({ transform: 'rotate(0 256 256'});
-      bodyandchinAnimation();
-    }
-  );
-}
-
 function earAnimation(){
   ear.stop().animate(
     { transform: 't0,3'},
@@ -104,48 +92,7 @@ function earShadingAnimation(){
   );
 }
 
-function faceAnimation(){
-  face.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      face.attr({ transform: 'rotate(0 256 256'});
-      faceAnimation();
-    }
-  );
-  faceblob.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      faceblob.attr({ transform: 'rotate(0 256 256'});
-      faceAnimation();
-    }
-  );
-  frontface.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      frontface.attr({ transform: 'rotate(0 256 256'});
-      faceAnimation();
-    }
-  );
-  topOfNose.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      topOfNose.attr({ transform: 'rotate(0 256 256'});
-      faceAnimation();
-    }
-  );
-}
-
-
-
-var capt = "ilovemydogalot";
+var capt = "caption time";
 var chars = capt.split('');
 var t = Snap('#text-container');
 console.log(chars);
@@ -219,17 +166,3 @@ for (var j = 0; j < listOfLetters.length; j++) {
   t.append(listOfLetters[j]);
 }
 
-// loadCaption(capt);
-
-
-
-// Snap.load("svg/svg_alphabet/a.min.svg", function(response) {
-//   a = response;
-//   var singleObj = {};
-//   singleObj['type'] = 'letter';
-//   singleObj['value'] = a;
-//   this.alphabet.push(singleObj);
-//   console.log(singleObj);
-// });
-
-// console.log(this.alphabet[0]);
