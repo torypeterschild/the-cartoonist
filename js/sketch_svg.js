@@ -3,7 +3,7 @@ var toadie;
 var s = new Snap("#dog-container");
 
 function preload() {
-  toadie = loadFont("css/fonts/toadie.ttf");
+  toadie = loadFont("css/fonts/toadie3.ttf");
 }
 
 var dog = Snap.select('#dog'),
@@ -27,7 +27,7 @@ function setup() {
 }
 
 function draw() {
-  var s = "some text";
+  var s = "a b c\n wxyz l l l  ";
   textFont(toadie);
   textSize(20);
   text(s, 10, 10, 500, 500);
