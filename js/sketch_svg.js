@@ -1,5 +1,10 @@
+
+var toadie;
 var s = new Snap("#dog-container");
-var alphabet = [];
+
+function preload() {
+  toadie = loadFont("css/fonts/toadie.ttf");
+}
 
 var dog = Snap.select('#dog'),
   dogStartMatrix = new Snap.Matrix(),
@@ -15,6 +20,18 @@ var lowerSnoutShading = dog.select('#lowerSnoutShading');
 var backFoot = dog.select('#backFoot');
 
 // s.attr({ viewBox: "0 0 600 600" });
+
+function setup() {
+  createCanvas(720,700);
+  stroke(0);
+}
+
+function draw() {
+  var s = "some text";
+  textFont(toadie);
+  textSize(20);
+  text(s, 10, 10, 500, 500);
+}
 
 tailAnimation();
 tailShadingAnimation();
@@ -40,9 +57,11 @@ function tailAnimation(){
   tail.stop().animate(
     { transform: 't5,15'},
     1000,
-    mina.bounce,
+    mina.easeinout(),
     function(){
-      tail.attr({ transform: 'rotate(0 256 256'});
+      tail.attr({ transform: 'rotate(0 256 256'},
+        1000,
+        mina.easeinout());
       tailAnimation();
     }
   );
@@ -172,13 +191,15 @@ function loadAlphabetLetter(letter) {
 
 // }
 
-for (var i = 0; i < chars.length; i++) {
-  loadAlphabetLetter(chars[i]);
-}
 
-for (var j = 0; j < listOfLetters.length; j++) {
-  console.log("inside append loop");
-  console.log(listOfLetters[j]);
-  t.append(listOfLetters[j]);
-}
+
+// for (var i = 0; i < chars.length; i++) {
+//   loadAlphabetLetter(chars[i]);
+// }
+
+// for (var j = 0; j < listOfLetters.length; j++) {
+//   console.log("inside append loop");
+//   console.log(listOfLetters[j]);
+//   t.append(listOfLetters[j]);
+// }
 

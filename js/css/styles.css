@@ -1,3 +1,7 @@
+@font-face { 
+    font-family: taodie; 
+    src: url('fonts/toadie.ttf'); 
+}
 body,
 div {
     padding: 0;
@@ -14,6 +18,7 @@ div {
     display: block;
 }
 .text-container svg {
+    font-family: toadie, sans-serf;
     max-width: 100%;
     max-height: 100%;
     width: 40px;
