@@ -10,6 +10,7 @@ var tail = dog.select('#tail');
 var tailShading = dog.select('#tailShading');
 var ear = dog.select('#ear');
 var earShading = dog.select('#earShading');
+var snoutOutline = dog.select('#snoutOutline');
 var lowerSnoutShading = dog.select('#lowerSnoutShading');
 var backFoot = dog.select('#backFoot');
 
@@ -21,6 +22,7 @@ eyeAnimation();
 earAnimation()
 earShadingAnimation();
 backFootAnimation();
+snoutOutlineAnimation();
 
 function eyeAnimation(){
   eye.stop().animate(
@@ -70,18 +72,6 @@ function tailShadingAnimation(){
   );
 }
 
-function stomachAnimation(){
-  stomach.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      stomach.attr({ transform: 'rotate(0 256 256'});
-      stomachAnimation();
-    }
-  );
-}
-
 function earAnimation(){
   ear.stop().animate(
     { transform: 't0,3'},
@@ -102,6 +92,18 @@ function earShadingAnimation(){
     function(){
       earShading.attr({ transform: 'rotate(0 256 256'});
       earShadingAnimation();
+    }
+  );
+}
+
+function snoutOutlineAnimation(){
+  snoutOutline.stop().animate(
+    { transform: 't0,3'},
+    500,
+    mina.bounce,
+    function(){
+      snoutOutline.attr({ transform: 'rotate(0 256 256'});
+      snoutOutlineAnimation();
     }
   );
 }
