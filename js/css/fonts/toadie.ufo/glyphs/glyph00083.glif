@@ -5,9 +5,6 @@
   <outline>
     <contour>
       <point x="157" y="484" type="qcurve"/>
-      <point x="157" y="484" name="inserted"/>
-      <point x="157" y="484"/>
-      <point x="157" y="484" type="qcurve"/>
       <point x="140" y="447"/>
       <point x="175" y="189"/>
       <point x="204" y="146" type="qcurve"/>
@@ -55,6 +52,9 @@
       <point x="192" y="488" type="qcurve"/>
       <point x="187" y="494"/>
       <point x="166" y="493"/>
+      <point x="157" y="484" type="qcurve"/>
+      <point x="157" y="484" name="inserted"/>
+      <point x="157" y="484"/>
     </contour>
   </outline>
 </glyph>
