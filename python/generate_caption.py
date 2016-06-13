@@ -1,7 +1,7 @@
 from __future__ import print_function
 from nltk.corpus import PlaintextCorpusReader
 from nltk.tokenize import sent_tokenize
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import word_tokenize, regexp_tokenize
 import nltk
 import nltk.data
 import random
@@ -14,7 +14,7 @@ corpus_root = 'corpus/'
 wordlists = PlaintextCorpusReader(corpus_root, '.*')
 sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
 
-def generate_model(cfdist, word, num=25):
+def generate_model(cfdist, word, num=35):
   for i in range(num):
     print(word, end=" ")
     # word = cfdist[word].max()
@@ -33,5 +33,8 @@ words1 = sent_tokenize(text_as_string)
 bigrams = nltk.bigrams(words_tokenized)
 cfd = nltk.ConditionalFreqDist(bigrams)
 
-generate_model(cfd, 'I')
+init_word = random.choice(list(words_tokenized))
+print(init_word)
+
+generate_model(cfd, init_word)
 
