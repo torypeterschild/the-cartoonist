@@ -19,15 +19,15 @@ var snoutOutline = dog.select('#snoutOutline');
 var lowerSnoutShading = dog.select('#lowerSnoutShading');
 var backFoot = dog.select('#backFoot');
 
-// s.attr({ viewBox: "0 0 600 600" });
 
 function setup() {
   createCanvas(720,700);
   stroke(0);
 }
 
+
 function draw() {
-  var s = "here is #* & ß my --little doggie\nHERE IS MY DOG\n! ?? $";
+  var s = "here is #* & my --little doggie\nHERE IS MY DOG\n! ?? $";
   textFont(toadie);
   textSize(20);
   textLeading(40);
@@ -127,80 +127,4 @@ function snoutOutlineAnimation(){
     }
   );
 }
-
-var capt = "caption time";
-var chars = capt.split('');
-var t = Snap('#text-container');
-console.log(chars);
-var a;
-var listOfLetters = [];
-
-function loadAlphabetLetter(letter) {
-  var path;
-  if (letter === " ") {
-    path = "svg/svg_alphabet/blank.svg";
-  } else {
-    path = "svg/svg_alphabet/" + letter + ".min.svg";
-  }
-  var name = letter;
-  Snap.load(path, function(response) {
-    name = response;
-    listOfLetters.push(name);
-    console.log(listOfLetters);
-    t.append(name);
-  });
-}
-
-// function loadCaption(caption) {
-//   var listOfLetters = [];
-//   chars = caption.split('');
-//   console.log(chars);
-
-//   function loadAlphabetLetter(letter) {
-//     var path;
-//     console.log("Inside load alph letter");
-//     console.log(letter);
-//     if (letter === " ") {
-//       path = "svg/svg_alphabet/blank.svg";
-//     } else {
-//       console.log("inside else");
-//       path = "svg/svg_alphabet/" + letter + ".min.svg";
-//     }
-//     console.log("path");
-//     console.log(path);
-//     var name = letter;
-//     Snap.load(path, function(response) {
-//       name = response;
-//       listOfLetters.push(name);
-//       console.log(listOfLetters);
-//     });
-//   }
-
-//   function appendLetters(list) {
-//     for (var j = 0; j < list.length; j++) {
-//       t.append(listOfLetters[j]);
-//       console.log(t);
-//     }
-//   }
-
-//   for (var i = 0; i < chars.length; i++) {
-//     loadAlphabetLetter(chars[i]);
-//   }
-
-//   var t = Snap("#text-container");
-//   t.appendLetters(listOfLetters);
-
-// }
-
-
-
-// for (var i = 0; i < chars.length; i++) {
-//   loadAlphabetLetter(chars[i]);
-// }
-
-// for (var j = 0; j < listOfLetters.length; j++) {
-//   console.log("inside append loop");
-//   console.log(listOfLetters[j]);
-//   t.append(listOfLetters[j]);
-// }
 
