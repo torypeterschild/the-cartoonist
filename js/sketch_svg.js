@@ -3,7 +3,7 @@ var toadie;
 var s = new Snap("#dog-container");
 
 function preload() {
-  toadie = loadFont("css/fonts/toadie_xyy.ttf");
+  toadie = loadFont("css/fonts/toadie_xy.ttf");
 }
 
 var dog = Snap.select('#dog'),
@@ -27,7 +27,7 @@ function setup() {
 
 
 function draw() {
-  var s = "here is #* & my --little doggie\nHERE IS MY DOG\n! ?? $";
+  var s = "here is #* & my --little doggie\nAND a CAPTION!\n! ?? $";
   textFont(toadie);
   textSize(20);
   textLeading(40);
@@ -42,6 +42,7 @@ earShadingAnimation();
 backFootAnimation();
 snoutOutlineAnimation();
 
+
 function eyeAnimation(){
   eye.stop().animate(
     { transform: 'r45,210,80'},
@@ -53,6 +54,7 @@ function eyeAnimation(){
     }
   );
 }
+
 
 function tailAnimation(){
   tail.stop().animate(
@@ -68,6 +70,7 @@ function tailAnimation(){
   );
 }
 
+
 function backFootAnimation(){
   backFoot.stop().animate(
     { transform: 't5,0'},
@@ -79,6 +82,7 @@ function backFootAnimation(){
     }
   );
 }
+
 
 function tailShadingAnimation(){
   tailShading.stop().animate(
@@ -92,6 +96,7 @@ function tailShadingAnimation(){
   );
 }
 
+
 function earAnimation(){
   ear.stop().animate(
     { transform: 't0,3'},
@@ -104,6 +109,7 @@ function earAnimation(){
   );
 }
 
+
 function earShadingAnimation(){
   earShading.stop().animate(
     { transform: 't0,3'},
@@ -115,6 +121,7 @@ function earShadingAnimation(){
     }
   );
 }
+
 
 function snoutOutlineAnimation(){
   snoutOutline.stop().animate(

@@ -2,21 +2,25 @@
     font-family: toadie; 
     src: url('fonts/toadie.ttf'); 
 }
+
 body,
 div {
     padding: 0;
     margin: 0;
     background: #FFF;
 }
+
 .svg-container svg {
     max-width: 100%;
     max-height: 100%;
     transform: scale(0.60);
     display: block;
 }
+
 .text-container {
     display: block;
 }
+
 .text-container svg {
     font-family: toadie, sans-serf;
     max-width: 100%;
