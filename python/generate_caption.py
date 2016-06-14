@@ -14,13 +14,13 @@ corpus_root = 'corpus/'
 wordlists = PlaintextCorpusReader(corpus_root, '.*')
 sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
 
-def generate_model(cfdist, word, num=35):
+def generate_model(cfdist, word, num=200):
   for i in range(num):
     print(word, end=" ")
-    # word = cfdist[word].max()
     word = random.choice(list(cfdist[word]))
     # print("TEMP %s" % temp)
-
+  print("\n\n")
+    
 text = wordlists.words()
 text_as_string = " ".join(text)
 
@@ -35,6 +35,7 @@ cfd = nltk.ConditionalFreqDist(bigrams)
 
 init_word = random.choice(list(words_tokenized))
 print(init_word)
+print("\n========\n")
 
 generate_model(cfd, init_word)
 
