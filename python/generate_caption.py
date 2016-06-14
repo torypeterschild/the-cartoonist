@@ -11,9 +11,10 @@ import random
 # expand corpus
 
 """ Define non-alphanumeric characters """
-SENTENCE_TERMINATORS = ['!', '?', '.']
-CLAUSE_TERMINATORS = [',', ';']
-VALID_SYMBOLS = SENTENCE_TERMINATORS + CLAUSE_TERMINATORS
+SENTENCE_TERMINATORS = ["!", "?", "."]
+CLAUSE_TERMINATORS = [",", ";"]
+PUNCTUATION = ["'", "-", "--"]
+VALID_SYMBOLS = SENTENCE_TERMINATORS + CLAUSE_TERMINATORS + PUNCTUATION
 
 
 """ Caption Generator Object """
@@ -21,13 +22,21 @@ class CaptionGenerator():
   def __init__(self, *args):
     corpus_root = 'corpus/'
     wordlists = PlaintextCorpusReader(corpus_root, '.*')
-    text = " ".join(wordlists.words())
-    words = nltk.word_tokenize(text)
-    sents = nltk.sent_tokenize(text)
-    bigrams = nltk.bigrams([w.lower() for w in words])
+    self.u_words = nltk.Text(wordlists.words())
+    self.text = " ".join(wordlists.words())
+    self.words = nltk.word_tokenize(self.text)
+    sents = nltk.sent_tokenize(self.text)
+    bigrams = nltk.bigrams([w.lower() for w in self.words])
     self.cdf = nltk.ConditionalFreqDist(bigrams)
-    self.case_cdf = nltk.ConditionalFreqDist([(w.lower(), w) for w in words])
-    self.avg_sent_len = int(len(words)/len(sents))
+    self.case_cdf = nltk.ConditionalFreqDist([(w.lower(), w) for w in self.words])
+    self.avg_sent_len = int(len(self.words)/len(sents))
+
+  def first_word(self):
+      first = random.choice(list(self.words))
+      if first in VALID_SYMBOLS:
+        first = random.choice(list(self.words))
+      print("first word is %s" % first)
+      return first
 
   def __call__(self, word):
     word = word.lower()
@@ -86,8 +95,11 @@ def main():
   g = CaptionGenerator()
   print(g)
   print(g.avg_sent_len)
-  caption = g.__call__("i")
+  first = g.first_word()
+  caption = g.__call__(first)
   print(caption)
+  print("\n----\n")
+
 
 
 if __name__ == "__main__":
