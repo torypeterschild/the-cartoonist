@@ -2,6 +2,8 @@ from __future__ import print_function
 from nltk.corpus import PlaintextCorpusReader
 from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize, regexp_tokenize
+from nltk.parse.generate import generate, demo_grammar
+from nltk import CFG
 import nltk
 import nltk.data
 import random
@@ -9,6 +11,8 @@ import random
 # TODO: deal with names
 # deal with grammar
 # expand corpus
+
+grammar = CFG.fromstring(demo_grammar)
 
 """ Define non-alphanumeric characters """
 SENTENCE_TERMINATORS = ["!", "?", "."]
@@ -33,27 +37,23 @@ class CaptionGenerator():
 
   def first_word(self):
       first = random.choice(list(self.words))
-      if first in VALID_SYMBOLS:
-        first = random.choice(list(self.words))
+      while first in VALID_SYMBOLS:
+        first = random.choice(list(self.words))  
       print("first word is %s" % first)
       return first
 
   def __call__(self, word):
     word = word.lower()
     if " " in word:
-      print("space in word")
       ret = nltk.word_tokenize(word)
       word = ret[-1]
     else:
-      print("space not in word")
       ret = [word]
 
     while word not in SENTENCE_TERMINATORS:
       if ret[-1] in CLAUSE_TERMINATORS:
-        print("in clause terminators")
         prev_word = ret[-1]
       else:
-        print("not in clause terminators")
         prev_word = ret[-1]
       for new_word in self.cdf[word]:
         # Avoid duplicates
@@ -97,7 +97,10 @@ def main():
   print(g.avg_sent_len)
   first = g.first_word()
   caption = g.__call__(first)
+  print("\n----\n")
   print(caption)
+  print("\n----\n")
+  print(g(first))
   print("\n----\n")
 
 
