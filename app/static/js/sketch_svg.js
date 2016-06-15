@@ -1,4 +1,3 @@
-
 var toadie;
 var s = new Snap("#dog-container");
 

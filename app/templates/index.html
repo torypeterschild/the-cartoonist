@@ -13,8 +13,11 @@
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
   <?xml version="1.0" encoding="UTF-8" ?>
   <div id="text-container" class="text-container">
-    <form action="/caption" method="post">
-      <button id="gencap" style="background-color: transparent" type="submit" value="generate" />Generate caption</button>
+    <form action="." method="GET">
+      <input type="text" id="keyword" name="keyword"/>
+      <br>
+      <input type="submit" value="submit" name="myform"/>
+<!--       <button id="gencap" style="background-color: transparent" type="submit" value="generate" />Generate caption</button> -->
     </form>  
   </div>
   <div id="dog-container" class="svg-container">
