@@ -5,10 +5,6 @@ from flask import Flask, request, url_for, render_template
 app = Flask(__name__)
 
 
-# def hello():
-#   return "hello world"
-
-# text = sys.stdin.read().decode('ascii', errors="replace")
 @app.route("/")
 def read_file():
   infile = open("corpus/corpus000.txt", "r")
@@ -22,7 +18,6 @@ def read_file():
     if len(sentence.words) >= 6:
       sentence_list.append(sentence.replace("\n", " "))  
 
-  # return " ".join(random.sample(sentences, 1))
   for item in random.sample(sentence_list, 1):
     item = item.split()
     sen = []
@@ -33,6 +28,4 @@ def read_file():
 
 if __name__ == "__main__":
   f = "corpus/corpus000.txt"
-  # port = int(os.environ.get('PORT', 5000))
-  # app.run(host='0.0.0.0', port=port)
   app.run()
