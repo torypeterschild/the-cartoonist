@@ -27,6 +27,9 @@ function setup() {
 
 function draw() {
   var s = "here is my little doggie\nAND a CAPTION!\n! ?? $";
+  if(typeof s == undefined){
+    console.log("Caption is undefined");
+  }
   textFont(toadie);
   textSize(20);
   textLeading(40);

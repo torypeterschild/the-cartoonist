@@ -1,10 +1,11 @@
 @font-face { 
-    font-family: toadie; 
-    src: url('fonts/toadie.ttf'); 
+    font-family: 'toadie'; 
+    src: url('toadie_xy.ttf') format('truetype'); 
 }
 
 body,
 div {
+    font-family: toadie;
     padding: 0;
     margin: 0;
     background: #FFF;
@@ -29,6 +30,12 @@ div {
     width: 40px;
     height: 100px;
     transform: scale(0.50);
+    padding: auto;
+    display: inline-block;
+}
+
+.caption p {
+    font-family: toadie;
     padding: auto;
     display: inline-block;
 }
