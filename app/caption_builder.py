@@ -19,7 +19,7 @@ def main():
 #   return keyword
 
 
-@app.route("/caption", methods=['GET'])
+@app.route("/caption", methods=['GET','POST'])
 def read_file():
   infile = open("corpus/corpus000.txt", "r")
   content = infile.read()
@@ -39,6 +39,7 @@ def read_file():
         sentence_list.append(sentence.replace("\n", " "))  
 
   for item in random.sample(sentence_list, 1):
+    print(item)
     item = item.split()
     sen = []
     for w in item:

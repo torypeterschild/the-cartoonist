@@ -14,6 +14,13 @@ div {
 .svg-container svg {
     max-width: 100%;
     max-height: 100%;
+    transform: scale(0.40);
+    display: block;
+}
+
+#dog path {
+    max-width: 100%;
+    max-height: 100%;
     transform: scale(0.60);
     display: block;
 }
@@ -29,15 +36,15 @@ div {
     max-height: 100%;
     width: 40px;
     height: 100px;
-    transform: scale(0.50);
+    transform: scale(0.40);
     padding: auto;
     display: inline-block;
 }
 
-.caption p {
-    font-family: toadie;
+#caption p {
+    font-family: "toadie";
     padding: auto;
-    display: inline-block;
+    display: block;
 }
 
 button {
