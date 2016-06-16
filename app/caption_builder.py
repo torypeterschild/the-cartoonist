@@ -19,17 +19,20 @@ def main():
 #   return keyword
 
 
-@app.route("/caption", methods=['GET','POST'])
+@app.route("/caption", methods=['POST', 'GET'])
 def read_file():
   infile = open("corpus/corpus000.txt", "r")
   content = infile.read()
   blob = TextBlob(content.decode('utf-8'))
+  caption = " "
   # ngrams = blob.ngrams(n=3)
+
+  if request.method == 'POST':
+      caption = request.form
 
   sentence_list = list()
 
   if keyword is not None:
-    keyword = parse_qs(os.environ['keyword'])
     for sentence in blob.sentences:
       if keyword in sentence:
         sentence_list.append(sentence.replace("\n", " "))
@@ -44,7 +47,9 @@ def read_file():
     sen = []
     for w in item:
       sen.append(w)
-    return " ".join(sen)   
+    caption = " ".join(sen) 
+
+  return render_template("index.html", value = caption)    
    
 
 

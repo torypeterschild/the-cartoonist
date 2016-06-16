@@ -21,23 +21,23 @@ var s = new Snap("#dog-container");
 // });
 
 
-$(function() {
-    $("#searchbar").on("submit", function (e) {
-      console.log("inside ajax");
-      e.preventDefault();
-      var keyword_js = $("#keyword").val();
-        console.log("the keyword is" + keyword_js);
-        var caption = $.post(
-          "~/caption_builder.py", 
-          {
-            keyword: keyword_js
-          },
-          function(){
-            console.log(keyword_js);
-            console.log(caption);
-          });
-    });         
-});
+// $(function() {
+//     $("#searchbar").on("submit", function (e) {
+//       console.log("inside ajax");
+//       e.preventDefault();
+//       var keyword_js = $("#keyword").val();
+//         console.log("the keyword is" + keyword_js);
+//         var caption = $.post(
+//           "~/caption_builder.py", 
+//           {
+//             keyword: keyword_js
+//           },
+//           function(){
+//             // console.log(keyword_js);
+//             // console.log(caption);
+//           });
+//     });         
+// });
 
 
 
@@ -47,6 +47,7 @@ function preload() {
 
 $("#caption").css({display: "block"});
 $("#caption").css({"font-family": "toadie_xy"});
+$("#caption").css({"font-size": "30px"});
 
 var dog = Snap.select('#dog'),
   dogStartMatrix = new Snap.Matrix(),
@@ -72,27 +73,27 @@ function draw() {
   var caption = "This is the caption";
   
   // var s = "here is my little doggie\nAND a CAPTION!\n! ?? $";
-  if(typeof caption === undefined){
-    console.log("Caption is undefined");
-    caption = "This is the caption error)";
-  } else {
-    console.log("Caption is defined");
-    console.log(caption);
-  }
+  // if(typeof caption === undefined){
+  //   console.log("Caption is undefined");
+  //   caption = "This is the caption error)";
+  // } else {
+  //   console.log("Caption is defined");
+  //   console.log(caption);
+  // }
 
-  textFont(toadie);
-  textSize(20);
-  textLeading(40);
-  text(caption, 10, 10, 500, 500);
+  // textFont(toadie);
+  // textSize(20);
+  // textLeading(40);
+  // text(caption, 10, 10, 500, 500);
 }
 
-tailAnimation();
-tailShadingAnimation();
-eyeAnimation();
-earAnimation()
-earShadingAnimation();
-backFootAnimation();
-snoutOutlineAnimation();
+// tailAnimation();
+// tailShadingAnimation();
+// eyeAnimation();
+// earAnimation()
+// earShadingAnimation();
+// backFootAnimation();
+// snoutOutlineAnimation();
 
 
 function eyeAnimation(){
