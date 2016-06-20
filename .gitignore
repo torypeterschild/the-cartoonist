@@ -1,3 +1,7 @@
 .DS_Store
 python/corpus
 python/highlights.txt
+app/__init__.pyc
+app/forms.pyc
+app/views.pyc
+config.pyc
