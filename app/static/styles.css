@@ -1,6 +1,6 @@
 @font-face { 
     font-family: 'toadie'; 
-    src: url('toadie_xy.ttf') format('truetype'); 
+    src: url('toadie_truer.ttf'); 
 }
 
 body,
@@ -57,14 +57,3 @@ button {
     display: inline-block;
     font-size: 13px;
 }
-
-/*#gencap {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}*/
