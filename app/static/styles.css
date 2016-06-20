@@ -1,13 +1,13 @@
 @font-face { 
     font-family: 'toadie'; 
-    src: url('toadie_truest.ttf'); 
+    src: url('/static/fonts/toadie_truest.ttf'); 
 }
 
 body,
 div {
-    font-family: toadie;
-    padding: 0;
-    margin: 0;
+    font-family: 'toadie';
+    padding: 10px;
+    margin: 10px;
     background: #FFF;
 }
 
