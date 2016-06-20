@@ -6,17 +6,9 @@ from cgi import parse_qs
 app = Flask(__name__)
 
 
-# @app.route("/caption", methods=['GET', 'POST'])
 @app.route("/")
 def main():
   return render_template("index.html")
-
-
-# @app.route("/", methods=['POST'])
-# def get_keyword():
-#   keyword = parse_qs(os.environ['keyword'])
-#   # text = request.form['keyword']
-#   return keyword
 
 
 @app.route("/caption", methods=['POST', 'GET'])
@@ -39,11 +31,7 @@ def read_file():
         sentence_list.append(sentence.replace("\n", " "))
       if keyword.lower() in sentence:
         sentence_list.append(sentence.replace("\n", " "))    
-  # else:
-  #   caption = "Error"
-    # for sentence in blob.sentences:
-    #   if len(sentence.words) >= 6:
-    #     sentence_list.append(sentence.replace("\n", " "))  
+  
   if not sentence_list:
     caption = "Error!"
   else:    
