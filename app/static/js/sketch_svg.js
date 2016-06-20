@@ -72,7 +72,7 @@ function setup() {
 function draw() {
   var caption = "This is the caption";
   
-  // var s = "here is my little doggie\nAND a CAPTION!\n! ?? $";
+  var s = "here is my little doggie\nAND a CAPTION!\n! ?? $";
   // if(typeof caption === undefined){
   //   console.log("Caption is undefined");
   //   caption = "This is the caption error)";
@@ -87,13 +87,13 @@ function draw() {
   // text(caption, 10, 10, 500, 500);
 }
 
-// tailAnimation();
-// tailShadingAnimation();
-// eyeAnimation();
-// earAnimation()
-// earShadingAnimation();
-// backFootAnimation();
-// snoutOutlineAnimation();
+tailAnimation();
+tailShadingAnimation();
+eyeAnimation();
+earAnimation()
+earShadingAnimation();
+backFootAnimation();
+snoutOutlineAnimation();
 
 
 function eyeAnimation(){

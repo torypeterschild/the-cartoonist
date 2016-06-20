@@ -9,7 +9,7 @@ app = Flask(__name__)
 # @app.route("/caption", methods=['GET', 'POST'])
 @app.route("/")
 def main():
-  return render_template('index.html')
+  return render_template("index.html")
 
 
 # @app.route("/", methods=['POST'])
@@ -28,7 +28,8 @@ def read_file():
   # ngrams = blob.ngrams(n=3)
 
   if request.method == 'POST':
-      caption = request.form
+      keyword = request.form['keyword']
+      print("Keyword is %s" % keyword)
 
   sentence_list = list()
 
@@ -36,23 +37,22 @@ def read_file():
     for sentence in blob.sentences:
       if keyword in sentence:
         sentence_list.append(sentence.replace("\n", " "))
-  else:
-    for sentence in blob.sentences:
-      if len(sentence.words) >= 6:
-        sentence_list.append(sentence.replace("\n", " "))  
+      if keyword.lower() in sentence:
+        sentence_list.append(sentence.replace("\n", " "))    
+  # else:
+  #   caption = "Error"
+    # for sentence in blob.sentences:
+    #   if len(sentence.words) >= 6:
+    #     sentence_list.append(sentence.replace("\n", " "))  
+  if not sentence_list:
+    caption = "Error!"
+  else:    
+    caption =  random.choice(sentence_list)
+  print("Caption is %s" % caption)
 
-  for item in random.sample(sentence_list, 1):
-    print(item)
-    item = item.split()
-    sen = []
-    for w in item:
-      sen.append(w)
-    caption = " ".join(sen) 
-
-  return render_template("index.html", value = caption)    
+  return render_template("index.html", message = caption)    
    
 
 
 if __name__ == "__main__":
-  f = "corpus/corpus000.txt"
   app.run()
