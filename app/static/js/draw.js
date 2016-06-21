@@ -6,11 +6,6 @@ function preload() {
   toadie = loadFont("../static/fonts/toadie-is.ttf");
 }
 
-/* Style caption text */
-// $("#caption").css({display: "block"});
-// $("#caption").css({"font-family": "toadie-is"});
-// $("#caption").css({"font-size": "30px"});
-
 /* Select parts of dog */
 /* TODO: figure out how this works when SVG isn't in html */
 var dog = Snap.select('#dog'),
