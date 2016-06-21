@@ -17,7 +17,7 @@ def input():
   if form.validate_on_submit():
     flash("Keyword is '%s'" % (form.keyword.data))
 
-  with app.open_resource('corpus000.txt') as f:
+  with app.open_resource('static/corpus000.txt') as f:
     content = f.read()
 
   blob = TextBlob(content.decode('utf-8'))
