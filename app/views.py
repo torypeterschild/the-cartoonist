@@ -8,7 +8,7 @@ import random, sys, os
 @app.route("/index")
 def index():
   return render_template("cartoon.html",
-    header="Cartoonist!", 
+    header="Cartoonist", 
     title="Cartoonist")
 
 @app.route("/input", methods=['GET', 'POST'])
@@ -32,7 +32,7 @@ def input():
         sentence_list.append(sentence.replace("\n", " "))
   else:
     return render_template("input.html",
-      title="choose a keyword",
+      header="Cartoonist",
       form=form)        
   
   if not sentence_list:
@@ -41,7 +41,7 @@ def input():
     caption = random.choice(sentence_list)
 
   return render_template("cartoon.html",
-    title="Choose a keyword",
+    header="Cartoonist",
     caption=caption,
     form=form)
 
