@@ -28,7 +28,8 @@ def input():
   """ TODO: generate error message when keyword is not in corpus """
   if form.keyword.data is not None:
     for sentence in blob.sentences:
-      if form.keyword.data in sentence or form.keyword.data.lower() in sentence:
+      words = sentence.split()
+      if form.keyword.data in words or form.keyword.data.lower() in words:
         sentence_list.append(sentence.replace("\n", " "))
   else:
     return render_template("input.html",
