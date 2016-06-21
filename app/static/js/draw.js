@@ -32,14 +32,14 @@ var backFoot = dog.select('#backFoot');
 /* NOTE:
  * draw() renders font poorly
  */
-function draw() {
-  var caption = "This is the caption";
-  var s = "here is my little doggie\nAND a CAPTION!\n! ?? $"
-  // textFont(toadie);
-  // textSize(20);
-  // textLeading(40);
-  // text(caption, 10, 10, 500, 500);
-}
+// function draw() {
+//   var caption = "This is the caption";
+//   var s = "here is my little doggie\nAND a CAPTION!\n! ?? $"
+//   // textFont(toadie);
+//   // textSize(20);
+//   // textLeading(40);
+//   // text(caption, 10, 10, 500, 500);
+// }
 
 /* Call all animation functions */
 tailAnimation();
