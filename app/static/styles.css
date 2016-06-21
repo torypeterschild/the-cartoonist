@@ -13,6 +13,10 @@ body {
     max-width: 100%;
 }
 
+body div, a {
+    margin: 10px;
+}
+
 h1 {
     font-size: 35pt;
     margin: 10px;
@@ -65,7 +69,7 @@ form input[type=submit] {
 }
 
 #menu {
-    font-size: 20pt;
+    font-size: 16pt;
 }
 
 #caption p {
