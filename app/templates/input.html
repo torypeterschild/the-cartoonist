@@ -7,10 +7,10 @@
       {{ form.hidden_tag() }}
       <p>
           Please enter a keyword:<br>
-          {{ form.keyword(size=80) }}<br>
+          {{ form.keyword(size=30) }}<br>
           {% for error in form.keyword.errors %}
             <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br>
+          {% endfor %}
       </p>
       <p><input type="submit" value="Generate"></p>
   </form>

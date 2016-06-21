@@ -9,8 +9,7 @@ import random, sys, os
 def index():
   return render_template("cartoon.html",
     header="Cartoonist!", 
-    title="Cartoonist",
-    svg="SVG will go here")
+    title="Cartoonist")
 
 @app.route("/input", methods=['GET', 'POST'])
 def input():

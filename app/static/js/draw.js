@@ -7,9 +7,9 @@ function preload() {
 }
 
 /* Style caption text */
-$("#caption").css({display: "block"});
-$("#caption").css({"font-family": "toadie-is"});
-$("#caption").css({"font-size": "30px"});
+// $("#caption").css({display: "block"});
+// $("#caption").css({"font-family": "toadie-is"});
+// $("#caption").css({"font-size": "30px"});
 
 /* Select parts of dog */
 /* TODO: figure out how this works when SVG isn't in html */
@@ -29,10 +29,10 @@ var backFoot = dog.select('#backFoot');
 /* NOTE:
  * setup() and draw() not currently in use -- check if these can be removed
  */
-function setup() {
-  createCanvas(720,700);
-  stroke(0);
-}
+// function setup() {
+//   // createCanvas(720,700);
+//   // stroke(0);
+// }
 
 /* NOTE:
  * draw() renders font poorly

@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>{{ header }}</h1>
-    <div>
+    <div id="menu">
       <a href="/index">Home</a><br>
       <a href="/input">Input</a>
     </div>
@@ -24,6 +24,7 @@
         </ul>
       {% endif %}
     {% endwith %}
+    <div id="drawing">{% include "dog.svg" %}</div>
     {% block content %}{% endblock %}
   </body>
 </html>
