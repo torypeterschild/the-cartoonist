@@ -23,7 +23,7 @@ svg {
     height: 100%;
     margin-left: 10px;
     padding: 0;
-    transform: scale(0.80);
+    transform: scale(0.90);
     display: auto;
 }
 
@@ -55,8 +55,8 @@ form input[type=submit] {
 #drawing {
     padding: 0;
     margin: 0;
-    max-height: 40%;
-    max-width: 40%;
+    max-height: 50%;
+    max-width: 50%;
 }
 
 #drawing svg {
