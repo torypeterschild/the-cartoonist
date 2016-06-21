@@ -12,9 +12,11 @@ $("#caption").css({"font-family": "toadie_truest"});
 $("#caption").css({"font-size": "30px"});
 
 /* Select parts of dog */
+/* TODO: figure out how this works when SVG isn't in html */
 var dog = Snap.select('#dog'),
   dogStartMatrix = new Snap.Matrix(),
   dogMidMatrix = new Snap.Matrix();
+console.log(dog);  
 var eye = dog.select('#eye');
 var tail = dog.select('#tail');
 var tailShading = dog.select('#tailShading');
