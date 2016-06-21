@@ -3,12 +3,12 @@ var s = new Snap("#dog-container");
 
 /* Preload fonts and any other files */
 function preload() {
-  toadie = loadFont("../static/fonts/toadie_truest.ttf");
+  toadie = loadFont("../static/fonts/toadie-is.ttf");
 }
 
 /* Style caption text */
 $("#caption").css({display: "block"});
-$("#caption").css({"font-family": "toadie_truest"});
+$("#caption").css({"font-family": "toadie-is"});
 $("#caption").css({"font-size": "30px"});
 
 /* Select parts of dog */

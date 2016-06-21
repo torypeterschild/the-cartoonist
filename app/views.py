@@ -18,17 +18,10 @@ def input():
   form = InputForm()
   if form.validate_on_submit():
     flash("Keyword is '%s'" % (form.keyword.data))
-    # return redirect("/index")
 
   with app.open_resource('corpus000.txt') as f:
     content = f.read()
-  # infile = open("static/corpus000.txt", "r")
-  # infile = request.files.get("/static/corpus000.txt")
-  # if infile:
-  #   content = open(infile).read()
-  # else:
-  #   return "No file selected."  
-  # content = infile.read()
+
   blob = TextBlob(content.decode('utf-8'))
   caption = " "  
 
