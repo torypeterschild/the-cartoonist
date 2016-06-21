@@ -32,8 +32,23 @@ form p {
     margin: 0;
 }
 
-form input {
-    font-size: 20pt;
+form input[type=text] {
+    font-family: "Arial", Arial, sans-serif;
+    color: #afafaf;
+    border:1px solid #ccc;
+    font-size: 16pt;
+    background-color: white;
+    -webkit-border-radius: 5px;
+}
+
+form input[type=submit] {
+    font-family: "Arial", Arial, sans-serif;
+    padding: 5px 5px 5px 5px;
+    font-size: 12pt;
+    background-color: #ccc;
+    border: 0 none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 #drawing {
@@ -56,15 +71,4 @@ form input {
     font-family: "toadie";
     padding: auto;
     display: block;
-}
-
-button {
-    background-color: white;
-    border: solid 2px #212121;
-    color: black;
-    padding: 0;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
 }
