@@ -3,18 +3,20 @@ var s = new Snap("#dog-container");
 
 /* Preload fonts and any other files */
 function preload() {
-  toadie = loadFont("../static/fonts/toadie_truest.ttf");
+  toadie = loadFont("../static/fonts/toadie-is.ttf");
 }
 
 /* Style caption text */
-$("#caption").css({display: "block"});
-$("#caption").css({"font-family": "toadie_truest"});
-$("#caption").css({"font-size": "30px"});
+// $("#caption").css({display: "block"});
+// $("#caption").css({"font-family": "toadie-is"});
+// $("#caption").css({"font-size": "30px"});
 
 /* Select parts of dog */
+/* TODO: figure out how this works when SVG isn't in html */
 var dog = Snap.select('#dog'),
   dogStartMatrix = new Snap.Matrix(),
   dogMidMatrix = new Snap.Matrix();
+console.log(dog);  
 var eye = dog.select('#eye');
 var tail = dog.select('#tail');
 var tailShading = dog.select('#tailShading');
@@ -27,10 +29,10 @@ var backFoot = dog.select('#backFoot');
 /* NOTE:
  * setup() and draw() not currently in use -- check if these can be removed
  */
-function setup() {
-  createCanvas(720,700);
-  stroke(0);
-}
+// function setup() {
+//   // createCanvas(720,700);
+//   // stroke(0);
+// }
 
 /* NOTE:
  * draw() renders font poorly

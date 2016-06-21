@@ -3,10 +3,17 @@
   <head>
     <title>{{ title }}</title>
     <link href="/static/styles.css" rel="stylesheet">
+    <script language="javascript" type="text/javascript" src="/static/js/Snap.svg-0.4.1/dist/snap.svg-min.js"></script>
+    <script language="javascript" type="text/javascript" src="/static/js/p5.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </head>
   <body>
     <h1>{{ header }}</h1>
-    <div><a href="/index">Home</a></div>
+    <div id="menu">
+      <a href="/index">Home</a><br>
+      <a href="/input">Input</a>
+    </div>
     <hr>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -17,6 +24,7 @@
         </ul>
       {% endif %}
     {% endwith %}
+    <div id="drawing">{% include "dog.svg" %}</div>
     {% block content %}{% endblock %}
   </body>
 </html>
