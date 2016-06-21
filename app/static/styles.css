@@ -13,8 +13,9 @@ body {
     max-width: 100%;
 }
 
-body div, a {
+body a {
     margin: 10px;
+    font-size: 16pt;
 }
 
 h1 {
@@ -56,6 +57,13 @@ form input[type=submit] {
     border-radius: 5px;
 }
 
+img {
+    float: left;
+    margin-left: 1em;
+    border: 0 none;
+    display: none;
+}
+
 #drawing {
     padding: 0;
     margin: 0;
@@ -70,6 +78,10 @@ form input[type=submit] {
 
 #menu {
     font-size: 16pt;
+}
+
+#data {
+    display: none;
 }
 
 #caption p {

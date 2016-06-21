@@ -29,6 +29,31 @@ var backFoot = dog.select('#backFoot');
 //   // stroke(0);
 // }
 
+// Get the SVG element
+// var svg = document.getElementById("design-1");
+
+// svg.toDataURL("image/png", {
+//     callback : function(data) {
+//         // Convert image to 'octet-stream' (Just a download, really)
+//         var image = data.replace("image/png", "image/octet-stream");
+//         window.location.href = image;
+//     }
+// });
+
+function doDog() {
+  var svg = document.getElementById("dog");
+  var img = document.getElementById("fromcanvas");
+  svg.toDataURL("image/png", {
+    callback: function(data) {
+        img.setAttribute("src", data)
+        img.style.display = "inline"
+        var a = document.querySelector("#data")
+        a.href = data
+        a.style.display = "inline"
+    }
+  })
+}
+
 /* NOTE:
  * draw() renders font poorly
  */
