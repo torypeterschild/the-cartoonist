@@ -10,8 +10,7 @@ def index():
   return render_template("cartoon.html",
     header="Cartoonist!", 
     title="Cartoonist",
-    svg="SVG will go here",
-    caption="Test Caption")
+    svg="SVG will go here")
 
 @app.route("/input", methods=['GET', 'POST'])
 def input():
@@ -26,13 +25,11 @@ def input():
   caption = " "  
 
   sentence_list = list()
-  print(sentence_list)
 
+  """ TODO: generate error message when keyword is not in corpus """
   if form.keyword.data is not None:
     for sentence in blob.sentences:
-      if form.keyword.data in sentence:
-        sentence_list.append(sentence.replace("\n", " "))
-      elif form.keyword.data.lower() in sentence:
+      if form.keyword.data in sentence or form.keyword.data.lower() in sentence:
         sentence_list.append(sentence.replace("\n", " "))
   else:
     return render_template("input.html",
