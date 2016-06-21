@@ -5,7 +5,7 @@
 
 body {
     font-family: 'toadie';
-    font-size: 30pt;
+    font-size: 25pt;
     padding: 10px;
     margin: 10px;
     background: #FFF;
@@ -28,7 +28,7 @@ svg {
 }
 
 form p {
-    padding: 0;
+    padding: 5px;
     margin: 0;
 }
 
@@ -39,8 +39,13 @@ form input {
 #drawing {
     padding: 0;
     margin: 0;
-    max-height: 50%;
-    max-width: 50%;
+    max-height: 40%;
+    max-width: 40%;
+}
+
+#drawing svg {
+    margin: 0;
+    padding: 0;
 }
 
 #menu {
