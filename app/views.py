@@ -37,7 +37,7 @@ def input():
       form=form)        
   
   if not sentence_list:
-    caption = "Error!"
+    caption = "?#$*&! - that word is not in the corpus."
   else:
     caption = random.choice(sentence_list)
 
