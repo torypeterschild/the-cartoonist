@@ -1,5 +1,6 @@
 var toadie;
-var s = new Snap("#dog-container");
+var s = new Snap("#bigsvg");
+// var paper = Snap(500,500);
 
 /* Preload fonts and any other files */
 function preload() {
@@ -21,50 +22,19 @@ var snoutOutline = dog.select('#snoutOutline');
 var lowerSnoutShading = dog.select('#lowerSnoutShading');
 var backFoot = dog.select('#backFoot');
 
-/* NOTE:
- * setup() and draw() not currently in use -- check if these can be removed
- */
-// function setup() {
-//   // createCanvas(720,700);
-//   // stroke(0);
-// }
+// console.log(tail.getBBox());
+// dog.clone();
 
-// Get the SVG element
-// var svg = document.getElementById("design-1");
+// var text = paper.text(10, 20, "Hello World");
+var text1 = s.text(0, 30, "Hello World I am here and it's cool");
 
-// svg.toDataURL("image/png", {
-//     callback : function(data) {
-//         // Convert image to 'octet-stream' (Just a download, really)
-//         var image = data.replace("image/png", "image/octet-stream");
-//         window.location.href = image;
-//     }
-// });
+var t = new Snap.Matrix() 
+t.translate(0, 35); 
+t.rotate(5, 0, 40); 
+text1.attr({"font-size":50});
+// text.transform(t);
+text1.transform(t);
 
-function doDog() {
-  var svg = document.getElementById("dog");
-  var img = document.getElementById("fromcanvas");
-  svg.toDataURL("image/png", {
-    callback: function(data) {
-        img.setAttribute("src", data)
-        img.style.display = "inline"
-        var a = document.querySelector("#data")
-        a.href = data
-        a.style.display = "inline"
-    }
-  })
-}
-
-/* NOTE:
- * draw() renders font poorly
- */
-// function draw() {
-//   var caption = "This is the caption";
-//   var s = "here is my little doggie\nAND a CAPTION!\n! ?? $"
-//   // textFont(toadie);
-//   // textSize(20);
-//   // textLeading(40);
-//   // text(caption, 10, 10, 500, 500);
-// }
 
 /* Call all animation functions */
 tailAnimation();
@@ -167,4 +137,13 @@ function snoutOutlineAnimation(){
     }
   );
 }
+
+
+$('#SVGsave').click(function(){
+    var a      = document.createElement('a');
+    a.href     = 'data:image/svg+xml;utf8,' + unescape($('#dog')[0].outerHTML);
+    a.download = 'cartoon.svg';
+    a.target   = '_blank';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+});
 

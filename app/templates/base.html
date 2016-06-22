@@ -6,7 +6,6 @@
     <script language="javascript" type="text/javascript" src="/static/js/Snap.svg-0.4.1/dist/snap.svg-min.js"></script>
     <script language="javascript" type="text/javascript" src="/static/js/p5.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/svg_todataurl.js"></script>
   </head>
   <body>
     <h1>{{ header }}</h1>
@@ -23,13 +22,13 @@
         </ul>
       {% endif %}
     {% endwith %}
-    <div id="drawing">{% include "dog.svg" %}</div>
-    {% block content %}{% endblock %}
+    <svg id="bigsvg">
+      <div id="drawing">{% include "dog.svg" %}</div>
+      {% block content %}{% endblock %}
+    </svg>  
     <p>
-      <button onclick="javascript:doDog()">Get DataURL</button>
-      <a id="data" href="data:">Go to DataURL</a>
+      <button id="SVGsave">Save SVG</button>
     </p>
-    <img id="fromcanvas" alt="SVG Image" />
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>
 </html>
