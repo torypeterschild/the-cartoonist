@@ -29,7 +29,7 @@ var captionText = $("#caption").text();
 console.log(captionText);
 
 
-wordCount = captionText.split(" ").length;
+var wordCount = captionText.split(" ").length;
 console.log("word count is");
 console.log(wordCount);
 
@@ -44,13 +44,26 @@ console.log(wordCount);
 
 var phrases = [];
 
-if (wordCount > 6) {
+var lineMax = 6;
+
+if (wordCount > lineMax) {
   console.log("Needs to be split up.");
-  console.log("wordCount/6 = " + Math.round(wordCount/6));
-  words = captionText.split(" ");
-  phrases.push(words.slice(0,5).join(" "));
-  phrases.push(words.slice(5, wordCount).join(" "));
+  var numLines = Math.round(wordCount/6);
+  console.log("wordCount/6 = " + numLines);
+  var words = captionText.split(" ");
+  var lineEnding = 0;
+  for (var i = 0; i < numLines - 1; i++) {
+    var line = words.slice(lineEnding, lineEnding + lineMax).join(" ");
+    lineEnding = lineEnding + lineMax;
+    console.log("i is " + i + "line: " + line);
+    phrases.push(line);
+  }
+  var lastLine = words.slice(lineEnding, wordCount).join(" ");
+  console.log("last line is " + lastLine);
+  phrases.push(lastLine);
   console.log(phrases);
+} else {
+  phrases.push(captionText);
 }
 
 console.log(phrases);
@@ -69,7 +82,7 @@ var text1 = s.text(dog_bb.x, captionHeight, phrases);
 
 var t = new Snap.Matrix() 
 t.translate(0, 35); 
-t.rotate(5, 0, 40); 
+t.rotate(4, 0, 40); 
 text1.attr({"font-size":40});
 text1.transform(t);
 
