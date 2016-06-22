@@ -28,15 +28,28 @@ console.log(dog_bb);
 var captionText = $("#caption").text();
 console.log(captionText);
 
-// var text = paper.text(10, 20, "Hello World");
 var text = s.text(dog_bb.x, dog_bb.y + dog_bb.height + 30, captionText);
-// var text = s.text(0, 0, captionText);
+
+wordCount = captionText.split(" ").length;
+console.log("word count is");
+console.log(wordCount);
+
+var phrases = [];
+
+if (wordCount > 5) {
+  console.log("Needs to be split up.");
+  words = captionText.split(" ");
+  phrases.push(words.slice(0,5).join(" "));
+  phrases.push(words.slice(5, wordCount).join(" "));
+  console.log(phrases);
+}
+
+console.log(phrases);
 
 var t = new Snap.Matrix() 
 t.translate(0, 35); 
 t.rotate(5, 0, 40); 
 text.attr({"font-size":40});
-// text.transform(t);
 text.transform(t);
 
 

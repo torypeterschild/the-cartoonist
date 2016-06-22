@@ -82,7 +82,7 @@ img {
     font-size: 16pt;
 }
 
-#caption {
+#caption, #save {
     display: none;
 }
 
