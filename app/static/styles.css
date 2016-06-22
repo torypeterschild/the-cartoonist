@@ -11,6 +11,7 @@ body {
     background: #FFF;
     max-height: 100%;
     max-width: 100%;
+    overflow: visible;
 }
 
 body a {
@@ -74,10 +75,15 @@ img {
 #drawing svg {
     margin: 0;
     padding: 0;
+    overflow: visible;
 }
 
 #menu {
     font-size: 16pt;
+}
+
+#caption {
+    display: none;
 }
 
 

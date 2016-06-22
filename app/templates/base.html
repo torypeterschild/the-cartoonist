@@ -12,8 +12,7 @@
     <div id="menu">
       <a href="/index">Home</a><a href="/input">Input</a>
     </div>
-    <hr>
-    {% with messages = get_flashed_messages() %}
+<!--     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>
         {% for message in messages %}
@@ -21,14 +20,9 @@
         {% endfor %}
         </ul>
       {% endif %}
-    {% endwith %}
-    <svg id="bigsvg">
-      <div id="drawing">{% include "dog.svg" %}</div>
-      {% block content %}{% endblock %}
-    </svg>  
-    <p>
-      <button id="SVGsave">Save SVG</button>
-    </p>
+    {% endwith %} -->
+    <div id="drawing">{% include "dog.svg" %}</div>
+    {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>
 </html>

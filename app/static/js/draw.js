@@ -1,5 +1,5 @@
 var toadie;
-var s = new Snap("#bigsvg");
+var s = new Snap("#dog");
 // var paper = Snap(500,500);
 
 /* Preload fonts and any other files */
@@ -22,18 +22,22 @@ var snoutOutline = dog.select('#snoutOutline');
 var lowerSnoutShading = dog.select('#lowerSnoutShading');
 var backFoot = dog.select('#backFoot');
 
-// console.log(tail.getBBox());
-// dog.clone();
+var dog_bb = dog.getBBox();
+console.log(dog_bb);
+
+var captionText = $("#caption").text();
+console.log(captionText);
 
 // var text = paper.text(10, 20, "Hello World");
-var text1 = s.text(0, 30, "Hello World I am here and it's cool");
+var text = s.text(dog_bb.x, dog_bb.y + dog_bb.height + 30, captionText);
+// var text = s.text(0, 0, captionText);
 
 var t = new Snap.Matrix() 
 t.translate(0, 35); 
 t.rotate(5, 0, 40); 
-text1.attr({"font-size":50});
+text.attr({"font-size":40});
 // text.transform(t);
-text1.transform(t);
+text.transform(t);
 
 
 /* Call all animation functions */
