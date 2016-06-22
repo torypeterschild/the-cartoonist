@@ -34,14 +34,6 @@ console.log("word count is");
 console.log(wordCount);
 
 
-// var headline = snap.paper.text(56,100, 
-//   ['The Three Layers','of','Every Web Page']).attr({
-//     fill: '#FBAF3F', fontFamily: 'Impact'});
-
-//     headline.select('tspan:first-of-type').attr({fontSize: '2.8em'})
-//     headline.select('tspan:nth-of-type(2)').attr({fill: 'none', stroke: '#FBAF3F', fontSize: '2.2em', dx: '15px', dy: '5px'});
-//     headline.select('tspan:last-of-type').attr({fontSize: '3.6em', x: '56px', y: '160px'});
-
 var phrases = [];
 
 var lineMax = 6;
@@ -68,15 +60,9 @@ if (wordCount > lineMax) {
 
 console.log(phrases);
 
-// var block = s.rect(dog_bb.x - 50, dog_bb.y + dog_bb.height + 30, 500, 200);
 
 captionHeight = dog_bb.y + dog_bb.height - 20;
 
-// block.attr({
-//   fill: "rgb(236, 240, 241)",
-//   stroke: "#1f2c39",
-//   strokeWidth: 3
-// });
 
 var text1 = s.text(dog_bb.x, captionHeight, phrases);
 
@@ -88,17 +74,10 @@ text1.transform(t);
 
 // TODO: make different lines slant differently
 text1.selectAll("tspan").forEach(function(tspan, i){
-      tspan.attr({x:0,y:captionHeight+45*(i+1)});
+      tspan.attr({x:0 + i,y:captionHeight+45*(i+1)});
    });
 
 // text1.select('tspan:nth-of-type(2)').attr({transform: 'rotate(10 x y'});
-
-// block.attr({
-//   width: (text1.node.clientWidth + 50)
-// });
-
-
-
 
 
 
