@@ -77,9 +77,7 @@ text1.selectAll("tspan").forEach(function(tspan, i){
       tspan.attr({x:0 + i,y:captionHeight+45*(i+1)});
    });
 
-// text1.select('tspan:nth-of-type(2)').attr({transform: 'rotate(10 x y'});
-
-
+dog.animate({x: 100}, 1000);
 
 /* Call all animation functions */
 tailAnimation();
