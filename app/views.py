@@ -1,15 +1,16 @@
-from flask import render_template, flash, redirect, request
+from flask import render_template, flash, redirect, request, url_for
 from app import app
 from .forms import InputForm
 from textblob import TextBlob
 import random, sys, os
 
+
 @app.route("/")
 @app.route("/index")
 def index():
   return render_template("cartoon.html",
-    header="Cartoonist", 
-    title="Cartoonist")
+    header="cartoonist")
+
 
 @app.route("/input", methods=['GET', 'POST'])
 def input():
@@ -44,6 +45,14 @@ def input():
     header="Cartoonist",
     caption=caption,
     form=form)
+
+
+@app.route("/cartoon")
+def render_cartoon():
+  return render_template("cartoon.html",
+    header="cartoonist",
+    caption="test caption")
+
 
 @app.errorhandler(404)
 def not_found_error(error):

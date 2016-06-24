@@ -1,6 +1,5 @@
 var toadie;
 var s = new Snap("#dog");
-// var paper = Snap(500,500);
 
 /* Preload fonts and any other files */
 function preload() {
@@ -39,21 +38,16 @@ var phrases = [];
 var lineMax = 6;
 
 if (wordCount > lineMax) {
-  console.log("Needs to be split up.");
   var numLines = Math.round(wordCount/6);
-  console.log("wordCount/6 = " + numLines);
   var words = captionText.split(" ");
   var lineEnding = 0;
   for (var i = 0; i < numLines - 1; i++) {
     var line = words.slice(lineEnding, lineEnding + lineMax).join(" ");
     lineEnding = lineEnding + lineMax;
-    console.log("i is " + i + "line: " + line);
     phrases.push(line);
   }
   var lastLine = words.slice(lineEnding, wordCount).join(" ");
-  console.log("last line is " + lastLine);
   phrases.push(lastLine);
-  console.log(phrases);
 } else {
   phrases.push(captionText);
 }
@@ -64,13 +58,13 @@ captionHeight = dog_bb.y + dog_bb.height - 20;
 
 var caption = s.text(dog_bb.x, captionHeight, phrases);
 
+// TODO: Randomly generate rotation angle between 355 and 5 degrees
 var t = new Snap.Matrix() 
 t.translate(0, 35); 
 t.rotate(4, 0, 40); 
 caption.attr({"font-size":40});
 caption.transform(t);
 
-// TODO: make different lines slant differently
 caption.selectAll("tspan").forEach(function(tspan, i){
       tspan.attr({x:0 + i,y:captionHeight+45*(i+1)});
    });

@@ -23,6 +23,7 @@ body a {
 h1 {
     font-size: 30pt;
     margin: 10px;
+    padding-bottom: 5px;
 }
 
 svg {
