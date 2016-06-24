@@ -37,13 +37,15 @@ svg {
 form p {
     padding: 5px;
     margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12pt;
 }
 
 form input[type=text] {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #afafaf;
     border:1px solid #ccc;
-    font-size: 16pt;
+    font-size: 12pt;
     background-color: white;
     -webkit-border-radius: 5px;
 }
@@ -52,7 +54,7 @@ form input[type=submit] {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #212121;
     padding: 5px 5px 5px 5px;
-    font-size: 12pt;
+    font-size: 10pt;
     background-color: #ccc;
     border: 0 none;
     -webkit-border-radius: 5px;
