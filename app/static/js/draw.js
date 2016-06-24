@@ -60,20 +60,18 @@ if (wordCount > lineMax) {
 
 console.log(phrases);
 
-
 captionHeight = dog_bb.y + dog_bb.height - 20;
 
-
-var text1 = s.text(dog_bb.x, captionHeight, phrases);
+var caption = s.text(dog_bb.x, captionHeight, phrases);
 
 var t = new Snap.Matrix() 
 t.translate(0, 35); 
 t.rotate(4, 0, 40); 
-text1.attr({"font-size":40});
-text1.transform(t);
+caption.attr({"font-size":40});
+caption.transform(t);
 
 // TODO: make different lines slant differently
-text1.selectAll("tspan").forEach(function(tspan, i){
+caption.selectAll("tspan").forEach(function(tspan, i){
       tspan.attr({x:0 + i,y:captionHeight+45*(i+1)});
    });
 

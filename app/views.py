@@ -25,7 +25,6 @@ def input():
 
   sentence_list = list()
 
-  """ TODO: generate error message when keyword is not in corpus """
   if form.keyword.data is not None:
     for sentence in blob.sentences:
       words = sentence.split()
