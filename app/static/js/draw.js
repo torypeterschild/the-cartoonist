@@ -182,3 +182,11 @@ $('#SVGsave').click(function(){
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
 });
 
+
+$('#saveCartoon').click(function(){
+    var captionText = $("#caption").text();
+    console.log(captionText);
+});
+
+
+
