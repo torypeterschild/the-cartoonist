@@ -82,6 +82,11 @@ img {
     overflow: visible;
 }
 
+#savetest {
+    margin-top: 60px;
+    display: inline-block;
+}
+
 #menu {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12pt;
