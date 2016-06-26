@@ -46,21 +46,19 @@ def input():
   return render_template("cartoon.html",
     header="Cartoonist",
     caption=caption,
-    keyword_form=keyword_form,
-    save_form=SaveForm())
+    keyword_form=keyword_form)
 
 
-@app.route("/save-cartoon", methods=['POST'])
+@app.route("/save-cartoon", methods=['POST', 'GET'])
 def save_cartoon():
   if request.method == 'POST':
     data = request.get_data()
-    # dataDict = json.loads(data)
     print("DATA IS %s" % data)
     print(type(data))
-    caption = data
+    # caption = data
 
   return render_template("save-cartoon.html",
-    captionsave=caption)
+    captionsave=data)
 
 
 @app.errorhandler(404)
