@@ -62,11 +62,12 @@ Caption.prototype.writeInSnap = function(s) {
    });
 }
 
+/* Call after POST to create new caption object */
 function makeSavedCaption() {
   console.log("IN MAKE SAVED CAPTION");
   var savedCaptionText = $("#captionsave").text();
   var savedCaption = new Caption(savedCaptionText);
-  console.log("saved caption after ajax: " + savedCaption.toString);
+  console.log("saved caption after ajax: " + savedCaption.toString());
   savedCaption.writeInSnap(s);
 }
 
@@ -210,6 +211,7 @@ function snoutOutlineAnimation(){
   );
 }
 
+/* This saves SVG file (without caption) */
 $('#SVGsave').click(function(){
     var a      = document.createElement('a');
     a.href     = 'data:image/svg+xml;utf8,' + unescape($('#dog')[0].outerHTML);
@@ -219,9 +221,10 @@ $('#SVGsave').click(function(){
 });
 
 /*
- TODO: 
- - buttons should appear below caption 
+ TODO: buttons should appear below caption 
 */
+
+/* Renders cartoon and caption in save-cartoon template */
 $('#savecartoon').click(function(){
   var value = $("#caption").text()
   console.log("VALUE IS " + value);
