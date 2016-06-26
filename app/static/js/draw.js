@@ -62,6 +62,14 @@ Caption.prototype.writeInSnap = function(s) {
    });
 }
 
+function makeSavedCaption() {
+  console.log("IN MAKE SAVED CAPTION");
+  var savedCaptionText = $("#captionsave").text();
+  var savedCaption = new Caption(savedCaptionText);
+  console.log("saved caption after ajax: " + savedCaption.toString);
+  savedCaption.writeInSnap(s);
+}
+
 
 /* Select parts of dog */
 /* TODO: figure out how this works when SVG isn't in html */
@@ -232,6 +240,7 @@ $('#savetest').click(function(){
   });
 });
 
+makeSavedCaption();
 
 
 
