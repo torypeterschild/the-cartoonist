@@ -13,9 +13,11 @@
   </head>
   <body>
     <h1>{{ header }}</h1>
+    {% if menu %}
     <div id="menu">
       <a href="/index">home</a><a href="/input">enter keyword</a>
     </div>
+    {% endif %}
 <!--     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>

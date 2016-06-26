@@ -12,6 +12,7 @@ def index():
   save_form = SaveForm()
   return render_template("cartoon.html",
     header="cartoonist",
+    menu=True,
     save_form=save_form)
 
 
@@ -37,6 +38,7 @@ def input():
   else:
     return render_template("input.html",
       header="cartoonist",
+      menu=True,
       keyword_form=keyword_form)        
   
   if not sentence_list:
@@ -47,6 +49,7 @@ def input():
   return render_template("cartoon.html",
     header="Cartoonist",
     caption=caption,
+    menu=True,
     keyword_form=keyword_form)
 
 """ TODO: Render save-cartoon template like cartoon template
