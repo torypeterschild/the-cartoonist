@@ -1,3 +1,4 @@
+/* Global variables */
 var toadie;
 var s = new Snap("#dog");
 
@@ -5,6 +6,62 @@ var s = new Snap("#dog");
 function preload() {
   toadie = loadFont("../static/fonts/toadie-is.ttf");
 }
+
+/* Define caption object */
+var Caption = function(captionText) {
+  this.captionText = captionText;
+  this.drawing = Snap.select('#dog');
+  // console.log("DRAWING: " + this.drawing);
+  this.drawing_bb = this.drawing.getBBox();
+  console.log("BOUNDING BOX: " + this.drawing_bb.height);
+  this.x = 0;
+  this.y = this.drawing_bb.y + this.drawing_bb.height - 20;
+  this.lineMax = 6;
+  this.wordCount = this.captionText.split(" ").length;
+  this.words = this.captionText.split(" ");
+  this.numLines = Math.round(this.wordCount/this.lineMax);
+  this.lines = [];
+  this.snapCaption = null;
+  this.mat = new Snap.Matrix();
+}
+
+/* Split caption into lines */
+Caption.prototype.splitIntoLines = function() {
+  if (this.numLines > 1) {
+    var lineEnding = 0;
+    for (var i = 0; i < this.numLines; i++) {
+      var line = this.words.slice(lineEnding, lineEnding + this.lineMax).join(" ");
+      lineEnding = lineEnding + this.lineMax;
+      this.lines.push(line);
+    }
+    var lastLine = this.words.slice(lineEnding, this.wordCount).join(" ");
+    this.lines.push(lastLine);
+  } else {
+    this.lines.push(this.captionText);
+  }
+}
+
+/* toString for debugging purposes */
+Caption.prototype.toString = function() {
+  return this.captionText + " with word count of " + this.wordCount + "\n and " + this.numLines + " lines";
+}
+
+/* Create Snap text object, set line spacing and slant */
+// TODO: Randomly generate rotation angle between 355 and 5 degrees
+Caption.prototype.writeInSnap = function(s) {
+  this.splitIntoLines();
+  console.log("these are the lines: " + this.lines);
+  this.snapCaption = s.text(this.x, this.y, this.lines);
+  this.mat.translate(0, 35); 
+  this.mat.rotate(4, 0, 40); 
+  this.snapCaption.attr({"font-size":40});
+  this.snapCaption.transform(this.mat);
+  var height = this.y;
+  this.snapCaption.selectAll("tspan").forEach(function(tspan, i){
+      tspan.attr({x:0 + i,y:height+45*(i+1)});
+   });
+}
+
 
 /* Select parts of dog */
 /* TODO: figure out how this works when SVG isn't in html */
@@ -32,44 +89,12 @@ var wordCount = captionText.split(" ").length;
 console.log("word count is");
 console.log(wordCount);
 
+var theCaption = new Caption(captionText);
+console.log("hello there");
+console.log(theCaption.toString());
 
-var phrases = [];
+theCaption.writeInSnap(s);
 
-var lineMax = 6;
-
-if (wordCount > lineMax) {
-  var numLines = Math.round(wordCount/6);
-  var words = captionText.split(" ");
-  var lineEnding = 0;
-  for (var i = 0; i < numLines - 1; i++) {
-    var line = words.slice(lineEnding, lineEnding + lineMax).join(" ");
-    lineEnding = lineEnding + lineMax;
-    phrases.push(line);
-  }
-  var lastLine = words.slice(lineEnding, wordCount).join(" ");
-  phrases.push(lastLine);
-} else {
-  phrases.push(captionText);
-}
-
-console.log(phrases);
-
-captionHeight = dog_bb.y + dog_bb.height - 20;
-
-var caption = s.text(dog_bb.x, captionHeight, phrases);
-
-// TODO: Randomly generate rotation angle between 355 and 5 degrees
-var t = new Snap.Matrix() 
-t.translate(0, 35); 
-t.rotate(4, 0, 40); 
-caption.attr({"font-size":40});
-caption.transform(t);
-
-caption.selectAll("tspan").forEach(function(tspan, i){
-      tspan.attr({x:0 + i,y:captionHeight+45*(i+1)});
-   });
-
-dog.animate({x: 100}, 1000);
 
 /* Call all animation functions */
 tailAnimation();
@@ -80,6 +105,10 @@ earShadingAnimation();
 backFootAnimation();
 snoutOutlineAnimation();
 
+
+/*------------------
+  DEFINE ANIMATIONS 
+ -------------------*/
 
 function eyeAnimation(){
   eye.stop().animate(
@@ -186,7 +215,6 @@ $('#SVGsave').click(function(){
  - fix all button names and styling 
  - buttons should appear below caption 
  - save caption template should be rendered in the same style as cartoon.html
- - remove menu from save template 
 */
 $('#savetest').click(function(){
   var value = $("#caption").text()
