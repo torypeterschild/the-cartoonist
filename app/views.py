@@ -4,6 +4,7 @@ from .forms import InputForm, SaveForm
 from textblob import TextBlob
 import random, sys, os, json
 
+captionpersist = list()
 
 @app.route("/")
 @app.route("/index")
@@ -48,17 +49,25 @@ def input():
     caption=caption,
     keyword_form=keyword_form)
 
-
-@app.route("/save-cartoon", methods=['POST', 'GET'])
+""" TODO: Render save-cartoon template like cartoon template
+    in the same style as cartoon template """
+@app.route("/save-cartoon", methods=['POST'])
 def save_cartoon():
-  if request.method == 'POST':
-    data = request.get_data()
-    print("DATA IS %s" % data)
-    print(type(data))
-    # caption = data
-
+  global captionpersist
+  real_caption = None
+  # if request.method == 'POST':
+  data = request.get_data()
+  print("DATA IS %s" % data)
+  print(type(data))
+  captionpersist.append(data.strip('"\''))
+  for elem in captionpersist:
+    if elem is not '':
+      real_caption = elem
+  print("Captionpersist is %s" % captionpersist)
+  print("real cap is %s" % real_caption)
+ 
   return render_template("save-cartoon.html",
-    captionsave=data)
+    captionsave=real_caption)
 
 
 @app.errorhandler(404)
