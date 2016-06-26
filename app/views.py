@@ -1,22 +1,24 @@
 from flask import render_template, flash, redirect, request, url_for
 from app import app
-from .forms import InputForm
+from .forms import InputForm, SaveForm
 from textblob import TextBlob
-import random, sys, os
+import random, sys, os, json
 
 
 @app.route("/")
 @app.route("/index")
 def index():
+  save_form = SaveForm()
   return render_template("cartoon.html",
-    header="cartoonist")
+    header="cartoonist",
+    save_form=save_form)
 
 
 @app.route("/input", methods=['GET', 'POST'])
 def input():
-  form = InputForm()
-  if form.validate_on_submit():
-    flash("Keyword is '%s'" % (form.keyword.data))
+  keyword_form = InputForm()
+  if keyword_form.validate_on_submit():
+    flash("Keyword is '%s'" % (keyword_form.keyword.data))
 
   with app.open_resource('static/corpus000.txt') as f:
     content = f.read()
@@ -26,15 +28,15 @@ def input():
 
   sentence_list = list()
 
-  if form.keyword.data is not None:
+  if keyword_form.keyword.data is not None:
     for sentence in blob.sentences:
       words = sentence.split()
-      if form.keyword.data in words or form.keyword.data.lower() in words:
+      if keyword_form.keyword.data in words or keyword_form.keyword.data.lower() in words:
         sentence_list.append(sentence.replace("\n", " "))
   else:
     return render_template("input.html",
-      header="Cartoonist",
-      form=form)        
+      header="cartoonist",
+      keyword_form=keyword_form)        
   
   if not sentence_list:
     caption = "?#$*&! - that word is not in the corpus."
@@ -44,14 +46,21 @@ def input():
   return render_template("cartoon.html",
     header="Cartoonist",
     caption=caption,
-    form=form)
+    keyword_form=keyword_form,
+    save_form=SaveForm())
 
 
-@app.route("/cartoon")
-def render_cartoon():
-  return render_template("cartoon.html",
-    header="cartoonist",
-    caption="test caption")
+@app.route("/save-cartoon", methods=['POST'])
+def save_cartoon():
+  if request.method == 'POST':
+    data = request.get_data()
+    # dataDict = json.loads(data)
+    print("DATA IS %s" % data)
+    print(type(data))
+    caption = data
+
+  return render_template("save-cartoon.html",
+    captionsave=caption)
 
 
 @app.errorhandler(404)

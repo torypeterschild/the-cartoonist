@@ -1,5 +1,6 @@
 <!doctype html>
 {% extends "base.html" %}
+
 {% block content %}
   <div id="caption">{{ caption }}</div>
   <div id="save">
@@ -7,9 +8,11 @@
       <button id="SVGsave">Save SVG</button>
     </p>
   </div>
-  <div id="saveThis">
-    <p>
-      <button id="saveCartoon">Save this cartoon</button>
-    </p>
-  </div>
+  {% if caption is defined %}
+    <div id="savetest">
+      <p>
+        <button id="savetest">savetest</button>
+      </p>
+    </div>
+  {% endif %}  
 {% endblock %}

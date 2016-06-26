@@ -3,10 +3,10 @@
 
 {% block content %}
   <form action="" method="post" name="input">
-      {{ form.hidden_tag() }}
+      {{ keyword_form.hidden_tag() }}
       <p>
-          Please enter a keyword: {{ form.keyword(size=30) }}<br>
-          {% for error in form.keyword.errors %}
+          Please enter a keyword: {{ keyword_form.keyword(size=30) }}<br>
+          {% for error in keyword_form.keyword.errors %}
             <span style="color: red;">[{{ error }}]</span>
           {% endfor %}
       </p>

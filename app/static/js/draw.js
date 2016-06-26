@@ -173,7 +173,6 @@ function snoutOutlineAnimation(){
   );
 }
 
-
 $('#SVGsave').click(function(){
     var a      = document.createElement('a');
     a.href     = 'data:image/svg+xml;utf8,' + unescape($('#dog')[0].outerHTML);
@@ -182,11 +181,35 @@ $('#SVGsave').click(function(){
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
 });
 
-
-$('#saveCartoon').click(function(){
-    var captionText = $("#caption").text();
-    console.log(captionText);
+// TODO: make sure button names are not messed up
+$('#savetest').click(function(){
+  var value = $("#caption").text()
+  console.log("VALUE IS " + value);
+  $.ajax({
+    type: "POST",
+    url: "/save-cartoon",
+    data: JSON.stringify(value),
+    success: function(msg){
+      console.log("success");
+    },
+    failure: function(msg){
+      console.log("failure");
+    }
+  });
 });
+
+// var value = $("#caption").text()
+// $.ajax({
+//       type: "POST",
+//       url: "/save-cartoon",
+//       data: JSON.stringify(value),
+//       success: function(msg){
+//         //success method
+//       },
+//       failure: function(msg){
+//        //failure message
+//       }
+// });
 
 
 
