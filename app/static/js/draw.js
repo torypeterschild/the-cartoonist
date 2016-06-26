@@ -220,11 +220,9 @@ $('#SVGsave').click(function(){
 
 /*
  TODO: 
- - fix all button names and styling 
  - buttons should appear below caption 
- - save caption template should be rendered in the same style as cartoon.html
 */
-$('#savetest').click(function(){
+$('#savecartoon').click(function(){
   var value = $("#caption").text()
   console.log("VALUE IS " + value);
   $.ajax({
