@@ -1,7 +1,11 @@
 <!doctype html>
 <html>
   <head>
+    {% if title %}
     <title>{{ title }}</title>
+    {% else %}
+    <title>cartoonist</title>
+    {% endif %}
     <link href="/static/styles.css" rel="stylesheet">
     <script language="javascript" type="text/javascript" src="/static/js/Snap.svg-0.4.1/dist/snap.svg-min.js"></script>
     <script language="javascript" type="text/javascript" src="/static/js/p5.min.js"></script>
@@ -9,11 +13,12 @@
   </head>
   <body>
     <h1>{{ header }}</h1>
+    {% if menu %}
     <div id="menu">
-      <a href="/index">Home</a><a href="/input">Input</a>
+      <a href="/index">home</a><a href="/input">enter keyword</a>
     </div>
-    <hr>
-    {% with messages = get_flashed_messages() %}
+    {% endif %}
+<!--     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>
         {% for message in messages %}
@@ -21,7 +26,7 @@
         {% endfor %}
         </ul>
       {% endif %}
-    {% endwith %}
+    {% endwith %} -->
     <div id="drawing">{% include "dog.svg" %}</div>
     {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>

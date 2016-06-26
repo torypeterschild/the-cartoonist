@@ -1,5 +1,5 @@
 var toadie;
-var s = new Snap("#dog-container");
+var s = new Snap("#dog");
 
 /* Preload fonts and any other files */
 function preload() {
@@ -21,25 +21,55 @@ var snoutOutline = dog.select('#snoutOutline');
 var lowerSnoutShading = dog.select('#lowerSnoutShading');
 var backFoot = dog.select('#backFoot');
 
-/* NOTE:
- * setup() and draw() not currently in use -- check if these can be removed
- */
-// function setup() {
-//   // createCanvas(720,700);
-//   // stroke(0);
-// }
+var dog_bb = dog.getBBox();
+console.log(dog_bb);
 
-/* NOTE:
- * draw() renders font poorly
- */
-function draw() {
-  var caption = "This is the caption";
-  var s = "here is my little doggie\nAND a CAPTION!\n! ?? $"
-  // textFont(toadie);
-  // textSize(20);
-  // textLeading(40);
-  // text(caption, 10, 10, 500, 500);
+var captionText = $("#caption").text();
+console.log(captionText);
+
+
+var wordCount = captionText.split(" ").length;
+console.log("word count is");
+console.log(wordCount);
+
+
+var phrases = [];
+
+var lineMax = 6;
+
+if (wordCount > lineMax) {
+  var numLines = Math.round(wordCount/6);
+  var words = captionText.split(" ");
+  var lineEnding = 0;
+  for (var i = 0; i < numLines - 1; i++) {
+    var line = words.slice(lineEnding, lineEnding + lineMax).join(" ");
+    lineEnding = lineEnding + lineMax;
+    phrases.push(line);
+  }
+  var lastLine = words.slice(lineEnding, wordCount).join(" ");
+  phrases.push(lastLine);
+} else {
+  phrases.push(captionText);
 }
+
+console.log(phrases);
+
+captionHeight = dog_bb.y + dog_bb.height - 20;
+
+var caption = s.text(dog_bb.x, captionHeight, phrases);
+
+// TODO: Randomly generate rotation angle between 355 and 5 degrees
+var t = new Snap.Matrix() 
+t.translate(0, 35); 
+t.rotate(4, 0, 40); 
+caption.attr({"font-size":40});
+caption.transform(t);
+
+caption.selectAll("tspan").forEach(function(tspan, i){
+      tspan.attr({x:0 + i,y:captionHeight+45*(i+1)});
+   });
+
+dog.animate({x: 100}, 1000);
 
 /* Call all animation functions */
 tailAnimation();
@@ -142,4 +172,38 @@ function snoutOutlineAnimation(){
     }
   );
 }
+
+$('#SVGsave').click(function(){
+    var a      = document.createElement('a');
+    a.href     = 'data:image/svg+xml;utf8,' + unescape($('#dog')[0].outerHTML);
+    a.download = 'cartoon.svg';
+    a.target   = '_blank';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+});
+
+/*
+ TODO: 
+ - fix all button names and styling 
+ - buttons should appear below caption 
+ - save caption template should be rendered in the same style as cartoon.html
+ - remove menu from save template 
+*/
+$('#savetest').click(function(){
+  var value = $("#caption").text()
+  console.log("VALUE IS " + value);
+  $.ajax({
+    type: "POST",
+    url: "/save-cartoon",
+    data: JSON.stringify(value),
+    success: function(msg){
+      console.log("success");
+    },
+    failure: function(msg){
+      console.log("failure");
+    }
+  });
+});
+
+
+
 

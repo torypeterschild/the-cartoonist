@@ -1,21 +1,26 @@
-from flask import render_template, flash, redirect, request
+from flask import render_template, flash, redirect, request, url_for
 from app import app
-from .forms import InputForm
+from .forms import InputForm, SaveForm
 from textblob import TextBlob
-import random, sys, os
+import random, sys, os, json
+
+captionpersist = list()
 
 @app.route("/")
 @app.route("/index")
 def index():
+  save_form = SaveForm()
   return render_template("cartoon.html",
-    header="Cartoonist", 
-    title="Cartoonist")
+    header="cartoonist",
+    menu=True,
+    save_form=save_form)
+
 
 @app.route("/input", methods=['GET', 'POST'])
 def input():
-  form = InputForm()
-  if form.validate_on_submit():
-    flash("Keyword is '%s'" % (form.keyword.data))
+  keyword_form = InputForm()
+  if keyword_form.validate_on_submit():
+    flash("Keyword is '%s'" % (keyword_form.keyword.data))
 
   with app.open_resource('static/corpus000.txt') as f:
     content = f.read()
@@ -25,16 +30,16 @@ def input():
 
   sentence_list = list()
 
-  """ TODO: generate error message when keyword is not in corpus """
-  if form.keyword.data is not None:
+  if keyword_form.keyword.data is not None:
     for sentence in blob.sentences:
       words = sentence.split()
-      if form.keyword.data in words or form.keyword.data.lower() in words:
+      if keyword_form.keyword.data in words or keyword_form.keyword.data.lower() in words:
         sentence_list.append(sentence.replace("\n", " "))
   else:
     return render_template("input.html",
-      header="Cartoonist",
-      form=form)        
+      header="cartoonist",
+      menu=True,
+      keyword_form=keyword_form)        
   
   if not sentence_list:
     caption = "?#$*&! - that word is not in the corpus."
@@ -44,7 +49,29 @@ def input():
   return render_template("cartoon.html",
     header="Cartoonist",
     caption=caption,
-    form=form)
+    menu=True,
+    keyword_form=keyword_form)
+
+""" TODO: Render save-cartoon template like cartoon template
+    in the same style as cartoon template """
+@app.route("/save-cartoon", methods=['POST'])
+def save_cartoon():
+  global captionpersist
+  real_caption = None
+  # if request.method == 'POST':
+  data = request.get_data()
+  print("DATA IS %s" % data)
+  print(type(data))
+  captionpersist.append(data.strip('"\''))
+  for elem in captionpersist:
+    if elem is not '':
+      real_caption = elem
+  print("Captionpersist is %s" % captionpersist)
+  print("real cap is %s" % real_caption)
+ 
+  return render_template("save-cartoon.html",
+    captionsave=real_caption)
+
 
 @app.errorhandler(404)
 def not_found_error(error):
