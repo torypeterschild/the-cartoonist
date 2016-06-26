@@ -181,7 +181,13 @@ $('#SVGsave').click(function(){
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
 });
 
-// TODO: make sure button names are not messed up
+/*
+ TODO: 
+ - fix all button names and styling 
+ - buttons should appear below caption 
+ - save caption template should be rendered in the same style as cartoon.html
+ - remove menu from save template 
+*/
 $('#savetest').click(function(){
   var value = $("#caption").text()
   console.log("VALUE IS " + value);
@@ -198,18 +204,6 @@ $('#savetest').click(function(){
   });
 });
 
-// var value = $("#caption").text()
-// $.ajax({
-//       type: "POST",
-//       url: "/save-cartoon",
-//       data: JSON.stringify(value),
-//       success: function(msg){
-//         //success method
-//       },
-//       failure: function(msg){
-//        //failure message
-//       }
-// });
 
 
 
