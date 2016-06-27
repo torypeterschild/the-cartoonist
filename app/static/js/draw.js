@@ -31,8 +31,9 @@ Face.prototype.alterCommands = function() {
   EXPERIMENTS
  ------------*/
 
-this.sur = Snap.select("#circleFace");
-var circlePath = document.getElementById("path");
+var sur = new Snap("#circleFace");
+// var sur = Snap.select("#circleFace");
+var circlePath = document.getElementById("cpath");
 var pathString = circlePath.getAttribute("d");
 console.log("the path string is " + pathString);
 var mat = new Snap.Matrix();
@@ -127,6 +128,21 @@ console.log("ALT PATH STRING : \n" + altPathString);
 
 circlePath.setAttribute("d", altPathString);
 
+var face = sur.select('#cpath');
+face_bb = face.getBBox();
+console.log("FACE BBOX ");
+console.log(face_bb);
+
+var faceMatrix = new Snap.Matrix();
+// faceMatrix.translate(0,0);
+faceMatrix.rotate(90, face_bb.cx, face_bb.cy);
+
+face.transform(faceMatrix);
+
+/*---------------
+  END EXPERIMENTS
+ ----------------*/
+
 
 /* Define caption object */
 var Caption = function(captionText) {
@@ -211,6 +227,7 @@ var lowerSnoutShading = dog.select('#lowerSnoutShading');
 var backFoot = dog.select('#backFoot');
 
 var dog_bb = dog.getBBox();
+console.log("DOG BB ");
 console.log(dog_bb);
 
 /*-------------------------
