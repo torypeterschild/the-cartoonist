@@ -3,6 +3,10 @@ var toadie;
 var s = new Snap("#dog");
 var tiltAmts = [5, 4, 3, 2, 355, 356, 357, 358];
 
+var cmdRegEx = /[a-z][^a-z]*/ig;
+var numRegEx = /[+-]?\d+(\.\d+)?/g;
+var instrRegEx = /^[a-zA-Z]*/g;
+
 /* Preload fonts and any other files */
 function preload() {
   toadie = loadFont("../static/fonts/toadie-is.ttf");
@@ -15,11 +19,17 @@ var Face = function() {
   this.pathString = this.path.getAttribute("d");
   this.mat = new Snap.Matrix();
   console.log("path string is " + this.pathString);
+  this.commands = this.pathString.match(cmdRegEx);
+  this.altPath = [];
 }
 
-// Face.prototype.distortPath = function() {
+Face.prototype.alterCommands = function() {
+  console.log("inside alterCommands");
+}
 
-// }
+/*------------
+  EXPERIMENTS
+ ------------*/
 
 this.sur = Snap.select("#circleFace");
 var circlePath = document.getElementById("path");
@@ -28,6 +38,94 @@ console.log("the path string is " + pathString);
 var mat = new Snap.Matrix();
 mat.scale(0.1, 0.1);
 sur.transform(mat);
+
+var cmdRegEx = /[a-z][^a-z]*/ig;
+var commands = pathString.match(cmdRegEx);
+console.log("COMMANDS ARE " + commands);
+console.log("COMMANDS 1 is  " + commands[0]);
+console.log("type of COMMANDS 1 is  " + typeof(commands[0]));
+var cmd1 = commands[0];
+var l = commands[0].split(",");
+console.log("split on comma " + l[0] + " " +  l[1]);
+var numRegEx = /[+-]?\d+(\.\d+)?/g;
+var instrRegEx = /^[a-zA-Z]*/g;
+console.log(l[0].match(instrRegEx));
+console.log(l[0].match(numRegEx));
+
+var alteredPath = [];
+var splitOnSpaceList = [];
+var splitOnCommas = [];
+
+function alterPoint(p) {
+  var addOrSub = [1, -1];
+  var byPercent = [0.001, 0.002, 0.003, 0.01, 0.03];
+  var op = addOrSub[Math.floor(Math.random()*addOrSub.length)];
+  var amt = byPercent[Math.floor(Math.random()*byPercent.length)];
+  console.log("addOrSub: " + op + "; byPercent: " + amt);
+  var newP = p + (p * amt * op);
+  console.log("OLD POINT IS: " + p + "\nNEW POINT IS: " + newP);
+  return newP;
+}
+
+for (var i = 0; i < commands.length; i++) {
+  var temp = commands[i];
+  console.log("temp at iteration " + i + " is " + temp);
+  var splitOnSpace = temp.split(" ");
+  splitOnSpaceList.push(splitOnSpace);
+}
+
+for (var j = 0; j < splitOnSpaceList.length; j++) {
+  console.log("\nsplit on space list " + j + " is " + splitOnSpaceList[j]);
+}
+
+for (var k = 0; k < splitOnSpaceList.length; k++) {
+  var temp = splitOnSpaceList[k];
+  console.log(temp);
+  console.log(typeof(temp));
+  for (var p = 0; p < temp.length; p++) {
+    if (Boolean(temp[p])) {
+      var splitOnComma = temp[p].split(",");
+      splitOnCommas.push(splitOnComma);
+    }
+  }
+}
+
+for (var n = 0; n < splitOnCommas.length; n++) {
+  console.log("\nsplit on commas list " + n + " is " + splitOnCommas[n]);
+}
+
+console.log("TESTTEST");
+console.log(splitOnCommas[0][0]);
+
+for (var q = 0; q < splitOnCommas.length; q++) {
+  var numPairs = splitOnCommas[q].length;
+  console.log("length at iter " + q + " is " + numPairs);
+  if (numPairs == 2) {
+    // console.log(splitOnCommas[0]);
+    // console.log("type of s.o.c.[0]: " + typeof(splitOnCommas[0]));
+    var instr = splitOnCommas[q][0].match(instrRegEx);
+    var px = splitOnCommas[q][0].match(numRegEx);
+    var py = splitOnCommas[q][1].match(numRegEx);
+    var fpx = parseFloat(px);
+    var fpy = parseFloat(py);
+    console.log("instr: " + instr);
+    console.log("PX: " + px + "; PY: " + py);
+    console.log("type of px " + typeof(px));
+    console.log("FPX: " + fpx);
+    console.log("type of fpx " + typeof(fpx));
+    var altPX = alterPoint(fpx);
+    console.log("altp is: " + altPX);
+    var altPY = alterPoint(fpy);
+    alteredPath.push(instr + altPX + "," + altPY);
+  }
+}
+
+console.log("ALTERED PATH: " + alteredPath);
+console.log("ALTERED PATH[0]: " + alteredPath[0]);
+var altPathString = alteredPath.join(" ");
+console.log("ALT PATH STRING : \n" + altPathString);
+
+circlePath.setAttribute("d", altPathString);
 
 
 /* Define caption object */
