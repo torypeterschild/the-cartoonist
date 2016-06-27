@@ -1,6 +1,7 @@
 /* Global variables */
 var toadie;
 var s = new Snap("#dog");
+var tiltAmts = [5, 4, 3, 2, 355, 356, 357, 358];
 
 /* Preload fonts and any other files */
 function preload() {
@@ -52,8 +53,10 @@ Caption.prototype.writeInSnap = function(s) {
   this.splitIntoLines();
   console.log("these are the lines: " + this.lines);
   this.snapCaption = s.text(this.x, this.y, this.lines);
+  var tilt = tiltAmts[Math.floor(Math.random()*tiltAmts.length)];
   this.mat.translate(0, 35); 
-  this.mat.rotate(4, 0, 40); 
+  console.log("TILT IS: " + tilt);
+  this.mat.rotate(tilt, 0, 40); 
   this.snapCaption.attr({"font-size":40});
   this.snapCaption.transform(this.mat);
   var height = this.y;
