@@ -8,10 +8,32 @@ function preload() {
   toadie = loadFont("../static/fonts/toadie-is.ttf");
 }
 
+/* Define face object */
+var Face = function() {
+  this.surface = Snap.select("#circleFace");
+  this.path = document.getElementById("path");
+  this.pathString = this.path.getAttribute("d");
+  this.mat = new Snap.Matrix();
+  console.log("path string is " + this.pathString);
+}
+
+// Face.prototype.distortPath = function() {
+
+// }
+
+this.sur = Snap.select("#circleFace");
+var circlePath = document.getElementById("path");
+var pathString = circlePath.getAttribute("d");
+console.log("the path string is " + pathString);
+var mat = new Snap.Matrix();
+mat.scale(0.1, 0.1);
+sur.transform(mat);
+
+
 /* Define caption object */
 var Caption = function(captionText) {
   this.captionText = captionText;
-  this.drawing = Snap.select('#dog');
+  this.drawing = Snap.select("#dog");
   // console.log("DRAWING: " + this.drawing);
   this.drawing_bb = this.drawing.getBBox();
   console.log("BOUNDING BOX: " + this.drawing_bb.height);
@@ -93,13 +115,12 @@ var backFoot = dog.select('#backFoot');
 var dog_bb = dog.getBBox();
 console.log(dog_bb);
 
+/*-------------------------
+  GET CAPTION TEXT, RENDER
+ -------------------------*/
+
 var captionText = $("#caption").text();
 console.log(captionText);
-
-
-var wordCount = captionText.split(" ").length;
-console.log("word count is");
-console.log(wordCount);
 
 var theCaption = new Caption(captionText);
 console.log("hello there");

@@ -87,6 +87,17 @@ img {
     display: inline-block;
 }
 
+#face {
+    height: 500px;
+}
+
+#face svg {
+    margin-left: 0px;
+    padding: 0;
+    transform: scale(0.50);
+    display: inline;
+}
+
 #menu {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12pt;
