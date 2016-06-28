@@ -172,44 +172,45 @@ var Caption = function(captionText) {
   this.mat = new Snap.Matrix();
 }
 
-/* Split caption into lines */
-Caption.prototype.splitIntoLines = function() {
-  if (this.numLines > 1) {
-    var lineEnding = 0;
-    for (var i = 0; i < this.numLines; i++) {
-      var line = this.words.slice(lineEnding, lineEnding + this.lineMax).join(" ");
-      lineEnding = lineEnding + this.lineMax;
-      this.lines.push(line);
+Caption.prototype = {
+
+  splitIntoLines: function() {
+    if (this.numLines > 1) {
+      var lineEnding = 0;
+      for (var i = 0; i < this.numLines; i++) {
+        var line = this.words.slice(lineEnding, lineEnding + this.lineMax).join(" ");
+        lineEnding = lineEnding + this.lineMax;
+        this.lines.push(line);
+      }
+      var lastLine = this.words.slice(lineEnding, this.wordCount).join(" ");
+      this.lines.push(lastLine);
+    } else {
+      this.lines.push(this.captionText);
     }
-    var lastLine = this.words.slice(lineEnding, this.wordCount).join(" ");
-    this.lines.push(lastLine);
-  } else {
-    this.lines.push(this.captionText);
-  }
-}
+  }, 
 
-/* toString for debugging purposes */
-Caption.prototype.toString = function() {
-  return this.captionText + " with word count of " + this.wordCount + "\n and " + this.numLines + " lines";
-}
+  toString: function() {
+    return this.captionText + " with word count of " + this.wordCount + "\n and " + this.numLines + " lines";
+  },
 
-/* Create Snap text object, set line spacing and slant */
-// TODO: Randomly generate rotation angle between 355 and 5 degrees
-Caption.prototype.writeInSnap = function(s) {
-  this.splitIntoLines();
-  console.log("these are the lines: " + this.lines);
-  this.snapCaption = s.text(this.x, this.y, this.lines);
-  var tilt = tiltAmts[Math.floor(Math.random()*tiltAmts.length)];
-  this.mat.translate(0, 35); 
-  console.log("TILT IS: " + tilt);
-  this.mat.rotate(tilt, 0, 40); 
-  this.snapCaption.attr({"font-size":40});
-  this.snapCaption.transform(this.mat);
-  var height = this.y;
-  this.snapCaption.selectAll("tspan").forEach(function(tspan, i){
+  writeInSnap: function(s) {
+    this.splitIntoLines();
+    console.log("these are the lines: " + this.lines);
+    this.snapCaption = s.text(this.x, this.y, this.lines);
+    var tilt = tiltAmts[Math.floor(Math.random()*tiltAmts.length)];
+    this.mat.translate(0, 35); 
+    console.log("TILT IS: " + tilt);
+    this.mat.rotate(tilt, 0, 40); 
+    this.snapCaption.attr({"font-size":40});
+    this.snapCaption.transform(this.mat);
+    var height = this.y;
+    this.snapCaption.selectAll("tspan").forEach(function(tspan, i){
       tspan.attr({x:0 + i,y:height+45*(i+1)});
    });
+  }
+
 }
+/* End Caption Prototype */
 
 
 /* Select parts of dog */
