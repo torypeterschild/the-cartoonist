@@ -32,12 +32,14 @@ Face.prototype.alterCommands = function() {
  ------------*/
 
 var sur = new Snap("#circleFace");
+
 // var sur = Snap.select("#circleFace");
 var circlePath = document.getElementById("cpath");
+var leftEye = sur.clone();
 var pathString = circlePath.getAttribute("d");
 console.log("the path string is " + pathString);
-var mat = new Snap.Matrix();
-mat.scale(0.1, 0.1);
+var mat = new Snap.matrix();
+// mat.scale(0.1, 0.1);
 sur.transform(mat);
 
 var cmdRegEx = /[a-z][^a-z]*/ig;
@@ -133,11 +135,25 @@ face_bb = face.getBBox();
 console.log("FACE BBOX ");
 console.log(face_bb);
 
+var r = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
+
 var faceMatrix = new Snap.Matrix();
 // faceMatrix.translate(0,0);
-faceMatrix.rotate(90, face_bb.cx, face_bb.cy);
+faceMatrix.rotate(r, face_bb.cx, face_bb.cy);
 
 face.transform(faceMatrix);
+
+
+var eyeMatrix = new Snap.Matrix();
+console.log("eyeMatrix");
+console.log(eyeMatrix);
+eyeMatrix.scale(.5);
+// eyeMatrix.translate(face_bb.cx, face_bb.cy);
+// eyeMatrix.rotate(0, face_bb.cx, face_bb.cy);
+leftEye.animate({transform: eyeMatrix}, 5000);
+var lEye = sur.svg(face_bb.cx, face_bb.cy);
+sur.transform(eyeMatrix);
+lEye.append(leftEye);
 
 /*---------------
   END EXPERIMENTS

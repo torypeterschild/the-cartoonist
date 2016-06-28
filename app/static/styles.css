@@ -89,6 +89,7 @@ img {
 
 #face {
     height: 500px;
+    overflow: visible;
 }
 
 #face svg {
