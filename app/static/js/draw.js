@@ -7,10 +7,17 @@ var cmdRegEx = /[a-z][^a-z]*/ig;
 var numRegEx = /[+-]?\d+(\.\d+)?/g;
 var instrRegEx = /^[a-zA-Z]*/g;
 
+var minRotation = 0;
+var maxRotation = 360;
+
 /* Preload fonts and any other files */
 function preload() {
   toadie = loadFont("../static/fonts/toadie-is.ttf");
 }
+
+/*--------
+  HELPERS
+ --------*/
 
 /* Helper function to alter a point */
 function alterPoint(p) {
@@ -22,6 +29,15 @@ function alterPoint(p) {
   var newP = p + (p * amt * op);
   console.log("OLD POINT IS: " + p + "\nNEW POINT IS: " + newP);
   return newP;
+}
+
+/* Call after POST to create new caption object */
+function makeSavedCaption() {
+  console.log("IN MAKE SAVED CAPTION");
+  var savedCaptionText = $("#captionsave").text();
+  var savedCaption = new Caption(savedCaptionText);
+  console.log("saved caption after ajax: " + savedCaption.toString());
+  savedCaption.writeInSnap(s);
 }
 
 /*-----
@@ -38,6 +54,7 @@ var Face = function() {
   this.splitOnSpaceList = [];
   this.splitOnCommasList = [];
   this.altPath = [];
+  this.mat = new Snap.Matrix();
 }
 
 Face.prototype.splitOnSpaces = function() {
@@ -93,6 +110,15 @@ Face.prototype.applyNewPath = function() {
   this.path.setAttribute("d", altPathString);
 }
 
+Face.prototype.applyMatrix = function() {
+  var r = Math.floor(Math.random() * (maxRotation - minRotation + 1)) + minRotation;
+  var thePath = this.surface.select("#cpath");
+  var bdgBox = thePath.getBBox();
+  // this.mat.translate(0, 35);
+  this.mat.rotate(r, bdgBox.cx, bdgBox.cy); 
+  thePath.transform(this.mat);
+}
+
 
 
 /*------------
@@ -128,6 +154,9 @@ Face.prototype.applyNewPath = function() {
   END EXPERIMENTS
  ----------------*/
 
+ /*--------------
+  CAPTION OBJECT
+ ---------------*/
 
 /* Define caption object */
 var Caption = function(captionText) {
@@ -186,15 +215,6 @@ Caption.prototype.writeInSnap = function(s) {
    });
 }
 
-/* Call after POST to create new caption object */
-function makeSavedCaption() {
-  console.log("IN MAKE SAVED CAPTION");
-  var savedCaptionText = $("#captionsave").text();
-  var savedCaption = new Caption(savedCaptionText);
-  console.log("saved caption after ajax: " + savedCaption.toString());
-  savedCaption.writeInSnap(s);
-}
-
 
 /* Select parts of dog */
 /* TODO: figure out how this works when SVG isn't in html */
@@ -235,6 +255,7 @@ origFace.splitOnSpaces();
 origFace.splitOnCommas();
 origFace.alterCommands();
 origFace.applyNewPath();
+origFace.applyMatrix();
 
 
 /* Call all animation functions */
