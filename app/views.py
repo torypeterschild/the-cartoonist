@@ -13,6 +13,7 @@ def index():
   return render_template("cartoon.html",
     header="cartoonist",
     menu=True,
+    buttons=True,
     save_form=save_form)
 
 

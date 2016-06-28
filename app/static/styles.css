@@ -1,3 +1,4 @@
+
 @font-face { 
     font-family: 'toadie'; 
     src: url('/static/fonts/toadie-is.ttf'); 
@@ -8,7 +9,7 @@ body {
     font-size: 25pt;
     padding: 10px;
     margin: 10px;
-    background: #FFF;
+    background: white;
     max-height: 100%;
     max-width: 100%;
     overflow: visible;
@@ -16,8 +17,12 @@ body {
 
 body a {
     margin: 10px;
-    font-size: 12pt;
+    font-size: 10pt;
     text-decoration: none;
+}
+
+a:visited {
+    color: #212121;
 }
 
 h1 {
@@ -70,16 +75,19 @@ img {
 }
 
 #drawing {
-    padding: 0;
-    margin: 0;
-    max-height: 50%;
-    max-width: 50%;
+    display: none;
+    height: 500px;
+    overflow: visible;
 }
 
 #drawing svg {
-    margin: 0;
+    margin-left: 0px;
     padding: 0;
+    height: 100%;
+    width: 100%;
+    display: inline;
     overflow: visible;
+    transform: scale(0.50);
 }
 
 #savetest {
@@ -87,29 +95,139 @@ img {
     display: inline-block;
 }
 
-#face {
+#facedrawing {
     height: 500px;
     overflow: visible;
 }
 
-#face svg {
+#facedrawing svg {
     margin-left: 0px;
     padding: 0;
     width: 100%;
     height: 100%;
-    transform: scale(0.50);
     display: inline;
     overflow: visible;
+    transform: scale(0.50);
 }
 
 #menu {
+    width: 100%;
+    height: 100%;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12pt;
     margin: 10px;
+    display: inline-block;
 }
 
 #caption, #save, #captionsave {
     display: none;
 }
+
+.button-container ul{
+  list-style: none;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+ul li{
+  color: #212121;
+  display: inline;
+  position: relative;
+  float: left;
+    border-bottom: none;
+}
+
+ul li input[type=radio]{
+  position: absolute;
+  visibility: hidden;
+}
+
+ul li label{
+  opacity: 0.2;
+  display: block;
+  position: relative;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 10pt;
+  padding: 15px 25px 25px 40px;
+  margin: 10px auto;
+  height: 15px;
+  z-index: 9;
+  cursor: pointer;
+  -webkit-transition: all 0.25s linear;
+}
+
+ul li:hover label{
+    color: #00d2c8;
+    opacity: 1;
+}
+
+ul li .check{
+  opacity: 0.2;
+  display: block;
+  position: absolute;
+  border: 3px solid #00d2c8;
+  border-radius: 100%;
+  height: 3px;
+  width: 3px;
+  top: 30px;
+  left: 20px;
+    z-index: 5;
+    transition: border .25s linear;
+    -webkit-transition: border .25s linear;
+}
+
+ul li:hover .check {
+  border: 5px solid #00d2c8;
+  opacity: 1;
+}
+
+ul li .check::before {
+  display: block;
+  position: absolute;
+    content: '';
+  border-radius: 100%;
+  height: 3px;
+  width: 3px;
+  top: 0px;
+    left: 0px;
+  margin: auto;
+    transition: background 0.25s linear;
+    -webkit-transition: background 0.25s linear;
+}
+
+input[type=radio]:checked ~ .check {
+  border: 3px solid #00d2c8;
+  opacity: 1;
+}
+
+input[type=radio]:checked ~ .check::before{
+  background: #afafaf;
+}
+
+input[type=radio]:checked ~ label{
+  color: #00d2c8;
+  opacity: 1;
+}
+
+.dogCartoon:checked ~ div {  
+  -webkit-animation: slide $duration infinite;
+  animation: slide $duration infinite;  
+}
+
+.faceCartoon:checked ~ div {
+/*  left: 35%;
+  width: 30%;*/
+  
+  -webkit-animation: width $duration infinite;
+  animation: width $duration infinite;  
+}
+
+.hidden {
+    display:none;
+}
+
 
 

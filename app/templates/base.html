@@ -18,11 +18,27 @@
       <a href="/index">home</a><a href="/input">enter keyword</a>
     </div>
     {% endif %}
-    {% if dog %}
-    <div id="drawing">{% include "dog.svg" %}</div>
-    {% else %}
-    <div id="face">{% include "circle_trimmed.svg" %}</div>
+    {% if buttons %}
+    <div class="button-container">
+      <ul>
+        <li>
+          <input type="radio" id="f-option" name="selector" onclick="handleClick(this);" value="1">
+          <label for="f-option">dog</label>
+    
+          <div class="check"></div>
+        </li>
+  
+        <li>
+          <input type="radio" id="s-option" name="selector" onclick="handleClick(this);" value="2">
+          <label for="s-option">draw something new</label>
+    
+          <div class="check"></div></div>
+        </li>
+      </ul>
+    </div>
     {% endif %}
+    <div id="drawing">{% include "dog.svg" %}</div>
+    <div id="facedrawing">{% include "circle_trimmed.svg" %}</div>
     {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>
