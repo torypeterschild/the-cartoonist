@@ -12,53 +12,7 @@ function preload() {
   toadie = loadFont("../static/fonts/toadie-is.ttf");
 }
 
-/* Define face object */
-var Face = function() {
-  this.surface = Snap.select("#circleFace");
-  this.path = document.getElementById("path");
-  this.pathString = this.path.getAttribute("d");
-  this.mat = new Snap.Matrix();
-  console.log("path string is " + this.pathString);
-  this.commands = this.pathString.match(cmdRegEx);
-  this.altPath = [];
-}
-
-Face.prototype.alterCommands = function() {
-  console.log("inside alterCommands");
-}
-
-/*------------
-  EXPERIMENTS
- ------------*/
-
-var sur = new Snap("#circleFace");
-
-// var sur = Snap.select("#circleFace");
-var circlePath = document.getElementById("cpath");
-var leftEye = sur.clone();
-var pathString = circlePath.getAttribute("d");
-console.log("the path string is " + pathString);
-var mat = new Snap.matrix();
-// mat.scale(0.1, 0.1);
-sur.transform(mat);
-
-var cmdRegEx = /[a-z][^a-z]*/ig;
-var commands = pathString.match(cmdRegEx);
-console.log("COMMANDS ARE " + commands);
-console.log("COMMANDS 1 is  " + commands[0]);
-console.log("type of COMMANDS 1 is  " + typeof(commands[0]));
-var cmd1 = commands[0];
-var l = commands[0].split(",");
-console.log("split on comma " + l[0] + " " +  l[1]);
-var numRegEx = /[+-]?\d+(\.\d+)?/g;
-var instrRegEx = /^[a-zA-Z]*/g;
-console.log(l[0].match(instrRegEx));
-console.log(l[0].match(numRegEx));
-
-var alteredPath = [];
-var splitOnSpaceList = [];
-var splitOnCommas = [];
-
+/* Helper function to alter a point */
 function alterPoint(p) {
   var addOrSub = [1, -1];
   var byPercent = [0.001, 0.002, 0.003, 0.01, 0.03];
@@ -70,90 +24,105 @@ function alterPoint(p) {
   return newP;
 }
 
-for (var i = 0; i < commands.length; i++) {
-  var temp = commands[i];
-  console.log("temp at iteration " + i + " is " + temp);
-  var splitOnSpace = temp.split(" ");
-  splitOnSpaceList.push(splitOnSpace);
+/*-----
+  FACE
+ -----*/
+
+var Face = function() {
+  this.surface = Snap.select("#circleFace");
+  this.path = document.getElementById("cpath");
+  this.pathString = this.path.getAttribute("d");
+  this.mat = new Snap.Matrix();
+  console.log("path string is " + this.pathString);
+  this.commands = this.pathString.match(cmdRegEx);
+  this.splitOnSpaceList = [];
+  this.splitOnCommasList = [];
+  this.altPath = [];
 }
 
-for (var j = 0; j < splitOnSpaceList.length; j++) {
-  console.log("\nsplit on space list " + j + " is " + splitOnSpaceList[j]);
+Face.prototype.splitOnSpaces = function() {
+  for (var i = 0; i < this.commands.length; i++) {
+    var temp = this.commands[i];
+    console.log("temp at iteration " + i + " is " + temp);
+    var splitOnSpace = temp.split(" ");
+    this.splitOnSpaceList.push(splitOnSpace);
+  }
 }
 
-for (var k = 0; k < splitOnSpaceList.length; k++) {
-  var temp = splitOnSpaceList[k];
-  console.log(temp);
-  console.log(typeof(temp));
-  for (var p = 0; p < temp.length; p++) {
-    if (Boolean(temp[p])) {
-      var splitOnComma = temp[p].split(",");
-      splitOnCommas.push(splitOnComma);
+Face.prototype.splitOnCommas = function() {
+  for (var k = 0; k < this.splitOnSpaceList.length; k++) {
+    var temp = this.splitOnSpaceList[k];
+    console.log(temp);
+    console.log(typeof(temp));
+    for (var j = 0; j < temp.length; j++) {
+      if (Boolean(temp[j])) {
+      var splitOnComma = temp[j].split(",");
+      this.splitOnCommasList.push(splitOnComma);
+      }
     }
   }
 }
 
-for (var n = 0; n < splitOnCommas.length; n++) {
-  console.log("\nsplit on commas list " + n + " is " + splitOnCommas[n]);
-}
-
-console.log("TESTTEST");
-console.log(splitOnCommas[0][0]);
-
-for (var q = 0; q < splitOnCommas.length; q++) {
-  var numPairs = splitOnCommas[q].length;
-  console.log("length at iter " + q + " is " + numPairs);
-  if (numPairs == 2) {
-    // console.log(splitOnCommas[0]);
-    // console.log("type of s.o.c.[0]: " + typeof(splitOnCommas[0]));
-    var instr = splitOnCommas[q][0].match(instrRegEx);
-    var px = splitOnCommas[q][0].match(numRegEx);
-    var py = splitOnCommas[q][1].match(numRegEx);
-    var fpx = parseFloat(px);
-    var fpy = parseFloat(py);
-    console.log("instr: " + instr);
-    console.log("PX: " + px + "; PY: " + py);
-    console.log("type of px " + typeof(px));
-    console.log("FPX: " + fpx);
-    console.log("type of fpx " + typeof(fpx));
-    var altPX = alterPoint(fpx);
-    console.log("altp is: " + altPX);
-    var altPY = alterPoint(fpy);
-    alteredPath.push(instr + altPX + "," + altPY);
+Face.prototype.alterCommands = function() {
+  console.log("inside alterCommands");
+  console.log("the path string is " + this.pathString);
+  for (var q = 0; q < this.splitOnCommasList.length; q++) {
+    var numPairs = this.splitOnCommasList[q].length;
+    console.log("length at iter " + q + " is " + numPairs);
+    if (numPairs == 2) {
+      var instr = this.splitOnCommasList[q][0].match(instrRegEx);
+      var px = this.splitOnCommasList[q][0].match(numRegEx);
+      var py = this.splitOnCommasList[q][1].match(numRegEx);
+      var fpx = parseFloat(px);
+      var fpy = parseFloat(py);
+      console.log("instr: " + instr);
+      console.log("PX: " + px + "; PY: " + py);
+      console.log("type of px " + typeof(px));
+      console.log("FPX: " + fpx);
+      console.log("type of fpx " + typeof(fpx));
+      var altPX = alterPoint(fpx);
+      console.log("altp is: " + altPX);
+      var altPY = alterPoint(fpy);
+      this.altPath.push(instr + altPX + "," + altPY);
+    }
   }
 }
 
-console.log("ALTERED PATH: " + alteredPath);
-console.log("ALTERED PATH[0]: " + alteredPath[0]);
-var altPathString = alteredPath.join(" ");
-console.log("ALT PATH STRING : \n" + altPathString);
-
-circlePath.setAttribute("d", altPathString);
-
-var face = sur.select('#cpath');
-face_bb = face.getBBox();
-console.log("FACE BBOX ");
-console.log(face_bb);
-
-var r = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
-
-var faceMatrix = new Snap.Matrix();
-// faceMatrix.translate(0,0);
-faceMatrix.rotate(r, face_bb.cx, face_bb.cy);
-
-face.transform(faceMatrix);
+Face.prototype.applyNewPath = function() {
+  var altPathString = this.altPath.join(" ");
+  this.path.setAttribute("d", altPathString);
+}
 
 
-var eyeMatrix = new Snap.Matrix();
-console.log("eyeMatrix");
-console.log(eyeMatrix);
-eyeMatrix.scale(.5);
-// eyeMatrix.translate(face_bb.cx, face_bb.cy);
-// eyeMatrix.rotate(0, face_bb.cx, face_bb.cy);
-leftEye.animate({transform: eyeMatrix}, 5000);
-var lEye = sur.svg(face_bb.cx, face_bb.cy);
-sur.transform(eyeMatrix);
-lEye.append(leftEye);
+
+/*------------
+  EXPERIMENTS
+ ------------*/
+
+// var face = sur.select('#cpath');
+// face_bb = face.getBBox();
+// console.log("FACE BBOX ");
+// console.log(face_bb);
+
+// var r = Math.floor(Math.random() * (360 - 0 + 1)) + 0;
+
+// var faceMatrix = new Snap.Matrix();
+// // faceMatrix.translate(0,0);
+// faceMatrix.rotate(r, face_bb.cx, face_bb.cy);
+
+// face.transform(faceMatrix);
+
+
+// var eyeMatrix = new Snap.Matrix();
+// console.log("eyeMatrix");
+// console.log(eyeMatrix);
+// eyeMatrix.scale(.5);
+// // eyeMatrix.translate(face_bb.cx, face_bb.cy);
+// // eyeMatrix.rotate(0, face_bb.cx, face_bb.cy);
+// leftEye.animate({transform: eyeMatrix}, 5000);
+// var lEye = sur.svg(face_bb.cx, face_bb.cy);
+// sur.transform(eyeMatrix);
+// lEye.append(leftEye);
 
 /*---------------
   END EXPERIMENTS
@@ -258,6 +227,14 @@ console.log("hello there");
 console.log(theCaption.toString());
 
 theCaption.writeInSnap(s);
+
+var origFace = new Face();
+console.log("face as object");
+console.log(origFace);
+origFace.splitOnSpaces();
+origFace.splitOnCommas();
+origFace.alterCommands();
+origFace.applyNewPath();
 
 
 /* Call all animation functions */
