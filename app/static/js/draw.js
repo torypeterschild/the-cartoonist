@@ -346,7 +346,7 @@ Caption.prototype = {
   },
 
   writeInSnapS: function() {
-    this.splitIntoLines();
+    // this.splitIntoLines();
     console.log("these are the lines: " + this.lines);
     this.snapCaptionS = s.text(this.x, this.y + 20, this.lines);
     var tilt = tiltAmts[Math.floor(Math.random()*tiltAmts.length)];
