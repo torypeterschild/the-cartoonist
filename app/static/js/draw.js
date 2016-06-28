@@ -1,6 +1,6 @@
 /* Global variables */
 var toadie;
-var s = new Snap("#dog");
+var s = new Snap("#circleFace");
 var tiltAmts = [5, 4, 3, 2, 355, 356, 357, 358];
 
 var cmdRegEx = /[a-z][^a-z]*/ig;
@@ -32,10 +32,10 @@ function alterPoint(p) {
 }
 
 /* Call after POST to create new caption object */
-function makeSavedCaption() {
+function makeSavedCaption(idString) {
   console.log("IN MAKE SAVED CAPTION");
   var savedCaptionText = $("#captionsave").text();
-  var savedCaption = new Caption(savedCaptionText);
+  var savedCaption = new Caption(savedCaptionText, idString);
   console.log("saved caption after ajax: " + savedCaption.toString());
   savedCaption.writeInSnap(s);
 }
@@ -155,9 +155,9 @@ Face.prototype = {
  ---------------*/
 
 /* Define caption object */
-var Caption = function(captionText) {
+var Caption = function(captionText, idString) {
   this.captionText = captionText;
-  this.drawing = Snap.select("#dog");
+  this.drawing = Snap.select(idString);
   // console.log("DRAWING: " + this.drawing);
   this.drawing_bb = this.drawing.getBBox();
   console.log("BOUNDING BOX: " + this.drawing_bb.height);
@@ -196,16 +196,16 @@ Caption.prototype = {
   writeInSnap: function(s) {
     this.splitIntoLines();
     console.log("these are the lines: " + this.lines);
-    this.snapCaption = s.text(this.x, this.y, this.lines);
+    this.snapCaption = s.text(this.x, this.y + 20, this.lines);
     var tilt = tiltAmts[Math.floor(Math.random()*tiltAmts.length)];
     this.mat.translate(0, 35); 
     console.log("TILT IS: " + tilt);
     this.mat.rotate(tilt, 0, 40); 
-    this.snapCaption.attr({"font-size":40});
+    this.snapCaption.attr({"font-size":60});
     this.snapCaption.transform(this.mat);
     var height = this.y;
     this.snapCaption.selectAll("tspan").forEach(function(tspan, i){
-      tspan.attr({x:0 + i,y:height+45*(i+1)});
+      tspan.attr({x:0 + i,y:height+65*(i+1)});
    });
   }
 
@@ -219,18 +219,21 @@ var dog = Snap.select('#dog'),
   dogStartMatrix = new Snap.Matrix(),
   dogMidMatrix = new Snap.Matrix();
 console.log(dog);  
-var eye = dog.select('#eye');
-var tail = dog.select('#tail');
-var tailShading = dog.select('#tailShading');
-var ear = dog.select('#ear');
-var earShading = dog.select('#earShading');
-var snoutOutline = dog.select('#snoutOutline');
-var lowerSnoutShading = dog.select('#lowerSnoutShading');
-var backFoot = dog.select('#backFoot');
 
-var dog_bb = dog.getBBox();
-console.log("DOG BB ");
-console.log(dog_bb);
+if (Boolean(dog)) {
+  var eye = dog.select('#eye');
+  var tail = dog.select('#tail');
+  var tailShading = dog.select('#tailShading');
+  var ear = dog.select('#ear');
+  var earShading = dog.select('#earShading');
+  var snoutOutline = dog.select('#snoutOutline');
+  var lowerSnoutShading = dog.select('#lowerSnoutShading');
+  var backFoot = dog.select('#backFoot');
+
+  var dog_bb = dog.getBBox();
+  console.log("DOG BB ");
+  console.log(dog_bb);
+}
 
 /*-------------------------
   GET CAPTION TEXT, RENDER
@@ -239,7 +242,7 @@ console.log(dog_bb);
 var captionText = $("#caption").text();
 console.log(captionText);
 
-var theCaption = new Caption(captionText);
+var theCaption = new Caption(captionText, "#circleFace");
 console.log("hello there");
 console.log(theCaption.toString());
 
@@ -256,14 +259,15 @@ origFace.applyMatrix();
 
 
 /* Call all animation functions */
-tailAnimation();
-tailShadingAnimation();
-eyeAnimation();
-earAnimation()
-earShadingAnimation();
-backFootAnimation();
-snoutOutlineAnimation();
-
+if (Boolean(dog)) {
+  tailAnimation();
+  tailShadingAnimation();
+  eyeAnimation();
+  earAnimation()
+  earShadingAnimation();
+  backFootAnimation();
+  snoutOutlineAnimation();
+}
 
 /*------------------
   DEFINE ANIMATIONS 
@@ -391,7 +395,7 @@ $('#savecartoon').click(function(){
   });
 });
 
-makeSavedCaption();
+makeSavedCaption("#circleFace");
 
 
 

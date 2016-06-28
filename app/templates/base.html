@@ -18,17 +18,11 @@
       <a href="/index">home</a><a href="/input">enter keyword</a>
     </div>
     {% endif %}
-<!--     {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }} </li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %} -->
+    {% if dog %}
     <div id="drawing">{% include "dog.svg" %}</div>
+    {% else %}
     <div id="face">{% include "circle_trimmed.svg" %}</div>
+    {% endif %}
     {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>
