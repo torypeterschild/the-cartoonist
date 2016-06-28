@@ -57,67 +57,63 @@ var Face = function() {
   this.mat = new Snap.Matrix();
 }
 
-Face.prototype.splitOnSpaces = function() {
-  for (var i = 0; i < this.commands.length; i++) {
-    var temp = this.commands[i];
-    console.log("temp at iteration " + i + " is " + temp);
-    var splitOnSpace = temp.split(" ");
-    this.splitOnSpaceList.push(splitOnSpace);
-  }
-}
+Face.prototype = {
 
-Face.prototype.splitOnCommas = function() {
-  for (var k = 0; k < this.splitOnSpaceList.length; k++) {
-    var temp = this.splitOnSpaceList[k];
-    console.log(temp);
-    console.log(typeof(temp));
-    for (var j = 0; j < temp.length; j++) {
-      if (Boolean(temp[j])) {
-      var splitOnComma = temp[j].split(",");
-      this.splitOnCommasList.push(splitOnComma);
+  splitOnSpaces: function() {
+    for (var i = 0; i < this.commands.length; i++) {
+      var temp = this.commands[i];
+      console.log("temp at iteration " + i + " is " + temp);
+      var splitOnSpace = temp.split(" ");
+      this.splitOnSpaceList.push(splitOnSpace);
+    }
+  },
+
+  splitOnCommas: function() {
+    for (var k = 0; k < this.splitOnSpaceList.length; k++) {
+      var temp = this.splitOnSpaceList[k];
+      console.log(temp);
+      console.log(typeof(temp));
+      for (var j = 0; j < temp.length; j++) {
+        if (Boolean(temp[j])) {
+          var splitOnComma = temp[j].split(",");
+          this.splitOnCommasList.push(splitOnComma);
+        }
       }
     }
-  }
-}
+  },
 
-Face.prototype.alterCommands = function() {
-  console.log("inside alterCommands");
-  console.log("the path string is " + this.pathString);
-  for (var q = 0; q < this.splitOnCommasList.length; q++) {
-    var numPairs = this.splitOnCommasList[q].length;
-    console.log("length at iter " + q + " is " + numPairs);
-    if (numPairs == 2) {
-      var instr = this.splitOnCommasList[q][0].match(instrRegEx);
-      var px = this.splitOnCommasList[q][0].match(numRegEx);
-      var py = this.splitOnCommasList[q][1].match(numRegEx);
-      var fpx = parseFloat(px);
-      var fpy = parseFloat(py);
-      console.log("instr: " + instr);
-      console.log("PX: " + px + "; PY: " + py);
-      console.log("type of px " + typeof(px));
-      console.log("FPX: " + fpx);
-      console.log("type of fpx " + typeof(fpx));
-      var altPX = alterPoint(fpx);
-      console.log("altp is: " + altPX);
-      var altPY = alterPoint(fpy);
-      this.altPath.push(instr + altPX + "," + altPY);
+  alterCommands: function() {
+    for (var q = 0; q < this.splitOnCommasList.length; q++) {
+      var numPairs = this.splitOnCommasList[q].length;
+      if (numPairs == 2) {
+        var instr = this.splitOnCommasList[q][0].match(instrRegEx);
+        var px = this.splitOnCommasList[q][0].match(numRegEx);
+        var py = this.splitOnCommasList[q][1].match(numRegEx);
+        var fpx = parseFloat(px);
+        var fpy = parseFloat(py);
+        var altPX = alterPoint(fpx);
+        var altPY = alterPoint(fpy);
+        this.altPath.push(instr + altPX + "," + altPY);
+      }
     }
+  },
+
+  applyNewPath: function() {
+    var altPathString = this.altPath.join(" ");
+    this.path.setAttribute("d", altPathString);
+  },
+
+  applyMatrix: function() {
+    var r = Math.floor(Math.random() * (maxRotation - minRotation + 1)) + minRotation;
+    var thePath = this.surface.select("#cpath");
+    var bdgBox = thePath.getBBox();
+    this.mat.rotate(r, bdgBox.cx, bdgBox.cy); 
+    thePath.transform(this.mat);
   }
-}
 
-Face.prototype.applyNewPath = function() {
-  var altPathString = this.altPath.join(" ");
-  this.path.setAttribute("d", altPathString);
-}
+} 
+/* End Face Prototype */
 
-Face.prototype.applyMatrix = function() {
-  var r = Math.floor(Math.random() * (maxRotation - minRotation + 1)) + minRotation;
-  var thePath = this.surface.select("#cpath");
-  var bdgBox = thePath.getBBox();
-  // this.mat.translate(0, 35);
-  this.mat.rotate(r, bdgBox.cx, bdgBox.cy); 
-  thePath.transform(this.mat);
-}
 
 
 
