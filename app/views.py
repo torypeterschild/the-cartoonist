@@ -48,7 +48,7 @@ def input():
     caption = random.choice(sentence_list)
 
   return render_template("cartoon.html",
-    header="Cartoonist",
+    header="cartoonist",
     caption=caption,
     menu=True,
     keyword_form=keyword_form)
