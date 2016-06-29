@@ -174,13 +174,29 @@ Face.prototype = {
     var sy = (Math.random() * (1.5 - 0.5)) + 0.5;
     eyeMatrix.scale(sx,sy);
     eyeMatrix.translate(this.BBOX.cx-(0.5*this.BBOX.width), this.BBOX.cy);
+    console.log("at left eye, this bbox cy is " + this.BBOX.cy);
     leftEye.transform(eyeMatrix);
     var lBB = leftEye.getBBox();
-    var leftPupil = s.circle(lBB.cx, lBB.cy, lBB.width/15);
-    eyeMatrix.translate(this.BBOX.cx+(0.5*this.BBOX.width), this.BBOX.cy);
+    var leftPupil = s.circle(lBB.cx-(lBB.width/5), lBB.cy, lBB.width/15);
+    eyeMatrix.translate(this.BBOX.cx+(0.75*this.BBOX.width), this.BBOX.cy);
+    console.log("at right eye, this bbox cy is " + this.BBOX.cy);
     rightEye.transform(eyeMatrix);
     var rBB = rightEye.getBBox();
-    var rightPupil = s.circle(rBB.cx, rBB.cy, rBB.width/15);
+    var rightPupil = s.circle(rBB.cx-(rBB.width/5), rBB.cy, rBB.width/15);
+    var eyelash1R = s.line((rBB.cx+rBB.x2)/2, rBB.y, rBB.x2-3, (rBB.y-15));
+    var eyelash2R = s.line((rBB.cx+rBB.x2)/2+5, rBB.y, rBB.x2+15, (rBB.y-15));
+    var eyelash3R = s.line((rBB.cx+rBB.x2)/2+10, rBB.y, rBB.x2+30, (rBB.y-15));
+    var eyelash1L = s.line((lBB.cx+lBB.x)/2, lBB.y, lBB.x+3, (lBB.y-15));
+    var eyelash2L = s.line((lBB.cx+lBB.x)/2-5, lBB.y, lBB.x-15, (lBB.y-15));
+    var eyelash3L = s.line((lBB.cx+lBB.x)/2-10, lBB.y, lBB.x-30, (lBB.y-15));
+    var lashes = s.group(eyelash1R, eyelash3R, eyelash2R, eyelash1L, eyelash3L, eyelash2L);
+    lashes.attr({
+      stroke: "#000",
+      strokeWidth: 2,
+      strokeLinecap:"round"
+    });
+    console.log("EYELASH " + rBB.x, rBB.y, rBB.x+1, rBB.y-10);
+    console.log(eyelash1R);
   }
 
 } 
