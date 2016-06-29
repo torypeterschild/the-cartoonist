@@ -173,7 +173,7 @@ Face.prototype = {
     var sx = (Math.random() * (1.5 - 0.5)) + 0.5;
     var sy = (Math.random() * (1.5 - 0.5)) + 0.5;
     eyeMatrix.scale(sx,sy);
-    eyeMatrix.translate(this.BBOX.cx-(0.5*this.BBOX.width), this.BBOX.cy);
+    eyeMatrix.translate(this.BBOX.cx-(0.75*this.BBOX.width), this.BBOX.cy);
     console.log("at left eye, this bbox cy is " + this.BBOX.cy);
     leftEye.transform(eyeMatrix);
     var lBB = leftEye.getBBox();
