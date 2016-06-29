@@ -13,6 +13,7 @@ def index():
   return render_template("cartoon.html",
     header="cartoonist",
     menu=True,
+    buttons=True,
     save_form=save_form)
 
 
@@ -47,7 +48,7 @@ def input():
     caption = random.choice(sentence_list)
 
   return render_template("cartoon.html",
-    header="Cartoonist",
+    header="cartoonist",
     caption=caption,
     menu=True,
     keyword_form=keyword_form)
