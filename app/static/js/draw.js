@@ -171,6 +171,12 @@ Face.prototype = {
     console.log("EYE");
     console.log(eye);
 
+    console.log("BBOX OF OUTLINE");
+    console.log(bdgBox);
+
+    console.log("GLOBAL BBOX");
+    console.log(this.BBOX);
+
     /* Create matrices */
     var lMat = new Snap.Matrix();
     var rMat = new Snap.Matrix();
