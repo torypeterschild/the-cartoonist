@@ -163,29 +163,59 @@ Face.prototype = {
     console.log("IN CREATE EYE BBOX IS:");
     console.log(this.BBOX);
     var outline = this.surface.select("#cpath");
+
+    /* Create leftEye and rightEye */
     var leftEye = outline.clone();
     var rightEye = outline.clone();
     var bdgBox = outline.getBBox();
     console.log("EYE");
     console.log(eye);
-    var eyeMatrix = new Snap.Matrix();
-    eyeMatrix.scale(0.25, 0.25);
-    var sx = (Math.random() * (1.5 - 0.5)) + 0.5;
-    var sy = (Math.random() * (1.5 - 0.5)) + 0.5;
-    eyeMatrix.scale(sx,sy);
-    eyeMatrix.translate(this.BBOX.cx-(0.75*this.BBOX.width), this.BBOX.cy);
-    console.log("at left eye, this bbox cy is " + this.BBOX.cy);
-    leftEye.transform(eyeMatrix);
+
+    /* Create matrices */
+    var lMat = new Snap.Matrix();
+    var rMat = new Snap.Matrix();
+
+    /* Define eye width and height in terms of BBOX*/
+    var eyeW = this.BBOX.width/25;
+    var eyeH = this.BBOX.height/25;
+
+    /* Translate */
+    lMat.translate(this.BBOX.cx-(0.15*this.BBOX.width), (this.BBOX.y+this.BBOX.cy/1.5));
+    rMat.translate(this.BBOX.cx-(0.15*this.BBOX.width) + 4*eyeW, (this.BBOX.y+this.BBOX.cy/1.5));
+
+    /* Scale sMat by eyeW, eyeH, and add noise */
+    lMat.scale(eyeW, eyeH);
+    rMat.scale(eyeW, eyeH);
+    var sx = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * this.BBOX.width);
+    var sy = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * this.BBOX.height);
+    lMat.scale(sx,sy);
+    lMat.translate(sx*150,sy*50);
+    rMat.scale(sx,sy);
+    rMat.translate(sx*150,sy*50);
+    console.log("SX IS " + sx);
+    console.log("SY IS " + sy);
+    leftEye.transform(lMat);
+    rightEye.transform(rMat);
+    
+    // width of eye
+    console.log("EYE WIDTH " + eyeW);
+
     var lBB = leftEye.getBBox();
     var leftPupil = s.circle(lBB.cx-(lBB.width/5), lBB.cy, lBB.width/15);
-    eyeMatrix.translate(this.BBOX.cx+(0.75*this.BBOX.width), this.BBOX.cy);
-    console.log("at right eye, this bbox cy is " + this.BBOX.cy);
-    rightEye.transform(eyeMatrix);
+    console.log("LEFT EYE BBOX");
+    console.log(lBB);
+
     var rBB = rightEye.getBBox();
     var rightPupil = s.circle(rBB.cx-(rBB.width/5), rBB.cy, rBB.width/15);
+    console.log("RIGHT EYE BBOX");
+    console.log(rBB);
+
+    /* Eyelashes on right eye */
     var eyelash1R = s.line((rBB.cx+rBB.x2)/2, rBB.y, rBB.x2-3, (rBB.y-15));
     var eyelash2R = s.line((rBB.cx+rBB.x2)/2+5, rBB.y, rBB.x2+15, (rBB.y-15));
     var eyelash3R = s.line((rBB.cx+rBB.x2)/2+10, rBB.y, rBB.x2+30, (rBB.y-15));
+
+    /* Eyelashes on left eye */
     var eyelash1L = s.line((lBB.cx+lBB.x)/2, lBB.y, lBB.x+3, (lBB.y-15));
     var eyelash2L = s.line((lBB.cx+lBB.x)/2-5, lBB.y, lBB.x-15, (lBB.y-15));
     var eyelash3L = s.line((lBB.cx+lBB.x)/2-10, lBB.y, lBB.x-30, (lBB.y-15));
