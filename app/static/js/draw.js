@@ -182,18 +182,18 @@ Face.prototype = {
     var rMat = new Snap.Matrix();
 
     /* Define eye width and height in terms of BBOX*/
-    var eyeW = this.BBOX.width/25;
-    var eyeH = this.BBOX.height/25;
+    var eyeW = bdgBox.width/20;
+    var eyeH = bdgBox.height/20;
 
     /* Translate */
-    lMat.translate(this.BBOX.cx-(0.15*this.BBOX.width), (this.BBOX.y+this.BBOX.cy/1.5));
-    rMat.translate(this.BBOX.cx-(0.15*this.BBOX.width) + 4*eyeW, (this.BBOX.y+this.BBOX.cy/1.5));
+    lMat.translate(bdgBox.cx-(0.15*bdgBox.width), (bdgBox.y+bdgBox.cy/1.5));
+    rMat.translate(bdgBox.cx-(0.15*bdgBox.width) + 4*eyeW, (bdgBox.y+bdgBox.cy/1.5));
 
     /* Scale sMat by eyeW, eyeH, and add noise */
     lMat.scale(eyeW, eyeH);
     rMat.scale(eyeW, eyeH);
-    var sx = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * this.BBOX.width);
-    var sy = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * this.BBOX.height);
+    var sx = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * bdgBox.width);
+    var sy = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * bdgBox.height);
     lMat.scale(sx,sy);
     lMat.translate(sx*150,sy*50);
     rMat.scale(sx,sy);
