@@ -99,6 +99,7 @@ var Face = function() {
   this.splitOnCommasList = [];
   this.altPath = [];
   this.mat = new Snap.Matrix();
+  this.BBOX = null;
 }
 
 Face.prototype = {
@@ -148,8 +149,124 @@ Face.prototype = {
     var r = Math.floor(Math.random() * (maxRotation - minRotation + 1)) + minRotation;
     var thePath = this.surface.select("#cpath");
     var bdgBox = thePath.getBBox();
+    var sx = (Math.random() * (1.5 - 0.5)) + 0.5;
+    var sy = (Math.random() * (1.5 - 0.5)) + 0.5;
+    console.log("sx: " + sx);
+    console.log("sy: " + sy);
     this.mat.rotate(r, bdgBox.cx, bdgBox.cy); 
+    this.mat.scale(sx,sy); 
     thePath.transform(this.mat);
+    this.BBOX = this.surface.getBBox();
+  },
+
+  createEye: function() {
+    console.log("IN CREATE EYE BBOX IS:");
+    console.log(this.BBOX);
+    var outline = this.surface.select("#cpath");
+
+    /* Create leftEye and rightEye */
+    var leftEye = outline.clone();
+    var rightEye = outline.clone();
+    var bdgBox = outline.getBBox();
+    console.log("EYE");
+    console.log(eye);
+
+    console.log("BBOX OF OUTLINE");
+    console.log(bdgBox);
+
+    console.log("GLOBAL BBOX");
+    console.log(this.BBOX);
+
+    /* Create matrices */
+    var lMat = new Snap.Matrix();
+    var rMat = new Snap.Matrix();
+
+    /* Define eye width and height in terms of BBOX*/
+    var eyeW = bdgBox.width/20;
+    var eyeH = bdgBox.height/20;
+
+    /* Translate */
+    lMat.translate(bdgBox.cx-(0.15*bdgBox.width), (bdgBox.y+bdgBox.cy/1.5));
+    rMat.translate(bdgBox.cx-(0.15*bdgBox.width) + 4*eyeW, (bdgBox.y+bdgBox.cy/1.5));
+
+    /* Scale sMat by eyeW, eyeH, and add noise */
+    lMat.scale(eyeW, eyeH);
+    rMat.scale(eyeW, eyeH);
+    var sx = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * bdgBox.width);
+    var sy = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * bdgBox.height);
+    lMat.scale(sx,sy);
+    lMat.translate(sx*150,sy*25);
+    rMat.scale(sx,sy);
+    rMat.translate(sx*150,sy*25);
+    console.log("SX IS " + sx);
+    console.log("SY IS " + sy);
+    leftEye.transform(lMat);
+    rightEye.transform(rMat);
+    
+    // width of eye
+    console.log("EYE WIDTH " + eyeW);
+
+    var lBB = leftEye.getBBox();
+    var leftPupil = s.circle(lBB.cx-(lBB.width/5), lBB.cy, lBB.width/15);
+    console.log("LEFT EYE BBOX");
+    console.log(lBB);
+
+    var rBB = rightEye.getBBox();
+    var rightPupil = s.circle(rBB.cx-(rBB.width/5), rBB.cy, rBB.width/15);
+    console.log("RIGHT EYE BBOX");
+    console.log(rBB);
+
+    /* Eyelashes on right eye */
+    var eyelash1R = s.line((rBB.cx+rBB.x2)/2, rBB.y, rBB.x2-3, (rBB.y-15));
+    var eyelash2R = s.line((rBB.cx+rBB.x2)/2+5, rBB.y, rBB.x2+15, (rBB.y-15));
+    var eyelash3R = s.line((rBB.cx+rBB.x2)/2+10, rBB.y, rBB.x2+30, (rBB.y-15));
+
+    /* Eyelashes on left eye */
+    var eyelash1L = s.line((lBB.cx+lBB.x)/2, lBB.y, lBB.x+3, (lBB.y-15));
+    var eyelash2L = s.line((lBB.cx+lBB.x)/2-5, lBB.y, lBB.x-15, (lBB.y-15));
+    var eyelash3L = s.line((lBB.cx+lBB.x)/2-10, lBB.y, lBB.x-30, (lBB.y-15));
+    var lashes = s.group(eyelash1R, eyelash3R, eyelash2R, eyelash1L, eyelash3L, eyelash2L);
+    lashes.attr({
+      stroke: "#000",
+      strokeWidth: 2,
+      strokeLinecap:"round"
+    });
+    console.log("EYELASH " + rBB.x, rBB.y, rBB.x+1, rBB.y-10);
+    console.log(eyelash1R);
+  },
+
+  drawHair: function() {
+    console.log("IN DRAW HAIR BBOX IS:");
+    console.log(this.BBOX);
+    var outline = this.surface.select("#cpath");
+    var bdgBox = outline.getBBox();
+    var pathString = [];
+    pathString.push("M");
+    pathString.push(bdgBox.cx.toFixed(2));
+    pathString.push(bdgBox.y.toFixed(2));
+    pathString.push("Q");
+    pathString.push((bdgBox.cx/2).toFixed(2));
+    pathString.push((bdgBox.y-70).toFixed(2));
+    pathString.push(bdgBox.cx.toFixed(2));
+    pathString.push(bdgBox.y.toFixed(2));
+    var p = pathString.join(" ");
+    var hair1 = s.path(p);
+    var hair2 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/2).toFixed(2) + " " + (bdgBox.y-40).toFixed(2) + 
+      " " + (bdgBox.cx).toFixed(2) + " " + (bdgBox.y-50).toFixed(2));
+    var hair3 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/3).toFixed(2) + " " + (bdgBox.y-20).toFixed(2) + 
+      " " + (bdgBox.cx/2).toFixed(2) + " " + (bdgBox.y-40).toFixed(2));
+    var hair4 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/4).toFixed(2) + " " + (bdgBox.y-10).toFixed(2) + 
+      " " + (bdgBox.cx/2).toFixed(2) + " " + (bdgBox.y-30).toFixed(2));
+    console.log("pathstring is " + pathString);
+    console.log(pathString);
+    console.log("p is " + p);
+    var hairs = s.group(hair1,hair2,hair3,hair4);
+    hairs.attr({
+      stroke: "#212121",
+      fill: "none",
+      strokeWidth: 3,
+      strokeLinecap:"round"
+    });
   }
 
 } 
@@ -371,37 +488,12 @@ Caption.prototype = {
 /* End Caption Prototype */
 
 
-/* Select parts of dog */
-/* TODO: figure out how this works when SVG isn't in html */
-// var dog = Snap.select('#dog'),
-//   dogStartMatrix = new Snap.Matrix(),
-//   dogMidMatrix = new Snap.Matrix();
-// console.log(dog);  
-
-// if (Boolean(dog)) {
-//   var eye = dog.select('#eye');
-//   var tail = dog.select('#tail');
-//   var tailShading = dog.select('#tailShading');
-//   var ear = dog.select('#ear');
-//   var earShading = dog.select('#earShading');
-//   var snoutOutline = dog.select('#snoutOutline');
-//   var lowerSnoutShading = dog.select('#lowerSnoutShading');
-//   var backFoot = dog.select('#backFoot');
-
-//   var dog_bb = dog.getBBox();
-//   console.log("DOG BB ");
-//   console.log(dog_bb);
-// }
-
 /*-------------------------
   GET CAPTION TEXT, RENDER
  -------------------------*/
 
 var captionText = $("#caption").text();
 console.log(captionText);
-
-
-// theCaption.writeInSnap();
 
 var drawingType = localStorage.getItem('dType');
 display();
@@ -431,121 +523,11 @@ if (drawingType == 1) {
   origFace.alterCommands();
   origFace.applyNewPath();
   origFace.applyMatrix();
+  origFace.createEye();
+  origFace.drawHair();
   theCaption.writeInSnapS();
 }
 
-
-/* Select parts of dog */
-/* TODO: figure out how this works when SVG isn't in html */
- 
-
-
-/* Call all animation functions */
-// if (Boolean(dog)) {
-//   tailAnimation();
-//   tailShadingAnimation();
-//   eyeAnimation();
-//   earAnimation()
-//   earShadingAnimation();
-//   backFootAnimation();
-//   snoutOutlineAnimation();
-// }
-
-/*------------------
-  DEFINE ANIMATIONS 
- -------------------*/
-
-function eyeAnimation(){
-  eye.stop().animate(
-    { transform: 'r45,210,80'},
-    1000,
-    mina.bounce,
-    function(){
-      eye.attr({ transform: 'rotate(0 256 256'});
-      eyeAnimation();
-    }
-  );
-}
-
-
-function tailAnimation(){
-  tail.stop().animate(
-    { transform: 't5,15'},
-    1000,
-    mina.easeinout(),
-    function(){
-      tail.attr({ transform: 'rotate(0 256 256'},
-        1000,
-        mina.easeinout());
-      tailAnimation();
-    }
-  );
-}
-
-
-function backFootAnimation(){
-  backFoot.stop().animate(
-    { transform: 't5,0'},
-    1000,
-    mina.bounce,
-    function(){
-      backFoot.attr({ transform: 'rotate(0 256 256'});
-      backFootAnimation();
-    }
-  );
-}
-
-
-function tailShadingAnimation(){
-  tailShading.stop().animate(
-    { transform: 't5,15'},
-    1000,
-    mina.bounce,
-    function(){
-      tailShading.attr({ transform: 'rotate(0 256 256'});
-      tailShadingAnimation();
-    }
-  );
-}
-
-
-function earAnimation(){
-  ear.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      ear.attr({ transform: 'rotate(0 256 256'});
-      earAnimation();
-    }
-  );
-}
-
-
-function earShadingAnimation(){
-  earShading.stop().animate(
-    { transform: 't0,3'},
-    1000,
-    mina.bounce,
-    function(){
-      earShading.attr({ transform: 'rotate(0 256 256'});
-      earShadingAnimation();
-    }
-  );
-}
-
-
-function snoutOutlineAnimation(){
-  snoutOutline.stop().animate(
-    { transform: 't0,3'},
-    500,
-    mina.bounce,
-    function(){
-      snoutOutline.attr({ transform: 'rotate(0 256 256'});
-      snoutOutlineAnimation();
-    }
-  );
-}
 
 /* This saves SVG file (without caption) */
 $('#SVGsave').click(function(){
@@ -577,7 +559,7 @@ $('#savecartoon').click(function(){
   });
 });
 
-// makeSavedCaption("#circleFace");
+/* Generate caption on save-cartoon.html page */
 makeSavedCaption();
 
 
