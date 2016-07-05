@@ -241,17 +241,13 @@ Face.prototype = {
     var outline = this.surface.select("#cpath");
     var bdgBox = outline.getBBox();
     var pathString = [];
-    // var pathString = "M" + bdgBox.cx + "," + bdgBox.y + "L" + bdgBox.x + "," + bdgBox.y-10;
     pathString.push("M");
     pathString.push(bdgBox.cx.toFixed(2));
-    // pathString.push(",");
     pathString.push(bdgBox.y.toFixed(2));
     pathString.push("Q");
     pathString.push((bdgBox.cx/2).toFixed(2));
-    // pathString.push(",");
     pathString.push((bdgBox.y-70).toFixed(2));
     pathString.push(bdgBox.cx.toFixed(2));
-    // pathString.push(",");
     pathString.push(bdgBox.y.toFixed(2));
     var p = pathString.join(" ");
     var hair1 = s.path(p);
