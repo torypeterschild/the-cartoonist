@@ -33,6 +33,7 @@ function handleClick(myRadio) {
   currentValue = myRadio.value;
   localStorage.setItem('dType',currentValue);
   display();
+  document.location.href="/input";
   if (currentValue == 1) {
     console.log("TRUE VAL IS 1");
   } else if (currentValue == 2) {
