@@ -195,9 +195,9 @@ Face.prototype = {
     var sx = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * bdgBox.width);
     var sy = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * bdgBox.height);
     lMat.scale(sx,sy);
-    lMat.translate(sx*150,sy*50);
+    lMat.translate(sx*150,sy*25);
     rMat.scale(sx,sy);
-    rMat.translate(sx*150,sy*50);
+    rMat.translate(sx*150,sy*25);
     console.log("SX IS " + sx);
     console.log("SY IS " + sy);
     leftEye.transform(lMat);
@@ -233,6 +233,44 @@ Face.prototype = {
     });
     console.log("EYELASH " + rBB.x, rBB.y, rBB.x+1, rBB.y-10);
     console.log(eyelash1R);
+  },
+
+  drawHair: function() {
+    console.log("IN DRAW HAIR BBOX IS:");
+    console.log(this.BBOX);
+    var outline = this.surface.select("#cpath");
+    var bdgBox = outline.getBBox();
+    var pathString = [];
+    // var pathString = "M" + bdgBox.cx + "," + bdgBox.y + "L" + bdgBox.x + "," + bdgBox.y-10;
+    pathString.push("M");
+    pathString.push(bdgBox.cx.toFixed(2));
+    // pathString.push(",");
+    pathString.push(bdgBox.y.toFixed(2));
+    pathString.push("Q");
+    pathString.push((bdgBox.cx/2).toFixed(2));
+    // pathString.push(",");
+    pathString.push((bdgBox.y-70).toFixed(2));
+    pathString.push(bdgBox.cx.toFixed(2));
+    // pathString.push(",");
+    pathString.push(bdgBox.y.toFixed(2));
+    var p = pathString.join(" ");
+    var hair1 = s.path(p);
+    var hair2 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/2).toFixed(2) + " " + (bdgBox.y-40).toFixed(2) + 
+      " " + (bdgBox.cx).toFixed(2) + " " + (bdgBox.y-50).toFixed(2));
+    var hair3 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/3).toFixed(2) + " " + (bdgBox.y-20).toFixed(2) + 
+      " " + (bdgBox.cx/2).toFixed(2) + " " + (bdgBox.y-40).toFixed(2));
+    var hair4 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/4).toFixed(2) + " " + (bdgBox.y-10).toFixed(2) + 
+      " " + (bdgBox.cx/2).toFixed(2) + " " + (bdgBox.y-30).toFixed(2));
+    console.log("pathstring is " + pathString);
+    console.log(pathString);
+    console.log("p is " + p);
+    var hairs = s.group(hair1,hair2,hair3,hair4);
+    hairs.attr({
+      stroke: "#212121",
+      fill: "none",
+      strokeWidth: 3,
+      strokeLinecap:"round"
+    });
   }
 
 } 
@@ -490,6 +528,7 @@ if (drawingType == 1) {
   origFace.applyNewPath();
   origFace.applyMatrix();
   origFace.createEye();
+  origFace.drawHair();
   theCaption.writeInSnapS();
 }
 
