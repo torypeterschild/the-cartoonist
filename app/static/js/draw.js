@@ -106,6 +106,8 @@ var Face = function() {
 Face.prototype = {
 
   splitOnSpaces: function() {
+    console.log("COMMANDS");
+    console.log(this.commands);
     for (var i = 0; i < this.commands.length; i++) {
       var temp = this.commands[i];
       var splitOnSpace = temp.split(" ");
