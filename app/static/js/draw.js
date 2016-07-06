@@ -16,10 +16,6 @@ var origDrawing = document.querySelector("#facedrawing");
 var s = new Snap("#circleFace");
 var d = new Snap("#dog");
 
-/* Preload fonts and any other files */
-function preload() {
-  toadie = loadFont("../static/fonts/toadie-is.ttf");
-}
 
 /*--------------
   RADIO BUTTONS
@@ -28,8 +24,6 @@ function preload() {
 var currentValue = 2;
 
 function handleClick(myRadio) {
-  console.log('Old value: ' + currentValue);
-  console.log('New value: ' + myRadio.value);
   currentValue = myRadio.value;
   localStorage.setItem('dType',currentValue);
   display();
@@ -45,21 +39,15 @@ function handleClick(myRadio) {
 function display() {
   drawingType = localStorage.getItem('dType');
   if (drawingType == 1) {
-    console.log("type DOG");
+    console.log("type: DOG");
     origDrawing.style.display = "none";
     dogDrawing.style.display = "block";
   } else if (drawingType == 2) {
-    console.log("type CIRCLE");
+    console.log("type: CIRCLE");
     origDrawing.style.display = "block";
     dogDrawing.style.display = "none";
   }
 }
-
-console.log("s is ");
-console.log(s);
-
-console.log("d is ");
-console.log(d);
 
 
 /*--------
@@ -75,6 +63,7 @@ function makeSavedCaption() {
   savedCaption.writeInSnapD();
   savedCaption.writeInSnapS();
 }
+
 
 /*-----------------------
   NOISE-SPECIFIC HELPERS 
@@ -95,6 +84,7 @@ function alterPoint(p) {
   var newP = p + (p * amt * op);
   return newP;
 }
+
 
 /*-----
   FACE
@@ -160,10 +150,8 @@ Face.prototype = {
     var r = randomNumberBetween(maxRotation,minRotation);
     var thePath = this.surface.select("#cpath");
     var bdgBox = thePath.getBBox();
-    var sx = randomNumberBetween(1.3,0.6);
-    var sy = randomNumberBetween(1.3,0.6);
-    console.log("sx: " + sx);
-    console.log("sy: " + sy);
+    var sx = randomNumberBetween(1.4,0.6);
+    var sy = randomNumberBetween(1.4,0.6);
     this.mat.rotate(r, bdgBox.cx, bdgBox.cy); 
     this.mat.scale(sx,sy); 
     thePath.transform(this.mat);
@@ -171,22 +159,12 @@ Face.prototype = {
   },
 
   createEye: function() {
-    console.log("IN CREATE EYE BBOX IS:");
-    console.log(this.BBOX);
     var outline = this.surface.select("#cpath");
 
     /* Create leftEye and rightEye */
     var leftEye = outline.clone();
     var rightEye = outline.clone();
     var bdgBox = outline.getBBox();
-    console.log("EYE");
-    console.log(eye);
-
-    console.log("BBOX OF OUTLINE");
-    console.log(bdgBox);
-
-    console.log("GLOBAL BBOX");
-    console.log(this.BBOX);
 
     /* Create matrices */
     var lMat = new Snap.Matrix();
@@ -209,23 +187,14 @@ Face.prototype = {
     lMat.translate(sx*150,sy*20);
     rMat.scale(sx,sy);
     rMat.translate(sx*150,sy*20);
-    console.log("SX IS " + sx);
-    console.log("SY IS " + sy);
     leftEye.transform(lMat);
     rightEye.transform(rMat);
-    
-    // width of eye
-    console.log("EYE WIDTH " + eyeW);
 
     var lBB = leftEye.getBBox();
     var leftPupil = s.circle(lBB.cx-(lBB.width/5), lBB.cy, lBB.width/15);
-    console.log("LEFT EYE BBOX");
-    console.log(lBB);
 
     var rBB = rightEye.getBBox();
     var rightPupil = s.circle(rBB.cx-(rBB.width/5), rBB.cy, rBB.width/15);
-    console.log("RIGHT EYE BBOX");
-    console.log(rBB);
 
     /* Eyelashes on right eye */
     var eyelash1R = s.line((rBB.cx+rBB.x2)/2, rBB.y, rBB.x2-3, (rBB.y-15));
@@ -242,28 +211,19 @@ Face.prototype = {
       strokeWidth: 2,
       strokeLinecap:"round"
     });
-    console.log("EYELASH " + rBB.x, rBB.y, rBB.x+1, rBB.y-10);
-    console.log(eyelash1R);
   },
 
   drawHair: function() {
-    console.log("IN DRAW HAIR BBOX IS:");
-    console.log(this.BBOX);
     var outline = this.surface.select("#cpath");
     var bdgBox = outline.getBBox();
-    var pathString = ["M", bdgBox.cx.toFixed(2), bdgBox.y.toFixed(2), "Q", (bdgBox.cx/2).toFixed(2), (bdgBox.y-70).toFixed(2), bdgBox.cx.toFixed(2), bdgBox.y.toFixed(2)];
-    pathString.push();
-    var p = pathString.join(" ");
-    var hair1 = s.path(p);
+    var hair1 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.cx/2).toFixed(2) + " " + (bdgBox.y-70).toFixed(2) + 
+      " " + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2));
     var hair2 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/2).toFixed(2) + " " + (bdgBox.y-40).toFixed(2) + 
       " " + (bdgBox.cx).toFixed(2) + " " + (bdgBox.y-50).toFixed(2));
     var hair3 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/3).toFixed(2) + " " + (bdgBox.y-20).toFixed(2) + 
       " " + (bdgBox.cx/2).toFixed(2) + " " + (bdgBox.y-40).toFixed(2));
     var hair4 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/4).toFixed(2) + " " + (bdgBox.y-10).toFixed(2) + 
       " " + (bdgBox.cx/2).toFixed(2) + " " + (bdgBox.y-30).toFixed(2));
-    console.log("pathstring is " + pathString);
-    console.log(pathString);
-    console.log("p is " + p);
     var hairs = s.group(hair1,hair2,hair3,hair4);
     hairs.attr({
       stroke: "#212121",
@@ -281,9 +241,7 @@ Face.prototype = {
  ----*/
 
 var Dog = function() {
-  this.surface = Snap.select("#dog");
-  console.log(this.surface);  
-
+  this.surface = Snap.select("#dog"); 
   this.eye = this.surface.select('#eye');
   this.tail = this.surface.select('#tail');
   this.tailShading = this.surface.select('#tailShading');
@@ -292,10 +250,7 @@ var Dog = function() {
   this.snoutOutline = this.surface.select('#snoutOutline');
   this.lowerSnoutShading = this.surface.select('#lowerSnoutShading');
   this.backFoot = this.surface.select('#backFoot');
-
   var dog_bb = this.surface.getBBox();
-  console.log("DOG BB ");
-  console.log(dog_bb);
 }
 
 Dog.prototype = {
@@ -397,22 +352,15 @@ Dog.prototype = {
 /* Define caption object */
 var Caption = function(captionText) {
   this.captionText = captionText;
-  // this.drawing = Snap.select("#circleFace");
   this.drawingType = localStorage.getItem('dType');
-  console.log("drawing type inside caption");
-  console.log(this.drawingType);
   var idString = null;
   if (this.drawingType == 1) {
-    console.log("this drawing type is 1");
     idString = "#dog";
   } else if (this.drawingType == 2) {
-    console.log("this drawing type is 2");
     idString = "#circleFace";
   }
   this.drawing = Snap.select(idString);
   this.drawing_bb = this.drawing.getBBox();
-  console.log("BOUNDING BOX: ");
-  console.log(this.drawing_bb);
   this.x = this.drawing_bb.x;
   this.y = this.drawing_bb.y2;
   this.lineMax = 6;
@@ -449,43 +397,37 @@ Caption.prototype = {
 
   writeInSnapD: function() {
     this.splitIntoLines();
-    console.log("these are the lines: " + this.lines);
+    console.log("Lines in writeInSnapD(): " + this.lines);
     this.snapCaptionD = d.text(this.x, this.y, this.lines);
     var tilt = tiltAmts[Math.floor(Math.random()*tiltAmts.length)];
     // this.mat.translate(this.drawing_bb.x, this.drawing_bb.y2);
     // this.mat.scale(10/this.drawing_bb.width);
-    console.log("this width is " + this.drawing_bb.width);
     console.log("TILT IS: " + tilt);
     this.mat.rotate(tilt, this.drawing_bb.cx, this.drawing_bb.cy); 
     this.snapCaptionD.attr({"font-size":40});
     this.snapCaptionD.transform(this.mat);
     var h = this.drawing_bb.y + this.drawing_bb.height;
-    console.log("Y OF CAPTION: " + this.y + 20);
     this.snapCaptionD.selectAll("tspan").forEach(function(tspan, i){
       tspan.attr({x:0 + i,y:h+45*(i+1)});
-   });
+    });
   },
 
   writeInSnapS: function() {
     if (this.lines.length == 0) {
       this.splitIntoLines();
     }
-    console.log("these are the lines: " + this.lines);
+    console.log("Lines in writeInSnapS(): " + this.lines);
     this.snapCaptionS = s.text(this.x, this.y + 20, this.lines);
     var tilt = tiltAmts[Math.floor(Math.random()*tiltAmts.length)];
-    // this.mat.translate(this.drawing_bb.x, this.drawing_bb.y2);
-    // this.mat.scale(10/this.drawing_bb.width);
-    console.log("this width is " + this.drawing_bb.width);
     console.log("TILT IS: " + tilt);
     this.mat.rotate(tilt, this.drawing_bb.cx, this.drawing_bb.y2); 
     this.snapCaptionS.attr({"font-size":40});
     // this.mat.translate(this.drawing_bb.x, this.drawing_bb.y2);
     this.snapCaptionS.transform(this.mat);
     var h = this.drawing_bb.y + this.drawing_bb.height;
-    console.log("Y OF CAPTION: " + this.y + 20);
     this.snapCaptionS.selectAll("tspan").forEach(function(tspan, i){
       tspan.attr({x:0 + i,y:h+45*(i+1)});
-   });
+    });
   }
 
 }
