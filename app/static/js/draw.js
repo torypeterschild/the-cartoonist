@@ -445,7 +445,6 @@ var drawingType = localStorage.getItem('dType');
 display();
 if (drawingType == 1) {
   var theCaption = new Caption(captionText);
-  console.log("hello there");
   console.log(theCaption.toString());
   var doggy = new Dog();
   theCaption.writeInSnapD();
@@ -459,7 +458,6 @@ if (drawingType == 1) {
   doggy.snoutOutlineAnimation();
 } else if (drawingType == 2) {
   var theCaption = new Caption(captionText);
-  console.log("hello there");
   console.log(theCaption.toString());
   var origFace = new Face();
   console.log("face as object");
