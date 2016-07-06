@@ -66,16 +66,6 @@ console.log(d);
   HELPERS
  --------*/
 
-/* Helper function to alter a point */
-function alterPoint(p) {
-  var addOrSub = [1, -1];
-  var byPercent = [0.001, 0.002, 0.003, 0.01, 0.03];
-  var op = addOrSub[Math.floor(Math.random()*addOrSub.length)];
-  var amt = byPercent[Math.floor(Math.random()*byPercent.length)];
-  var newP = p + (p * amt * op);
-  return newP;
-}
-
 /* Call after POST to create new caption object */
 function makeSavedCaption() {
   console.log("IN MAKE SAVED CAPTION");
@@ -84,6 +74,26 @@ function makeSavedCaption() {
   console.log("saved caption after ajax: " + savedCaption.toString());
   savedCaption.writeInSnapD();
   savedCaption.writeInSnapS();
+}
+
+/*-----------------------
+  NOISE-SPECIFIC HELPERS 
+-------------------------*/
+
+/* Get a random number between a certain max and min */
+function randomNumberBetween(max, min) {
+  var r = Math.random() * (max - min) + min;
+  return r;
+}
+
+/* Helper function to alter a point */
+function alterPoint(p) {
+  var addOrSub = [1, -1];
+  var byPercent = [0.001, 0.002, 0.003, 0.01, 0.03];
+  var op = addOrSub[Math.floor(Math.random()*addOrSub.length)];
+  var amt = byPercent[Math.floor(Math.random()*byPercent.length)];
+  var newP = p + (p * amt * op);
+  return newP;
 }
 
 /*-----
@@ -147,11 +157,11 @@ Face.prototype = {
   },
 
   applyMatrix: function() {
-    var r = Math.floor(Math.random() * (maxRotation - minRotation + 1)) + minRotation;
+    var r = randomNumberBetween(maxRotation,minRotation);
     var thePath = this.surface.select("#cpath");
     var bdgBox = thePath.getBBox();
-    var sx = (Math.random() * (1.5 - 0.5)) + 0.5;
-    var sy = (Math.random() * (1.5 - 0.5)) + 0.5;
+    var sx = randomNumberBetween(1.3,0.6);
+    var sy = randomNumberBetween(1.3,0.6);
     console.log("sx: " + sx);
     console.log("sy: " + sy);
     this.mat.rotate(r, bdgBox.cx, bdgBox.cy); 
@@ -193,12 +203,12 @@ Face.prototype = {
     /* Scale sMat by eyeW, eyeH, and add noise */
     lMat.scale(eyeW, eyeH);
     rMat.scale(eyeW, eyeH);
-    var sx = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * bdgBox.width);
-    var sy = ((Math.random() * (1.5 - 0.5)) + 0.5)/100*(0.0025 * bdgBox.height);
+    var sx = ((Math.random() * (1.5 - 0.8)) + 0.8)/100*(0.0025 * bdgBox.width);
+    var sy = ((Math.random() * (1.5 - 0.8)) + 0.8)/100*(0.0025 * bdgBox.height);
     lMat.scale(sx,sy);
-    lMat.translate(sx*150,sy*25);
+    lMat.translate(sx*150,sy*20);
     rMat.scale(sx,sy);
-    rMat.translate(sx*150,sy*25);
+    rMat.translate(sx*150,sy*20);
     console.log("SX IS " + sx);
     console.log("SY IS " + sy);
     leftEye.transform(lMat);
@@ -241,15 +251,8 @@ Face.prototype = {
     console.log(this.BBOX);
     var outline = this.surface.select("#cpath");
     var bdgBox = outline.getBBox();
-    var pathString = [];
-    pathString.push("M");
-    pathString.push(bdgBox.cx.toFixed(2));
-    pathString.push(bdgBox.y.toFixed(2));
-    pathString.push("Q");
-    pathString.push((bdgBox.cx/2).toFixed(2));
-    pathString.push((bdgBox.y-70).toFixed(2));
-    pathString.push(bdgBox.cx.toFixed(2));
-    pathString.push(bdgBox.y.toFixed(2));
+    var pathString = ["M", bdgBox.cx.toFixed(2), bdgBox.y.toFixed(2), "Q", (bdgBox.cx/2).toFixed(2), (bdgBox.y-70).toFixed(2), bdgBox.cx.toFixed(2), bdgBox.y.toFixed(2)];
+    pathString.push();
     var p = pathString.join(" ");
     var hair1 = s.path(p);
     var hair2 = s.path("M" + bdgBox.cx.toFixed(2) + " " + bdgBox.y.toFixed(2) + "Q" + (bdgBox.x2/2).toFixed(2) + " " + (bdgBox.y-40).toFixed(2) + 
