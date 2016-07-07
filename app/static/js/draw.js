@@ -84,10 +84,6 @@ $('#SVGsave').click(function(){
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
 });
 
-/*
- TODO: buttons should appear below caption 
-*/
-
 /* Renders cartoon and caption in save-cartoon template */
 $('#savecartoon').click(function(){
   var value = $("#caption").text()
@@ -105,6 +101,7 @@ $('#savecartoon').click(function(){
   });
 });
 
+/* TODO: REFACTOR SAVE FUNCTIONALITY */
 /* Generate caption on save-cartoon.html page */
 // makeSavedCaption();
 
