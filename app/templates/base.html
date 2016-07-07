@@ -7,7 +7,8 @@
     <title>cartoonist</title>
     {% endif %}
     <script>
-      var captionLines = {{ vartest|safe }};
+      var captionLines = {{ lines|safe }};
+      var tilt = {{ tilt|safe }};
     </script> 
     <link href="/static/styles.css" rel="stylesheet">
     <script language="javascript" type="text/javascript" src="/static/js/Snap.svg-0.4.1/dist/snap.svg-min.js"></script>

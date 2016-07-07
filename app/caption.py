@@ -3,6 +3,7 @@ import random, sys, os
 
 LINE_MAX = 6
 WORDS_MAX = 24
+ERROR = "?#$*&! - that word is not in the corpus."
 
 
 class Caption:
@@ -11,15 +12,17 @@ class Caption:
     self.words = None
     self.word_count = None
     self.n_lines = None
+    self.tilt = None
     self.lines = []
 
   def __str__(self):
     descr = "Text is %s\nWord count is %s\n" % (self.text, self.word_count)
     lines = "\nLines are:\n"
     line_count = "\nLine count is %d" % self.n_lines
+    cap_tilt = "\nTilt is %s" % self.tilt
     for i in range(len(self.lines)):
       lines = lines + str(self.lines[i]) + "\n"
-    return descr + line_count + lines
+    return descr + line_count + lines + cap_tilt
 
   def get_text(self, content, keyword):
     blob = TextBlob(content.decode('utf-8'))
@@ -31,7 +34,7 @@ class Caption:
           if len(words) < WORDS_MAX:
             sentence_list.append(sentence.replace("\n", " "))    
     if not sentence_list:
-      self.text = "?#$*&! - that word is not in the corpus."
+      self.text = ERROR
     else:
       self.text = random.choice(sentence_list)
 
@@ -66,10 +69,17 @@ class Caption:
       self.lines.append(li_en)
     else:
       print("Error: No self.n_lines")
-    print("TYPE OF SELF.LINES")
-    print(type(self.lines))
-    print("TYPE OF SELF.LINES element")
-    print(type(self.lines[0]))
+
+  def calculate_tilt(self):
+    tiltAmts = [5, 4, 3, 2, 355, 356, 357, 358]
+    self.tilt = random.choice(tiltAmts)
+
+  def make(self):
+    self.set_words()
+    self.count_words()
+    self.set_n_lines()
+    self.split_into_lines()
+    self.calculate_tilt()
 
 
 

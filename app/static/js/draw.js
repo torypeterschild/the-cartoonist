@@ -451,9 +451,12 @@ var captionText = $("#caption").text();
 console.log("captionText");
 console.log(captionText);
 if (Boolean(paper)) {
+  var m = new Snap.Matrix();
   p_bb = paper.getBBox();
+  m.rotate(tilt, this.p_bb.cx, this.p_bb.y2);
   var newCap = paper.text(p_bb.x, p_bb.y2+50, captionLines);
   newCap.attr({"font-size":50});
+  newCap.transform(m);
   var h = this.p_bb.y2;
   newCap.selectAll("tspan").forEach(function(tspan, i){
     tspan.attr({x:0 + i,y:h+50*(i+1)});

@@ -33,20 +33,15 @@ def input():
   with app.open_resource('static/corpus000.txt') as f:
     content = f.read()
 
-  # blob = TextBlob(content.decode('utf-8'))
-  # caption = " "
-  t = cg.Cartoon()
-  print(t.__str__())
-  tt = t.bundle_noisy_paths() 
+  cartoon = cg.Cartoon()
+  print(cartoon.__str__())
+  noisy_cartoon = cartoon.bundle_noisy_paths() 
 
   if keyword_form.keyword.data is not None:
     keyword = keyword_form.keyword.data 
     test_cap = caption.Caption()
     test_cap.get_text(content, keyword)
-    test_cap.set_words()
-    test_cap.count_words()
-    test_cap.set_n_lines()
-    test_cap.split_into_lines()
+    test_cap.make()
     print(test_cap.__str__())
   else:
     return render_template("input.html",
@@ -62,8 +57,9 @@ def input():
     header="cartoonist",
     caption=test_cap.text,
     menu=True,
-    svg=Markup(tt),
-    vartest=test_cap.lines,
+    svg=Markup(noisy_cartoon),
+    lines=test_cap.lines,
+    tilt=test_cap.tilt,
     keyword_form=keyword_form)
 
 
