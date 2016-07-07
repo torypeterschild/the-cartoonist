@@ -15,7 +15,7 @@ def get_string_from_list(li):
 
 def inject_path_data(path_string):
   svg_start = '''
-    <svg height="210" width="400" viewBox="0 0 400 400">
+    <svg height="210" width="400" viewBox="0 -20 600 600">
       <path stroke="#000" stroke-width="1" fill="none" fill-rule="evenodd" d="'''
   svg_end = '''"/>
     </svg>
@@ -40,7 +40,7 @@ def combine_mult_paths(li_path_strings):
 
 def inject_path_tags(paths_str):   
   svg_start = '''
-    <svg height="210" width="400" viewBox="0 0 400 400">
+    <svg height="210" width="400" viewBox="0 -20 600 600">
     '''
   svg_end = '''
     </svg>
