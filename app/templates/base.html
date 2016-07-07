@@ -8,7 +8,6 @@
     {% endif %}
     <link href="/static/styles.css" rel="stylesheet">
     <script language="javascript" type="text/javascript" src="/static/js/Snap.svg-0.4.1/dist/snap.svg-min.js"></script>
-    <script language="javascript" type="text/javascript" src="/static/js/p5.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   </head>
   <body>
@@ -39,6 +38,7 @@
     {% endif %}
     <div id="drawing">{% include "dog.svg" %}</div>
     <div id="facedrawing">{% include "circle_trimmed.svg" %}</div>
+<!--     {{ svg }} -->
     {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>

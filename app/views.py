@@ -1,8 +1,10 @@
-from flask import render_template, flash, redirect, request, url_for
+from flask import render_template, flash, redirect, request, url_for, Markup
 from app import app
 from .forms import InputForm, SaveForm
 from textblob import TextBlob
 import random, sys, os, json
+import svg_utils, shapes
+import cartoon_generator as cg
 
 captionpersist = list()
 
@@ -10,10 +12,17 @@ captionpersist = list()
 @app.route("/index")
 def index():
   save_form = SaveForm()
+  z = cg.Cartoon()
+  print(z.__str__())
+  zz = z.bundle_noisy_paths()
+  t = svg_utils.inject_path_data(shapes.circle)
+  y = svg_utils.svgObject(shapes.circle)
+  n = y.make_noisy_svg()
   return render_template("cartoon.html",
     header="cartoonist",
     menu=True,
     buttons=True,
+    svg=Markup(zz),
     save_form=save_form)
 
 
