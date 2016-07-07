@@ -11,38 +11,32 @@ triangle = "M150 0 L75 200 L225 200 Z"
 rectangle = "M270.5 6.9c28.1 1.9 70.1 3.2 117.4 3.9l48.3.7 2 5c3.3 8.4 7.7 26.2 10.8 44 7.9 46 10.8 80.8 13 159.5.6 21.2 2.6 71.6 4.5 112 4 85.8 4.3 96.8 5.6 201.5.6 43.4 1.4 85.3 1.9 93 .5 7.7 1.2 23.7 1.6 35.5.6 20.2.6 21.6-1.2 23.7-1.4 1.6-9.6 4.8-29.8 11.3-32.7 10.7-53.7 16.2-99.6 26-35.8 7.7-64.1 14.4-135.3 31.9-24.6 6.1-55.6 13.4-69 16.2-23.8 5-40.4 9-62.2 14.9-11.5 3.2-18.9 4-20.6 2.3-.6-.6-3.1-13.6-5.5-28.9C33.9 643.5 31.5 599.3 28.5 308 27 169.9 23.2 119.1 10 63.9 5.2 44 4.9 37.5 8.5 33.2c6-7.2 32.6-16.1 64.5-21.6 15.2-2.6 44.1-5.4 62-6 18.6-.6 121.1.4 135.5 1.3zM128 1C77.6 3.4 33.5 12.2 11.4 24.4-.6 31-1.6 37.2 5 64.8c13.2 55.7 17 106.1 18.5 244.7 3.1 291.6 5.3 334.2 23.5 448.4 5.2 33 5.8 34.8 12 36.4 3.9 1 12.4-.7 32-6.3 7.4-2.2 20.3-5.3 28.5-7 31.3-6.5 61.3-13.4 101.4-23.5 56.8-14.2 85.8-21 131.6-30.9 45.8-9.9 57.5-13 91-23.8 29.6-9.5 31.7-10.3 34.7-13.5 2.2-2.4 2.3-2.9 2.2-22.6 0-11.1-.6-28.8-1.2-39.2-.7-10.5-1.6-55.2-2.1-99.5-1.2-98.7-1.4-104.4-5.6-197.5-1.9-41.3-3.9-91.2-4.5-111-1.9-69.8-3.8-98.1-9.1-135.5-4.2-30.1-8.6-51.1-13.9-66.5-1-3-1.6-5.6-1.2-5.9.9-.4 8.7.7 16.9 2.4 4.9 1.1 6.6 1.1 7.5.2 1-1 .9-1.5-.2-2.6-1.7-1.5-12.6-4.2-21.4-5.2-4.9-.6-6.4-1.2-8.4-3.6-1.9-2.2-2.7-2.6-3.8-1.7-.8.6-1.4 2.1-1.4 3.2 0 2-.2 2-50.7 1.3-49.2-.7-76.4-1.6-109.8-3.7C250.9.6 149.5-.1 128 1z"
 
 
-# List of head styles
-# head = [small_circle, alt_circle, circle, tall_ellipse, wide_ellipse, rectangle]
+""" List of head styles """
 head_dict = dict(circle=circle,sm_circle=small_circle, a_circle=alt_circle, t_ellipse=tall_ellipse, w_ellipse=wide_ellipse, rect=rectangle)
 
-# List of eye styles (NOT COMPLETE)
+""" List of eye styles (NOT COMPLETE) """
 # eyes = [circle, small_circle, tall_ellipse, wide_ellipse]
 eye_dict = dict(circle=circle,sm_circle=small_circle, a_circle=alt_circle, t_ellipse=tall_ellipse, rect=rectangle)
 
 
-# List of mouth styles (NOT COMPLETE)
-# mouth = [large_curve, small_curve, circle, wide_ellipse]
+""" List of mouth styles (NOT COMPLETE) """
 mouth_dict = dict(circle=circle,sm_circle=small_circle, a_circle=alt_circle, lg_curve=large_curve, w_ellipse=wide_ellipse, rect=rectangle, sm_curve=small_curve)
 
 
-# List of nose styles (NOT COMPLETE)
-# nose = [small_curve, small_circle, wide_ellipse]
+""" List of nose styles (NOT COMPLETE) """
 nose_dict = dict(sm_circle=small_circle, w_ellipse=wide_ellipse, sm_curve=small_curve)
 
 
-# List of cheek styles (NOT COMPLETE)
-# cheeks = [circle, small_circle, alt_circle, tall_ellipse, wide_ellipse]
+""" List of cheek styles (NOT COMPLETE) """
 cheeks_dict = dict(circle=circle,sm_circle=small_circle, a_circle=alt_circle, t_ellipse=tall_ellipse, w_ellipse=wide_ellipse)
 
 
-# List of eyebrow styles [TODO]
+""" List of eyebrow styles [TODO] """
 eyebrows = []
 
-# List of eyelash styles [TODO]
+"""List of eyelash styles [TODO] """
 eyelashes = []
 
-# List of hair styles [TODO]
+"""List of hair styles [TODO] """
 hair = []
 
-def get_head():
-  return random.choice(head)
