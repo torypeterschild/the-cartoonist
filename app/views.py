@@ -39,10 +39,10 @@ def input():
 
   if keyword_form.keyword.data is not None:
     keyword = keyword_form.keyword.data 
-    test_cap = caption.Caption()
-    test_cap.get_text(content, keyword)
-    test_cap.make()
-    print(test_cap.__str__())
+    cap = caption.Caption()
+    cap.get_text(content, keyword)
+    cap.make()
+    print(cap.__str__())
   else:
     return render_template("input.html",
       header="cartoonist",
@@ -50,16 +50,16 @@ def input():
       keyword_form=keyword_form)
   # sentence_list = list()
   print("\nTEST CAP LINES")
-  for i in test_cap.lines:
+  for i in cap.lines:
     print(i)
 
   return render_template("cartoon.html",
     header="cartoonist",
-    caption=test_cap.text,
+    caption=cap.text,
     menu=True,
     svg=Markup(noisy_cartoon),
-    lines=test_cap.lines,
-    tilt=test_cap.tilt,
+    lines=cap.lines,
+    tilt=cap.tilt,
     keyword_form=keyword_form)
 
 
