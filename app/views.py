@@ -3,7 +3,7 @@ from app import app
 from .forms import InputForm, SaveForm
 from textblob import TextBlob
 import random, sys, os, json
-import svg_utils
+import svg_utils, shapes
 
 captionpersist = list()
 
@@ -11,8 +11,8 @@ captionpersist = list()
 @app.route("/index")
 def index():
   save_form = SaveForm()
-  t = svg_utils.inject_path(svg_utils.test)
-  y = svg_utils.svgObject(svg_utils.test)
+  t = svg_utils.inject_path(shapes.rectangle)
+  y = svg_utils.svgObject(shapes.rectangle)
   n = y.make_noisy_svg()
   return render_template("cartoon.html",
     header="cartoonist",
