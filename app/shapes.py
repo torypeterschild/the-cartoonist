@@ -12,7 +12,7 @@ rectangle = "M270.5 6.9c28.1 1.9 70.1 3.2 117.4 3.9l48.3.7 2 5c3.3 8.4 7.7 26.2 
 
 
 # List of head styles
-head = [small_circle, alt_circle, circle, tall_ellipse, wide_ellipse]
+head = [small_circle, alt_circle, circle, tall_ellipse, wide_ellipse, rectangle]
 
 # List of eye styles (NOT COMPLETE)
 eyes = [circle, small_circle, tall_ellipse, wide_ellipse]

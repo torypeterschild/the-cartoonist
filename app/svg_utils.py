@@ -1,7 +1,3 @@
-from flask import render_template, flash, redirect, request, url_for
-from app import app
-from .forms import InputForm, SaveForm
-from textblob import TextBlob
 import random, sys, os, json, re
 import numpy as np
 import noise
@@ -13,10 +9,6 @@ FLOAT_RE = re.compile("[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?")
 
 
 """ HELPERS """
-def generate_noise_array(pure_array):
-  noise = np.random.normal(0, 1, len(pure_array))
-  return noise
-
 def get_string_from_list(li):
   return " ".join(li)
 
