@@ -4,6 +4,7 @@ from .forms import InputForm, SaveForm
 from textblob import TextBlob
 import random, sys, os, json
 import svg_utils, shapes
+import cartoon_generator as cg
 
 captionpersist = list()
 
@@ -11,17 +12,18 @@ captionpersist = list()
 @app.route("/index")
 def index():
   save_form = SaveForm()
-  t = svg_utils.inject_path(shapes.rectangle)
-  y = svg_utils.svgObject(shapes.rectangle)
+  z = cg.Cartoon()
+  print(z.__str__())
+  zz = z.bundle_noisy_paths()
+  t = svg_utils.inject_path_data(shapes.circle)
+  y = svg_utils.svgObject(shapes.circle)
   n = y.make_noisy_svg()
   return render_template("cartoon.html",
     header="cartoonist",
     menu=True,
     buttons=True,
-    svg=Markup(t),
-    path1=t,
+    svg=Markup(zz),
     noisy=Markup(n),
-    path2=n,
     save_form=save_form)
 
 

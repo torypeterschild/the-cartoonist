@@ -12,7 +12,8 @@ FLOAT_RE = re.compile("[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?")
 def get_string_from_list(li):
   return " ".join(li)
 
-def inject_path(path_string):
+
+def inject_path_data(path_string):
   svg_start = '''
     <svg height="210" width="400" viewBox="0 0 400 400">
       <path stroke="#000" stroke-width="1" fill="none" fill-rule="evenodd" d="'''
@@ -21,6 +22,31 @@ def inject_path(path_string):
     '''
   new_svg = svg_start + path_string + svg_end
   return new_svg  
+
+
+def combine_mult_paths(li_path_strings):
+  all_paths = []
+  path_start = '''<path stroke="#000" stroke-width="1" fill="none" fill-rule="evenodd" d="
+    '''
+  path_end = '''"/>
+    '''
+  for item in li_path_strings:
+    p = path_start + item + path_end
+    all_paths.append(p)
+
+  paths_as_str = " ".join(all_paths)
+  return paths_as_str
+
+
+def inject_path_tags(paths_str):   
+  svg_start = '''
+    <svg height="210" width="400" viewBox="0 0 400 400">
+    '''
+  svg_end = '''
+    </svg>
+    '''
+  full_svg = svg_start + paths_str + svg_end
+  return full_svg 
 
 """ END HELPERS """
 
@@ -69,5 +95,12 @@ class svgObject:
     self.get_pairs()
     self.add_noise_to_path()
     noisy_string = get_string_from_list(self.noisy_path)
-    noisy_svg = inject_path(noisy_string)
+    noisy_svg = inject_path_data(noisy_string)
     return noisy_svg
+
+  def make_noisy_path_str(self):
+    self.tokenize_path()
+    self.get_pairs()
+    self.add_noise_to_path()
+    noisy_string = get_string_from_list(self.noisy_path)
+    return noisy_string
