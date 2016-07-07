@@ -5,6 +5,7 @@ from textblob import TextBlob
 import random, sys, os, json
 import svg_utils, shapes
 import cartoon_generator as cg
+import caption
 
 captionpersist = list()
 
@@ -15,13 +16,10 @@ def index():
   z = cg.Cartoon()
   print(z.__str__())
   zz = z.bundle_noisy_paths()
-  t = svg_utils.inject_path_data(shapes.circle)
-  y = svg_utils.svgObject(shapes.circle)
-  n = y.make_noisy_svg()
   return render_template("cartoon.html",
     header="cartoonist",
     menu=True,
-    buttons=True,
+    buttons=False,
     svg=Markup(zz),
     save_form=save_form)
 
@@ -35,32 +33,39 @@ def input():
   with app.open_resource('static/corpus000.txt') as f:
     content = f.read()
 
-  blob = TextBlob(content.decode('utf-8'))
-  caption = " "  
-
-  sentence_list = list()
+  # blob = TextBlob(content.decode('utf-8'))
+  # caption = " "
+  t = cg.Cartoon()
+  print(t.__str__())
+  tt = t.bundle_noisy_paths() 
 
   if keyword_form.keyword.data is not None:
-    for sentence in blob.sentences:
-      words = sentence.split()
-      if keyword_form.keyword.data in words or keyword_form.keyword.data.lower() in words:
-        sentence_list.append(sentence.replace("\n", " "))
+    keyword = keyword_form.keyword.data 
+    test_cap = caption.Caption()
+    test_cap.get_text(content, keyword)
+    test_cap.set_words()
+    test_cap.count_words()
+    test_cap.set_n_lines()
+    test_cap.split_into_lines()
+    print(test_cap.__str__())
   else:
     return render_template("input.html",
       header="cartoonist",
       menu=True,
-      keyword_form=keyword_form)        
-  
-  if not sentence_list:
-    caption = "?#$*&! - that word is not in the corpus."
-  else:
-    caption = random.choice(sentence_list)
+      keyword_form=keyword_form)
+  # sentence_list = list()
+  print("\nTEST CAP LINES")
+  for i in test_cap.lines:
+    print(i)
 
   return render_template("cartoon.html",
     header="cartoonist",
-    caption=caption,
+    caption=test_cap.text,
     menu=True,
+    svg=Markup(tt),
+    vartest=test_cap.lines,
     keyword_form=keyword_form)
+
 
 """ TODO: Render save-cartoon template like cartoon template
     in the same style as cartoon template """

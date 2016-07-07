@@ -6,9 +6,12 @@
     {% else %}
     <title>cartoonist</title>
     {% endif %}
+    <script>
+      var captionLines = {{ vartest|safe }};
+    </script> 
     <link href="/static/styles.css" rel="stylesheet">
     <script language="javascript" type="text/javascript" src="/static/js/Snap.svg-0.4.1/dist/snap.svg-min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
   </head>
   <body>
     <h1>{{ header }}</h1>
@@ -36,9 +39,7 @@
       </ul>
     </div>
     {% endif %}
-    <div id="drawing">{% include "dog.svg" %}</div>
-    <div id="facedrawing">{% include "circle_trimmed.svg" %}</div>
-<!--     {{ svg }} -->
+    <div id="pythonSVG">{{ svg }}</div>
     {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>

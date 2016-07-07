@@ -229,5 +229,9 @@ input[type=radio]:checked ~ label{
     display:none;
 }
 
+#pythonSVG svg {
+  overflow: visible;
+}
+
 
 
