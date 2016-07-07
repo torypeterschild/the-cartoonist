@@ -23,7 +23,6 @@ def index():
     menu=True,
     buttons=True,
     svg=Markup(zz),
-    noisy=Markup(n),
     save_form=save_form)
 
 

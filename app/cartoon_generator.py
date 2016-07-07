@@ -5,7 +5,6 @@ import shapes
 class Cartoon:
   def __init__(self):
     self.head = random.choice(shapes.head_dict.keys())
-    print(self.head)
     self.eyes = random.choice(shapes.eye_dict.keys())
     self.paths = [shapes.head_dict[self.head], shapes.eye_dict[self.eyes]]
     self.objs = []
