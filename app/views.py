@@ -35,7 +35,8 @@ def input():
 
   cartoon = cg.Cartoon()
   print(cartoon.__str__())
-  noisy_cartoon = cartoon.bundle_noisy_paths() 
+  noisy_cartoon = cartoon.bundle_noisy_paths()
+  cartoon.get_bounding_box()
 
   if keyword_form.keyword.data is not None:
     keyword = keyword_form.keyword.data 

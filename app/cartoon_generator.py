@@ -9,6 +9,7 @@ class Cartoon:
     self.paths = [shapes.head_dict[self.head], shapes.eye_dict[self.eyes]]
     self.objs = []
     self.noisy_paths = []
+    self.bounding_box = None
 
   def __str__(self):
     descr = "Head is %s. Eyes are %s" % (self.head, self.eyes)
@@ -35,3 +36,6 @@ class Cartoon:
     p_str = svg_utils.combine_mult_paths(self.noisy_paths)
     svg_html = svg_utils.inject_path_tags(p_str)
     return svg_html
+
+  def get_bounding_box(self):
+    pass
