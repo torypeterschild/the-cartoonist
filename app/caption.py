@@ -27,7 +27,7 @@ class Caption:
   def get_text(self, content, keyword):
     blob = TextBlob(content.decode('utf-8'))
     sentence_list = list()
-    if keyword is not None:
+    if keyword:
       for sentence in blob.sentences:
         words = sentence.split()
         if keyword in words or keyword.lower() in words:
@@ -39,17 +39,18 @@ class Caption:
       self.text = random.choice(sentence_list)
 
   def set_words(self):
-    if self.text is not None:
+    if self.text:
       self.words = self.text.split()
 
   def count_words(self):
-    if self.words is not None:
+    if self.words:
       self.word_count = len(self.words)
 
   def set_n_lines(self):
-    if self.word_count is not None:
+    if self.word_count:
       self.n_lines = self.word_count / LINE_MAX
 
+  # TODO: CLEAN THIS UP
   def split_into_lines(self):
     if self.n_lines > 1:
       line_ending = 0

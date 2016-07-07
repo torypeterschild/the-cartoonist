@@ -105,7 +105,3 @@ $('#savecartoon').click(function(){
 /* Generate caption on save-cartoon.html page */
 // makeSavedCaption();
 
-
-
-
-
