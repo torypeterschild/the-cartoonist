@@ -38,6 +38,7 @@
     {% endif %}
     <div id="drawing">{% include "dog.svg" %}</div>
     <div id="facedrawing">{% include "circle_trimmed.svg" %}</div>
+    {{ svg }}
     {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>

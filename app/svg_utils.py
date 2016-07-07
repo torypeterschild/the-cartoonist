@@ -16,6 +16,19 @@ def generate_noise_array(pure_array):
   noise = np.random.normal(0, 1, len(pure_array))
   return noise
 
+def get_string_from_list(li):
+  return " ".join(li)
+
+def inject_path(path_string):
+  svg_start = '''
+    <svg height="210" width="400">
+      <path d="'''
+  svg_end = '''"/>
+    </svg>
+    '''
+  new_svg = svg_start + path_string + svg_end
+  return new_svg  
+
 """ END HELPERS """
 
 class svgObject:
@@ -71,5 +84,10 @@ if __name__ == "__main__":
   svg.add_noise_to_path()
 
   print("\nNOISY PATH")
+  print(type(svg.noisy_path))
   for j in svg.noisy_path:
     print(j + "\n")
+
+  pstring = get_string_from_list(svg.noisy_path)
+  test_html = inject_path(pstring)
+  print(test_html)
