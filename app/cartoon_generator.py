@@ -1,6 +1,7 @@
 import random, sys, os
 import svg_utils
 import shapes
+import svgwrite
 
 class Cartoon:
   def __init__(self):
@@ -38,4 +39,7 @@ class Cartoon:
     return svg_html
 
   def get_bounding_box(self):
-    pass
+    svg_doc = svgwrite.Drawing(size = ("800px", "600px"))
+    clip_path = svg_doc.defs.add(svg_doc.clipPath())
+    clip_path.add(svg_doc.circle((100, 100), 50))
+    return svg_doc

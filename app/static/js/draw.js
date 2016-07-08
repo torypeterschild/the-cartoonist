@@ -6,39 +6,6 @@ console.log("Paper");
 console.log(paper);
 
 
-/*--------------
-  RADIO BUTTONS
- --------------*/
-
-// var currentValue = 2;
-
-// function handleClick(myRadio) {
-//   currentValue = myRadio.value;
-//   localStorage.setItem('dType',currentValue);
-//   display();
-//   document.location.href="/input";
-//   if (currentValue == 1) {
-//     console.log("TRUE VAL IS 1");
-//   } else if (currentValue == 2) {
-//     console.log("ELSE");
-//   }
-// }
-
-
-// function display() {
-//   drawingType = localStorage.getItem('dType');
-//   if (drawingType == 1) {
-//     console.log("type: DOG");
-//     origDrawing.style.display = "none";
-//     dogDrawing.style.display = "block";
-//   } else if (drawingType == 2) {
-//     console.log("type: CIRCLE");
-//     origDrawing.style.display = "block";
-//     dogDrawing.style.display = "none";
-//   }
-// }
-
-
 /*--------
   HELPERS
  --------*/
