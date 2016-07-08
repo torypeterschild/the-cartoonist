@@ -13,14 +13,11 @@ captionpersist = list()
 @app.route("/index")
 def index():
   save_form = SaveForm()
-  z = cg.Cartoon()
-  print(z.__str__())
-  zz = z.bundle_noisy_paths()
   return render_template("cartoon.html",
     header="cartoonist",
     menu=True,
     buttons=False,
-    svg=Markup(zz),
+    svg=" ",
     save_form=save_form)
 
 
@@ -32,11 +29,6 @@ def input():
 
   with app.open_resource('static/corpus000.txt') as f:
     content = f.read()
-
-  # cartoon = cg.Cartoon()
-  # print(cartoon.__str__())
-  # noisy_cartoon = cartoon.bundle_noisy_paths()
-  # print(cartoon.create_svg())
 
   if keyword_form.keyword.data is not None:
     keyword = keyword_form.keyword.data 
@@ -50,7 +42,6 @@ def input():
       header="cartoonist",
       menu=True,
       keyword_form=keyword_form)
-
 
   print("\nTEST CAP LINES")
   for i in cap.lines:

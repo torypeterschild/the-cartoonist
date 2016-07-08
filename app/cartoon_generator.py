@@ -56,31 +56,17 @@ class Cartoon:
 
   def create_head(self):
     noisy_head = get_noisy_path_str(shapes.head_dict[self.head])
-    head = self.paper.path(d=shapes.head_dict[self.head],fill="pink",stroke="blue",fill_rule="nonzero")
+    head = self.paper.path(d=noisy_head,fill="pink",stroke="blue",fill_rule="evenodd")
     return head
 
   def create_eyes(self):
     noisy_eyes = get_noisy_path_str(shapes.eye_dict[self.eyes])
-    eyes = self.paper.path(d=noisy_eyes,fill="blue",stroke="red") 
-    return eyes 
+    l_eye = self.paper.path(d=noisy_eyes,fill="blue",opacity=0.5,stroke="red")
+    r_eye = copy.deepcopy(l_eye)
+    r_eye.translate(125,0)
+    return (l_eye, r_eye)
 
-
-  def assemble(self):
-    # head = self.paper.path(d=shapes.head_dict[self.head],fill="pink",stroke="blue",fill_rule="nonzero")
-    head = self.create_head()
-    eye = self.paper.path(d=shapes.eye_dict[self.eyes],fill='none',stroke="red")
-    self.paper.add(head)
-    self.paper.add(eye)
-    eyetest = self.create_eyes()
-    print("\nEYETEST\n")
-    print(eyetest.tostring())
-    self.paper.add(eyetest)
-    mask = self.paper.mask(fill_rule="nonzero")
-    mask.add(head).fill("yellow",opacity=0.7)
-    eye_r = copy.deepcopy(eye)
-    eye.scale(.25,.25)
-    eye_r.translate(125,0)
-    self.paper.add(eye_r)
+  def create_caption(self):
     i = 500
     caption_elem = self.paper.text("", insert=(0, 0))
     for line in self.caption.lines:
@@ -88,8 +74,19 @@ class Cartoon:
       caption_elem.add(ts)
       i = i + 40
     caption_elem.rotate(self.caption.tilt)
+    return caption_elem
+
+  def assemble(self):
+    head = self.create_head()
+    l_eye, r_eye = self.create_eyes()
+    self.paper.add(head)
+    self.paper.add(l_eye)
+    self.paper.add(r_eye)
+    mask = self.paper.mask(fill_rule="evenodd")
+    mask.add(head).fill("yellow",opacity=0.7)
+    caption_elem = self.create_caption()
     self.paper.add(caption_elem)
-    self.paper.defs.add(mask)
+    self.paper.add(mask)
     return self.paper.tostring()
 
 
