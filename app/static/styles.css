@@ -233,5 +233,13 @@ input[type=radio]:checked ~ label{
   overflow: visible;
 }
 
+#pythonSVGWRITE svg {
+  overflow: visible;
+  display: block;
+}
 
+#pythonSVGWRITE {
+  height: 500px;
+  display: block;
+}
 

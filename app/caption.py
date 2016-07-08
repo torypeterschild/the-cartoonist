@@ -65,7 +65,7 @@ class Caption:
       last_line_en = last_line.encode('utf-8')
       self.lines.append(last_line_en)
     elif self.n_lines <= 1:
-      li = " ".join(self.words)
+      li = " ".join(self.words[:])
       li_en = li.encode('utf-8')
       self.lines.append(li_en)
     else:

@@ -36,7 +36,7 @@ def input():
   cartoon = cg.Cartoon()
   print(cartoon.__str__())
   noisy_cartoon = cartoon.bundle_noisy_paths()
-  print(cartoon.get_bounding_box())
+  print(cartoon.create_svg())
 
   if keyword_form.keyword.data is not None:
     keyword = keyword_form.keyword.data 
@@ -54,11 +54,16 @@ def input():
   for i in cap.lines:
     print(i)
 
+  testsvg = cartoon.create_svg()
+  print("NOISY CARTOON \n")
+  print(noisy_cartoon)
+
   return render_template("cartoon.html",
     header="cartoonist",
     caption=cap.text,
     menu=True,
     svg=Markup(noisy_cartoon),
+    svgwrite=Markup(testsvg),
     lines=cap.lines,
     tilt=cap.tilt,
     keyword_form=keyword_form)
