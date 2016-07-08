@@ -6,6 +6,12 @@ from svgwrite.text import TSpan
 import copy
 
 
+def get_noisy_path_str(pure_ps):
+  obj = svg_utils.svgObject(pure_ps)
+  noisy_ps = obj.make_noisy_path_str()
+  return noisy_ps
+
+
 class Cartoon:
   def __init__(self, caption):
     self.paper = svgwrite.Drawing(size=('100%', '100%'))
@@ -48,16 +54,33 @@ class Cartoon:
     svg_html = svg_utils.inject_path_tags(p_str)
     return svg_html
 
+  def create_head(self):
+    noisy_head = get_noisy_path_str(shapes.head_dict[self.head])
+    head = self.paper.path(d=shapes.head_dict[self.head],fill="pink",stroke="blue",fill_rule="nonzero")
+    return head
+
+  def create_eyes(self):
+    noisy_eyes = get_noisy_path_str(shapes.eye_dict[self.eyes])
+    eyes = self.paper.path(d=noisy_eyes,fill="blue",stroke="red") 
+    return eyes 
+
+
   def assemble(self):
-    head = self.paper.path(d=shapes.head_dict[self.head],fill='pink',stroke="blue",fill_rule="nonzero")
+    # head = self.paper.path(d=shapes.head_dict[self.head],fill="pink",stroke="blue",fill_rule="nonzero")
+    head = self.create_head()
     eye = self.paper.path(d=shapes.eye_dict[self.eyes],fill='none',stroke="red")
     self.paper.add(head)
     self.paper.add(eye)
-    mask = self.paper.mask(fill_rule="evenodd")
+    eyetest = self.create_eyes()
+    print("\nEYETEST\n")
+    print(eyetest.tostring())
+    self.paper.add(eyetest)
+    mask = self.paper.mask(fill_rule="nonzero")
     mask.add(head).fill("yellow",opacity=0.7)
     eye_r = copy.deepcopy(eye)
     eye.scale(.25,.25)
-    eye_r.translate(25,0)
+    eye_r.translate(125,0)
+    self.paper.add(eye_r)
     i = 500
     caption_elem = self.paper.text("", insert=(0, 0))
     for line in self.caption.lines:

@@ -56,16 +56,13 @@ def input():
   for i in cap.lines:
     print(i)
 
-
-  testsvg = cartoon.assemble()
-  # print("NOISY CARTOON \n")
-  # print(noisy_cartoon)
+  svg_cartoon = cartoon.assemble()
 
   return render_template("cartoon.html",
     header="cartoonist",
     caption=cap.text,
     menu=True,
-    svgwrite=Markup(testsvg),
+    svgwrite=Markup(svg_cartoon),
     keyword_form=keyword_form)
 
 
