@@ -26,20 +26,18 @@ console.log(paper);
   RENDER CAPTION
  -------------------------*/
 
-console.log("CAPTIONLINES LEN: " + captionLines.length);
-
-if (Boolean(paper)) {
-  var m = new Snap.Matrix();
-  paper_bb = paper.getBBox();
-  m.rotate(tilt, this.paper_bb.cx, this.paper_bb.y2);
-  var newCap = paper.text(paper_bb.x, paper_bb.y2+50, captionLines);
-  newCap.attr({"font-size":50});
-  newCap.transform(m);
-  var h = this.paper_bb.y2;
-  newCap.selectAll("tspan").forEach(function(tspan, i){
-    tspan.attr({x:0 + i,y:h+50*(i+1)});
-  });
-}  
+// if (Boolean(paper)) {
+//   var m = new Snap.Matrix();
+//   paper_bb = paper.getBBox();
+//   m.rotate(tilt, this.paper_bb.cx, this.paper_bb.y2);
+//   var newCap = paper.text(paper_bb.x, paper_bb.y2+50, captionLines);
+//   newCap.attr({"font-size":50});
+//   newCap.transform(m);
+//   var h = this.paper_bb.y2;
+//   newCap.selectAll("tspan").forEach(function(tspan, i){
+//     tspan.attr({x:0 + i,y:h+50*(i+1)});
+//   });
+// }  
 
 
 /* This saves SVG file (without caption) */

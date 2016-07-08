@@ -33,39 +33,39 @@ def input():
   with app.open_resource('static/corpus000.txt') as f:
     content = f.read()
 
-  cartoon = cg.Cartoon()
-  print(cartoon.__str__())
-  noisy_cartoon = cartoon.bundle_noisy_paths()
-  print(cartoon.create_svg())
+  # cartoon = cg.Cartoon()
+  # print(cartoon.__str__())
+  # noisy_cartoon = cartoon.bundle_noisy_paths()
+  # print(cartoon.create_svg())
 
   if keyword_form.keyword.data is not None:
     keyword = keyword_form.keyword.data 
-    cap = caption.Caption()
-    cap.get_text(content, keyword)
+    cap = caption.Caption(content,keyword)
     cap.make()
     print(cap.__str__())
+    cartoon = cg.Cartoon(cap)
+    print(cartoon.__str__())
   else:
     return render_template("input.html",
       header="cartoonist",
       menu=True,
       keyword_form=keyword_form)
-  # sentence_list = list()
+
+
   print("\nTEST CAP LINES")
   for i in cap.lines:
     print(i)
 
-  testsvg = cartoon.create_svg()
-  print("NOISY CARTOON \n")
-  print(noisy_cartoon)
+
+  testsvg = cartoon.assemble()
+  # print("NOISY CARTOON \n")
+  # print(noisy_cartoon)
 
   return render_template("cartoon.html",
     header="cartoonist",
     caption=cap.text,
     menu=True,
-    svg=Markup(noisy_cartoon),
     svgwrite=Markup(testsvg),
-    lines=cap.lines,
-    tilt=cap.tilt,
     keyword_form=keyword_form)
 
 

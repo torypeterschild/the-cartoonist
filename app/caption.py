@@ -7,8 +7,10 @@ ERROR = "?#$*&! - that word is not in the corpus."
 
 
 class Caption:
-  def __init__(self):
+  def __init__(self, content, keyword):
     self.text = None
+    self.content = content
+    self.keyword = keyword
     self.words = None
     self.word_count = None
     self.n_lines = None
@@ -16,21 +18,22 @@ class Caption:
     self.lines = []
 
   def __str__(self):
-    descr = "Text is %s\nWord count is %s\n" % (self.text, self.word_count)
-    lines = "\nLines are:\n"
+    descr = "\n-- CAPTION INSTANCE --\nText is %s\nWord count is %s\n" % (self.text, self.word_count)
     line_count = "\nLine count is %d" % self.n_lines
     cap_tilt = "\nTilt is %s" % self.tilt
+    lines = "\nLines are:"
     for i in range(len(self.lines)):
       lines = lines + str(self.lines[i]) + "\n"
-    return descr + line_count + lines + cap_tilt
+    end = "\n-- END CAPTION INSTANCE --"  
+    return descr + line_count + lines + cap_tilt + end
 
-  def get_text(self, content, keyword):
-    blob = TextBlob(content.decode('utf-8'))
+  def get_text(self):
+    blob = TextBlob(self.content.decode('utf-8'))
     sentence_list = list()
-    if keyword:
+    if self.keyword:
       for sentence in blob.sentences:
         words = sentence.split()
-        if keyword in words or keyword.lower() in words:
+        if self.keyword in words or self.keyword.lower() in words:
           if len(words) < WORDS_MAX:
             sentence_list.append(sentence.replace("\n", " "))    
     if not sentence_list:
@@ -76,6 +79,7 @@ class Caption:
     self.tilt = random.choice(tiltAmts)
 
   def make(self):
+    self.get_text()
     self.set_words()
     self.count_words()
     self.set_n_lines()

@@ -6,10 +6,6 @@
     {% else %}
     <title>cartoonist</title>
     {% endif %}
-    <script>
-      var captionLines = {{ lines|safe }};
-      var tilt = {{ tilt|safe }};
-    </script> 
     <link href="/static/styles.css" rel="stylesheet">
     <script language="javascript" type="text/javascript" src="/static/js/Snap.svg-0.4.1/dist/snap.svg-min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
@@ -40,7 +36,6 @@
       </ul>
     </div>
     {% endif %}
-    <div id="pythonSVG">{{ svg }}</div>
     <div id="pythonSVGWRITE">{{ svgwrite }}</div>
     {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
