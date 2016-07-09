@@ -31,7 +31,7 @@ Q3_Y = CY
 
 """ CAPTION """
 CAPTION_X = CX - R
-CAPTION_Y = Y_MAX + (HEIGHT*.1)
+CAPTION_Y = CY + (R * 1.3)
 
 
 def get_noisy_path_str(pure_ps):
@@ -41,6 +41,9 @@ def get_noisy_path_str(pure_ps):
 
 def rN():
   return random.uniform(0.95,1.05)
+
+def rNUnit():
+  return random.uniform(0.5, 1.0)
 
 def rC():
   r = lambda: random.randint(0,255)
@@ -66,17 +69,71 @@ def get_d_string(tuples_li):
   return joined
 
 
+""" PAC MAN SHAPE """
 def create_points(n, r, cx, cy):
   points = ['M']
   s = (2 * math.pi)/n
   for i in range(n):
+    if i == n/2:
+      dx = cx + r * .35
+      dy = cy - r * math.sin(s)
+      dp = (dx, dy)
+      points.append(dp)
     a = s * i
-    new_x = cx + r * math.cos(a) * rN()
+    new_x = cx + r * math.cos(a)
     new_y = cy + r * math.sin(a) * rN()
     p = (new_x, new_y)
     points.append(p)
   d = get_d_string(points)
   return d  
+
+
+""" EXPERIMENT """
+def create_points_exp(n, r, cx, cy):
+  pp = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
+  pp.fill(rC(),opacity=0.5).stroke("grey",width="3")
+  # pp.push_arc(target=(CX,CY), rotation=30, r=(2,4), large_arc=False, angle_dir='-', absolute=True)
+  points = ['M']
+  s = (2 * math.pi)/n
+  for i in range(n):
+    a = s * i
+    if i == n/2:
+      dx = cx + r * math.cos(a)
+      dy = cy - r * math.sin(a)
+      # pp.push("M %d,%d " % (CX+R,CY))
+      pp.push("S %d,%d %d,%d " % (dx,dy,dx*rN(),dy*rN()))
+      # dp = (dx, dy)
+      # points.append(dp)
+    new_x = cx + r * math.cos(a)
+    new_y = cy + r * rN() * math.sin(a)
+    p = (new_x, new_y)
+    # pp.push(p)
+    pp.push("S %d,%d %d,%d " % (new_x*rN(),new_y*rN(),new_x,new_y))
+    points.append(p)
+  d = get_d_string(points)
+  return d, pp
+
+
+""" EXPERIMENT 2 """
+def create_points_r(n, r, cx, cy):
+  pp = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
+  pp.fill(rC(),opacity=0.3).stroke("grey",width="3")
+  # pp.push_arc(target=(CX,CY), rotation=30, r=(2,4), large_arc=False, angle_dir='-', absolute=True)
+  points = ['M']
+  s = (2 * math.pi)/n
+  rr = r
+  for i in range(n):
+    a = s * i
+    rr = rr + rI(-10,5)
+    new_x = cx + rr * math.cos(a)
+    new_y = cy + rr * rN() * math.sin(a)
+    p = (new_x, new_y)
+    pp.push('L %d,%d' % (new_x,new_y))
+    pp.push("S %d,%d %d,%d " % (new_x*rN(),new_y*rN(),new_x,new_y))
+    # pp.push("S %d,%d %d,%d " % (new_x*rN(),new_y*rN(),new_x,new_y))
+  #   points.append(p)
+  # d = get_d_string(points)
+  return pp
 
 
 class Cartoon:
@@ -130,7 +187,7 @@ class Cartoon:
 
   def create_eyes(self):
     noisy_eyes = get_noisy_path_str(shapes.eye_dict[self.eyes])
-    l_eye = self.paper.path(d=noisy_eyes,fill="pink",opacity=1,stroke="red")
+    l_eye = self.paper.path(d=noisy_eyes,fill="pink",opacity=1,stroke="red",stroke_width='5')
     r_eye = copy.deepcopy(l_eye)
     r_eye.translate(250,100)
     l_eye.translate(100,100)
@@ -165,7 +222,7 @@ class Cartoon:
     return path
 
   def create_eye_path(self):
-    eye1 = self.paper.circle(center=(Q0_X*.75*rN(), Q0_Y*1.5*rN()), r=25*rN(), fill='pink', opacity=0.4, stroke='red', stroke_width='2')
+    eye1 = self.paper.circle(center=(Q0_X*.75*rN(), Q0_Y*1.5*rN()), r=25*rN(), fill=rC(), opacity=0.4, stroke=rC(), stroke_width='5')
     eye2 = copy.deepcopy(eye1)
     eye2.translate(Q0_X*.25)
     # eye2.scale(0.5)
@@ -179,9 +236,6 @@ class Cartoon:
     head = self.create_head()
     l_eye, r_eye = self.create_eyes()
     eye1, eye2, pupil1, pupil2 = self.create_eye_path()
-    # self.paper.add(head)
-    # self.paper.add(l_eye)
-    # self.paper.add(r_eye)
     mask = self.paper.mask(fill_rule="evenodd")
     # mask.add(head).fill("yellow",opacity=0.7)
     # mask.add(l_eye).fill("orange",opacity=0.7)
@@ -192,18 +246,17 @@ class Cartoon:
     # self.paper.add(mask)
     path = self.create_path()
     # self.paper.add(path)
+    pp = create_points_r(30, R, CX, CY)
+    # face = self.paper.path(d=d, fill=rC(), opacity=0.3, stroke='black', stroke_width='3')
+    # face.push_arc(target=(CX,CY), rotation=30, r=(2,4), large_arc=False, angle_dir='-', absolute=True)
+    # face.scale(rS(),rS())
+    # face.translate(0.25*rN()*CX,0)
+    # self.paper.add(face)
+    self.paper.add(pp)
     self.paper.add(eye1)
     self.paper.add(eye2)
     self.paper.add(pupil1)
     self.paper.add(pupil2)
-    d = create_points(rI(50,100), R, CX, CY)
-    face = self.paper.path(d=d, fill=rC(), opacity=0.3, stroke='black', stroke_width='3')
-    # face.scale(rS(),rS())
-    # face.translate(0.25*rN()*CX,0)
-    self.paper.add(face)
-    print("\n=====EYE1 INFO======\N")
-    print(eye1.tostring())
-    print(eye1['cx'])
     return self.paper.tostring()
 
 
