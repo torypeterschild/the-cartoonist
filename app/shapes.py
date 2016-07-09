@@ -20,7 +20,7 @@ eye_dict = dict(sm_circle=small_circle)
 
 
 """ List of mouth styles (NOT COMPLETE) """
-mouth_dict = dict(circle=circle,sm_circle=small_circle, lg_curve=large_curve, w_ellipse=wide_ellipse, sm_curve=small_curve)
+mouth_dict = dict(circle=circle, lg_curve=large_curve, w_ellipse=wide_ellipse, sm_curve=small_curve)
 
 
 """ List of nose styles (NOT COMPLETE) """

@@ -12,7 +12,7 @@ body {
     background: white;
     max-height: 100%;
     max-width: 100%;
-    overflow: visible;
+    overflow: hidden;
 }
 
 body a {
@@ -42,16 +42,16 @@ svg {
 
 form p {
     padding: 5px;
-    margin: 0;
+    margin: 10px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 12pt;
+    font-size: 10pt;
 }
 
 form input[type=text] {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #afafaf;
     border:1px solid #ccc;
-    font-size: 12pt;
+    font-size: 10pt;
     background-color: white;
     -webkit-border-radius: 5px;
 }
@@ -90,9 +90,17 @@ img {
     transform: scale(0.50);
 }
 
-#savetest {
-    margin-top: 60px;
-    display: inline-block;
+#savetest p {
+  margin-top: -30px;
+  display: inline-block;
+  align-content: right !important;
+  text-align: right!important;
+  float: right !important;
+  margin-right: 50px !important;
+}
+
+#savecartoon {
+  align-content: right;
 }
 
 #facedrawing {

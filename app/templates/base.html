@@ -17,6 +17,7 @@
       <a href="/index">home</a><a href="/input">enter keyword</a>
     </div>
     {% endif %}
+    {% block content %}{% endblock %}
     {% if buttons %}
     <div class="button-container">
       <ul>
@@ -37,7 +38,6 @@
     </div>
     {% endif %}
     <div id="pythonSVGWRITE">{{ svgwrite }}</div>
-    {% block content %}{% endblock %}
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>
 </html>

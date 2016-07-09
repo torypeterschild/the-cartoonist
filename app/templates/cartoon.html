@@ -2,13 +2,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div id="caption">{{ caption }}</div>
-  <div id="save">
-    <p>
-      <button id="SVGsave">Save SVG</button>
-    </p>
-  </div>
-  {% if caption is defined %}
+
+  {% if save %}
     <div id="savetest">
       <form name="savetestform" action="/save-cartoon" method="post">
       <p>
@@ -16,5 +11,10 @@
       </p>
       </form>
     </div>
+    <div id="save">
+    <p>
+      <button id="SVGsave">Save SVG</button>
+    </p>
+  </div>
   {% endif %}
 {% endblock %}

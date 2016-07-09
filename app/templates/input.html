@@ -5,11 +5,10 @@
   <form action="" method="post" name="input">
       {{ keyword_form.hidden_tag() }}
       <p>
-          Please enter a keyword: {{ keyword_form.keyword(size=30) }}<br>
+          {{ keyword_form.keyword(size=20) }} <input type="submit" value="&rarr;"><br>
           {% for error in keyword_form.keyword.errors %}
             <span style="color: red;">[{{ error }}]</span>
           {% endfor %}
       </p>
-      <p><input type="submit" value="generate"></p>
   </form>
 {% endblock %}

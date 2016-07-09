@@ -51,8 +51,8 @@ def input():
 
   return render_template("cartoon.html",
     header="cartoonist",
-    caption=cap.text,
     menu=True,
+    save=True,
     svgwrite=Markup(svg_cartoon),
     keyword_form=keyword_form)
 

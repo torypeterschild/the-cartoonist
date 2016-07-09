@@ -14,9 +14,10 @@ def get_noisy_path_str(pure_ps):
 
 class Cartoon:
   def __init__(self, caption):
-    self.paper = svgwrite.Drawing(size=('100%', '100%'))
+    self.paper = svgwrite.Drawing(size=('100%', '100%'),debug=True)
     self.head = random.choice(shapes.head_dict.keys())
     self.eyes = random.choice(shapes.eye_dict.keys())
+    self.mouth = random.choice(shapes.mouth_dict.keys())
     self.paths = [shapes.head_dict[self.head], shapes.eye_dict[self.eyes]]
     self.objs = []
     self.noisy_paths = []
@@ -26,7 +27,7 @@ class Cartoon:
     self.svg = svgwrite.Drawing(size=('100%', '100%'))
 
   def __str__(self):
-    descr = "\n-- CARTOON INSTANCE --\nHead is %s. Eyes are %s" % (self.head, self.eyes)
+    descr = "\n-- CARTOON INSTANCE --\nHead is %s.\nEyes are %s.\nMouth is %s." % (self.head, self.eyes, self.mouth)
     caption = self.caption.__str__()
     end = "\n-- END CARTOON INSTANCE --"
     return descr + caption + end
@@ -57,14 +58,23 @@ class Cartoon:
   def create_head(self):
     noisy_head = get_noisy_path_str(shapes.head_dict[self.head])
     head = self.paper.path(d=noisy_head,fill="pink",stroke="blue",fill_rule="evenodd")
+    head.translate(50,50)
     return head
 
   def create_eyes(self):
     noisy_eyes = get_noisy_path_str(shapes.eye_dict[self.eyes])
     l_eye = self.paper.path(d=noisy_eyes,fill="blue",opacity=0.5,stroke="red")
     r_eye = copy.deepcopy(l_eye)
-    r_eye.translate(125,0)
+    r_eye.translate(250,100)
+    l_eye.translate(100,100)
     return (l_eye, r_eye)
+
+  def create_mouth(self):
+    mouth = self.paper.path(d=shapes.mouth_dict[self.mouth],fill="purple",opacity=0.3,stroke="red")
+    mouth.translate(175,300)
+    if self.mouth is "circle" or self.mouth is "w_ellipse":
+      mouth.scale(.35)
+    return mouth
 
   def create_caption(self):
     i = 500
@@ -84,7 +94,10 @@ class Cartoon:
     self.paper.add(r_eye)
     mask = self.paper.mask(fill_rule="evenodd")
     mask.add(head).fill("yellow",opacity=0.7)
+    mask.add(l_eye).fill("orange",opacity=0.7)
     caption_elem = self.create_caption()
+    mouth = self.create_mouth()
+    self.paper.add(mouth)
     self.paper.add(caption_elem)
     self.paper.add(mask)
     return self.paper.tostring()
