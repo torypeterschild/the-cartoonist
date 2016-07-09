@@ -35,6 +35,9 @@ def get_noisy_path_str(pure_ps):
   noisy_ps = obj.make_noisy_path_str()
   return noisy_ps
 
+def rN():
+  return random.uniform(0.95,1.05)
+
 
 class Cartoon:
   def __init__(self, caption):
@@ -112,30 +115,51 @@ class Cartoon:
     return caption_elem
 
   def create_path(self):
-    d = [('M', Q0_X, Q0_Y)]
-    path = self.paper.path(d=d, fill='none', stroke='orange', stroke_width='1')
-    path.push("C%d,%d %d,%d %d,%d" % (X_MAX,Y_MIN,X_MAX,Y_MIN,Q1_X,Q1_Y))
-    path.push("C%d,%d %d,%d %d,%d" % (X_MAX,Y_MAX,X_MAX,Y_MAX,Q2_X,Q2_Y))
-    path.push("C%d,%d %d,%d %d,%d" % (X_MIN,Y_MAX,X_MIN,Y_MAX,Q3_X,Q3_Y))
-    path.push("C%d,%d %d,%d %d,%d" % (X_MIN,Y_MIN,X_MIN,Y_MIN,Q0_X,Q0_Y))
+    d = ('M', Q0_X, Q0_Y)
+    path = self.paper.path(d=d, fill='blue', opacity=0.3, stroke='orange', stroke_width='3')
+    path.push("S%d,%d %d,%d" % (X_MAX,Y_MIN,Q1_X,Q1_Y))
+    path.push("C%d,%d %d,%d %d,%d" % (X_MAX*rN(),Y_MAX*rN(),X_MAX*rN(),Y_MAX*rN(),Q2_X*rN(),Q2_Y*rN()))
+    path.push("C%d,%d %d,%d %d,%d" % (X_MIN*rN(),Y_MAX*rN(),X_MIN*rN(),Y_MAX*rN(),Q3_X*rN(),Q3_Y*rN()))
+    path.push("C%d,%d %d,%d %d,%d" % (X_MIN*rN(),Y_MIN*rN(),X_MIN*rN(),Y_MIN*rN(),Q0_X,Q0_Y))
+    print("\nCOMMANDS\n")
+    print(path.commands)
     return path
+
+  def create_eye_path(self):
+    eye1 = self.paper.circle(center=(Q0_X*.75, Q0_Y*1.5), r=25, fill='pink', opacity=0.4, stroke='red', stroke_width='2')
+    eye2 = copy.deepcopy(eye1)
+    # eye1.translate(Q0_X)
+    eye2.translate(Q0_X*.25)
+    pupil1 = self.paper.circle(center=(eye1['cx']*rN(), eye1['cy']*rN()), r=(eye1['r']/5), fill='grey', stroke='blue', stroke_width='2')
+    pupil2 = copy.deepcopy(pupil1)
+    pupil2.translate(Q0_X*.25)
+    return (eye1, eye2, pupil1, pupil2)
+
 
   def assemble(self):
     head = self.create_head()
     l_eye, r_eye = self.create_eyes()
-    self.paper.add(head)
-    self.paper.add(l_eye)
-    self.paper.add(r_eye)
+    eye1, eye2, pupil1, pupil2 = self.create_eye_path()
+    # self.paper.add(head)
+    # self.paper.add(l_eye)
+    # self.paper.add(r_eye)
     mask = self.paper.mask(fill_rule="evenodd")
-    mask.add(head).fill("yellow",opacity=0.7)
-    mask.add(l_eye).fill("orange",opacity=0.7)
+    # mask.add(head).fill("yellow",opacity=0.7)
+    # mask.add(l_eye).fill("orange",opacity=0.7)
     caption_elem = self.create_caption()
     mouth = self.create_mouth()
-    self.paper.add(mouth)
+    # self.paper.add(mouth)
     self.paper.add(caption_elem)
-    self.paper.add(mask)
+    # self.paper.add(mask)
     path = self.create_path()
     self.paper.add(path)
+    self.paper.add(eye1)
+    self.paper.add(eye2)
+    self.paper.add(pupil1)
+    self.paper.add(pupil2)
+    print("\n=====EYE1 INFO======\N")
+    print(eye1.tostring())
+    print(eye1['cx'])
     return self.paper.tostring()
 
 

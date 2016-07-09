@@ -1,8 +1,8 @@
 from textblob import TextBlob
 import random, sys, os
 
-LINE_MAX = 6
-WORDS_MAX = 24
+LINE_MAX = 5
+WORDS_MAX = 20
 ERROR = "?#$*&! - that word is not in the corpus."
 
 
