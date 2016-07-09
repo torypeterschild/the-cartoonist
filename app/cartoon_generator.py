@@ -5,6 +5,30 @@ import svgwrite
 from svgwrite.text import TSpan
 import copy
 
+""" SIZE OF DRAWING """
+WIDTH = 1000
+HEIGHT = 1000
+widthmm = "%fmm" % WIDTH
+heightmm = "%fmm" % HEIGHT
+
+""" SIZE OF HEAD OUTLINE """
+X_MIN = WIDTH * .25
+X_MAX = WIDTH * .75
+Y_MIN = HEIGHT * .2
+Y_MAX = HEIGHT * .6
+Q0_X = (X_MIN + X_MAX)/2
+Q0_Y = Y_MIN
+Q1_X = X_MAX
+Q1_Y = (Y_MIN + Y_MAX)/2
+Q2_X = (X_MIN + X_MAX)/2
+Q2_Y = Y_MAX
+Q3_X = X_MIN
+Q3_Y = (Y_MIN + Y_MAX)/2
+
+""" CAPTION """
+CAPTION_X = (X_MIN + X_MAX)/6
+CAPTION_Y = Y_MAX + (HEIGHT*.1)
+
 
 def get_noisy_path_str(pure_ps):
   obj = svg_utils.svgObject(pure_ps)
@@ -14,7 +38,8 @@ def get_noisy_path_str(pure_ps):
 
 class Cartoon:
   def __init__(self, caption):
-    self.paper = svgwrite.Drawing(size=('100%', '100%'),debug=True)
+    self.paper = svgwrite.Drawing(size=(widthmm, heightmm),debug=True)
+    self.paper.viewbox(width=WIDTH,height=HEIGHT)
     self.head = random.choice(shapes.head_dict.keys())
     self.eyes = random.choice(shapes.eye_dict.keys())
     self.mouth = random.choice(shapes.mouth_dict.keys())
@@ -23,8 +48,8 @@ class Cartoon:
     self.noisy_paths = []
     self.bounding_box = None
     self.caption = caption
-    self.captext = "And my feeling is, I don't know how religious she can be in that outfit. I mean, I tried to tell her, it's all about social capital."
-    self.svg = svgwrite.Drawing(size=('100%', '100%'))
+    self.svg = svgwrite.Drawing(size=(1000, 1000))
+    #dwg.viewbox(width=args.width,height=args.height)
 
   def __str__(self):
     descr = "\n-- CARTOON INSTANCE --\nHead is %s.\nEyes are %s.\nMouth is %s." % (self.head, self.eyes, self.mouth)
@@ -57,13 +82,13 @@ class Cartoon:
 
   def create_head(self):
     noisy_head = get_noisy_path_str(shapes.head_dict[self.head])
-    head = self.paper.path(d=noisy_head,fill="pink",stroke="blue",fill_rule="evenodd")
+    head = self.paper.path(d=noisy_head,fill="blue",stroke="blue",fill_rule="evenodd")
     head.translate(50,50)
     return head
 
   def create_eyes(self):
     noisy_eyes = get_noisy_path_str(shapes.eye_dict[self.eyes])
-    l_eye = self.paper.path(d=noisy_eyes,fill="blue",opacity=0.5,stroke="red")
+    l_eye = self.paper.path(d=noisy_eyes,fill="pink",opacity=0.5,stroke="red")
     r_eye = copy.deepcopy(l_eye)
     r_eye.translate(250,100)
     l_eye.translate(100,100)
@@ -77,14 +102,23 @@ class Cartoon:
     return mouth
 
   def create_caption(self):
-    i = 500
-    caption_elem = self.paper.text("", insert=(0, 0))
+    i = CAPTION_Y
+    caption_elem = self.paper.text("", insert=(CAPTION_X, 0))
     for line in self.caption.lines:
-      ts = TSpan(line, insert=(0, i), style = "font-size:40px;")
+      ts = TSpan(line, insert=(CAPTION_X, i), style = "font-size:50px;")
       caption_elem.add(ts)
-      i = i + 40
+      i = i + 50
     caption_elem.rotate(self.caption.tilt)
     return caption_elem
+
+  def create_path(self):
+    d = [('M', Q0_X, Q0_Y)]
+    path = self.paper.path(d=d, fill='none', stroke='orange', stroke_width='1')
+    path.push("C%d,%d %d,%d %d,%d" % (X_MAX,Y_MIN,X_MAX,Y_MIN,Q1_X,Q1_Y))
+    path.push("C%d,%d %d,%d %d,%d" % (X_MAX,Y_MAX,X_MAX,Y_MAX,Q2_X,Q2_Y))
+    path.push("C%d,%d %d,%d %d,%d" % (X_MIN,Y_MAX,X_MIN,Y_MAX,Q3_X,Q3_Y))
+    path.push("C%d,%d %d,%d %d,%d" % (X_MIN,Y_MIN,X_MIN,Y_MIN,Q0_X,Q0_Y))
+    return path
 
   def assemble(self):
     head = self.create_head()
@@ -100,6 +134,8 @@ class Cartoon:
     self.paper.add(mouth)
     self.paper.add(caption_elem)
     self.paper.add(mask)
+    path = self.create_path()
+    self.paper.add(path)
     return self.paper.tostring()
 
 
