@@ -4,6 +4,7 @@ import shapes, caption
 import svgwrite
 from svgwrite.text import TSpan
 import copy
+import math
 
 """ SIZE OF DRAWING """
 WIDTH = 1000
@@ -16,17 +17,20 @@ X_MIN = WIDTH * .25
 X_MAX = WIDTH * .75
 Y_MIN = HEIGHT * .2
 Y_MAX = HEIGHT * .6
-Q0_X = (X_MIN + X_MAX)/2
+CX = (X_MIN + X_MAX)/2
+CY = (Y_MIN + Y_MAX)/2
+R = WIDTH/4
+Q0_X = CX
 Q0_Y = Y_MIN
 Q1_X = X_MAX
-Q1_Y = (Y_MIN + Y_MAX)/2
-Q2_X = (X_MIN + X_MAX)/2
+Q1_Y = CY
+Q2_X = CX
 Q2_Y = Y_MAX
 Q3_X = X_MIN
-Q3_Y = (Y_MIN + Y_MAX)/2
+Q3_Y = CY
 
 """ CAPTION """
-CAPTION_X = (X_MIN + X_MAX)/6
+CAPTION_X = CX - R
 CAPTION_Y = Y_MAX + (HEIGHT*.1)
 
 
@@ -37,6 +41,42 @@ def get_noisy_path_str(pure_ps):
 
 def rN():
   return random.uniform(0.95,1.05)
+
+def rC():
+  r = lambda: random.randint(0,255)
+  return "#%02X%02X%02X" % (r(),r(),r())
+
+def rI(a,b):
+  return random.randint(a,b)
+
+def rS():
+  sc = [1, random.uniform(0.5,1.05)]
+  return random.choice(sc)
+
+def get_d_string(tuples_li):
+  print("INSIDE GET D STRING")
+  str_li = []
+  for elem in tuples_li:
+    if len(elem) > 1:
+      s = ",".join(map(str,elem))
+      str_li.append(s)
+    else:
+      str_li.append(elem)
+  joined = " ".join(str_li)
+  return joined
+
+
+def create_points(n, r, cx, cy):
+  points = ['M']
+  s = (2 * math.pi)/n
+  for i in range(n):
+    a = s * i
+    new_x = cx + r * math.cos(a) * rN()
+    new_y = cy + r * math.sin(a) * rN()
+    p = (new_x, new_y)
+    points.append(p)
+  d = get_d_string(points)
+  return d  
 
 
 class Cartoon:
@@ -52,7 +92,6 @@ class Cartoon:
     self.bounding_box = None
     self.caption = caption
     self.svg = svgwrite.Drawing(size=(1000, 1000))
-    #dwg.viewbox(width=args.width,height=args.height)
 
   def __str__(self):
     descr = "\n-- CARTOON INSTANCE --\nHead is %s.\nEyes are %s.\nMouth is %s." % (self.head, self.eyes, self.mouth)
@@ -91,7 +130,7 @@ class Cartoon:
 
   def create_eyes(self):
     noisy_eyes = get_noisy_path_str(shapes.eye_dict[self.eyes])
-    l_eye = self.paper.path(d=noisy_eyes,fill="pink",opacity=0.5,stroke="red")
+    l_eye = self.paper.path(d=noisy_eyes,fill="pink",opacity=1,stroke="red")
     r_eye = copy.deepcopy(l_eye)
     r_eye.translate(250,100)
     l_eye.translate(100,100)
@@ -116,7 +155,7 @@ class Cartoon:
 
   def create_path(self):
     d = ('M', Q0_X, Q0_Y)
-    path = self.paper.path(d=d, fill='blue', opacity=0.3, stroke='orange', stroke_width='3')
+    path = self.paper.path(d=d, fill=rC(), opacity=0.3, stroke='orange', stroke_width='3')
     path.push("S%d,%d %d,%d" % (X_MAX,Y_MIN,Q1_X,Q1_Y))
     path.push("C%d,%d %d,%d %d,%d" % (X_MAX*rN(),Y_MAX*rN(),X_MAX*rN(),Y_MAX*rN(),Q2_X*rN(),Q2_Y*rN()))
     path.push("C%d,%d %d,%d %d,%d" % (X_MIN*rN(),Y_MAX*rN(),X_MIN*rN(),Y_MAX*rN(),Q3_X*rN(),Q3_Y*rN()))
@@ -126,10 +165,10 @@ class Cartoon:
     return path
 
   def create_eye_path(self):
-    eye1 = self.paper.circle(center=(Q0_X*.75, Q0_Y*1.5), r=25, fill='pink', opacity=0.4, stroke='red', stroke_width='2')
+    eye1 = self.paper.circle(center=(Q0_X*.75*rN(), Q0_Y*1.5*rN()), r=25*rN(), fill='pink', opacity=0.4, stroke='red', stroke_width='2')
     eye2 = copy.deepcopy(eye1)
-    # eye1.translate(Q0_X)
     eye2.translate(Q0_X*.25)
+    # eye2.scale(0.5)
     pupil1 = self.paper.circle(center=(eye1['cx']*rN(), eye1['cy']*rN()), r=(eye1['r']/5), fill='grey', stroke='blue', stroke_width='2')
     pupil2 = copy.deepcopy(pupil1)
     pupil2.translate(Q0_X*.25)
@@ -152,11 +191,16 @@ class Cartoon:
     self.paper.add(caption_elem)
     # self.paper.add(mask)
     path = self.create_path()
-    self.paper.add(path)
+    # self.paper.add(path)
     self.paper.add(eye1)
     self.paper.add(eye2)
     self.paper.add(pupil1)
     self.paper.add(pupil2)
+    d = create_points(rI(50,100), R, CX, CY)
+    face = self.paper.path(d=d, fill=rC(), opacity=0.3, stroke='black', stroke_width='3')
+    # face.scale(rS(),rS())
+    # face.translate(0.25*rN()*CX,0)
+    self.paper.add(face)
     print("\n=====EYE1 INFO======\N")
     print(eye1.tostring())
     print(eye1['cx'])
