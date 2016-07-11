@@ -11,7 +11,7 @@ class Eye:
     self.cy = cy
     self.outline = pu.create_circ_points(n, r, cx, cy)
     self.pupil = svgwrite.shapes.Circle(center=(cx*noise.rN(),cy*noise.rN()), 
-      r=(noise.rN()*r/5), fill='grey', stroke='blue', stroke_width=noise.rI(1,3))
+      r=(noise.rN()*r/5), fill=noise.rC(), opacity=0.7, stroke=noise.rC(), stroke_width=noise.rI(1,3))
 
   def translate(self, tx, ty=None):
     if ty is not None:

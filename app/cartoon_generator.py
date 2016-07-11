@@ -158,10 +158,10 @@ class Cartoon:
     print(path.commands)
     return path
 
-  def create_eye_path(self):
-    eye1 = eye.Eye(40, 20*rI(1,3), Q0_X*.75*rN(), Q0_Y*1.5*rN())
+  def create_eye_path(self, head):
+    eye1 = eye.Eye(40, 20*rI(1,3), head.cx - .25*head.r, head.cy-.25*head.r)
     eye2 = copy.deepcopy(eye1)
-    eye2.translate(Q0_X*.25)
+    eye2.translate(head.r*.5)
     return eye1, eye2
 
 
@@ -169,7 +169,7 @@ class Cartoon:
     head_ = self.create_head()
     l_eye, r_eye = self.create_eyes()
     # eye1t, eye2, pupil1, pupil2 = self.create_eye_path()
-    eye1, eye2 = self.create_eye_path()
+    eye1, eye2 = self.create_eye_path(head_)
     mask = self.paper.mask(fill_rule="evenodd")
     caption_elem = self.create_caption()
     mouth = self.create_mouth()

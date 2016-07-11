@@ -17,7 +17,7 @@ import noise
 """
 def create_circ_points(n, r, cx, cy):
   path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  path.fill(noise.rC(),opacity=0.4).stroke(noise.rC(),width="3")
+  path.fill(noise.rC(),opacity=0.4).stroke(noise.rC(),width=noise.rI(0,3))
   s = (2 * math.pi)/n
   for i in range(n):
     a = s * i
@@ -116,16 +116,20 @@ def create_misshapen_head_x(n, r, cx, cy):
 """
 def create_fuzzy_head(n, r, cx, cy):
   path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  path.fill(noise.rC(),opacity=0.5).stroke("grey",width="3")
+  path.fill(noise.rC(),opacity=0.3).stroke("grey",width="1")
   s = (2 * math.pi)/n
   for i in range(n):
     a = s * i
-    if i == n/2:
-      dx = cx + r * math.cos(a)
-      dy = cy - r * math.sin(a)
-      path.push("S %d,%d %d,%d " % (dx,dy,dx*noise.rN(),dy*noise.rN()))
-    new_x = cx + r * math.cos(a)
-    new_y = cy + r * noise.rN() * math.sin(a)
-    path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
+    if math.pi*(3/2) < a:
+      print("\nTRUEEEEE")
+      dx = cx + .4*noise.rN()*a*r * math.cos(a)
+      dy = cy - .3*noise.rN()*a*r - math.sin(a)
+      path.push('L %d,%d' % (dx,dy))
+      # path.push("S %d,%d %d,%d " % (dx,dy,dx*noise.rN(),dy*noise.rN()))
+    print("IN FUZZY HEAD")
+    new_x = cx + r*.7 * math.cos(a)
+    new_y = cy + r*.8 * math.sin(a)
+    path.push('L %d,%d' % (new_x,new_y))
+    # path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
   return path
 
