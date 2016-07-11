@@ -37,8 +37,8 @@ class Caption:
           if len(words) < WORDS_MAX:
             sentence_list.append(sentence.replace("\n", " "))
         # TEMPORARY
-        elif len(words) < WORDS_MAX:
-          sentence_list.append(sentence.replace("\n", " "))
+        # elif len(words) < WORDS_MAX:
+        #   sentence_list.append(sentence.replace("\n", " "))
     if not sentence_list:
       self.text = ERROR
     else:

@@ -117,13 +117,14 @@ def create_points_exp(n, r, cx, cy):
 """ EXPERIMENT 2 """
 def create_points_r(n, r, cx, cy):
   pp = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  pp.fill(rC(),opacity=0.3).stroke("grey",width="3")
+  pp.fill(rC(),opacity=0.3).stroke("grey",width="1")
   # pp.push_arc(target=(CX,CY), rotation=30, r=(2,4), large_arc=False, angle_dir='-', absolute=True)
   points = ['M']
   s = (2 * math.pi)/n
   rr = r
   for i in range(n):
     a = s * i
+    # use these numbers for home page, use -10,5 or -10,15 for real drawings
     rr = rr + rI(-10,5)
     new_x = cx + rr * math.cos(a)
     new_y = cy + rr * rN() * math.sin(a)
@@ -222,7 +223,7 @@ class Cartoon:
     return path
 
   def create_eye_path(self):
-    eye1 = self.paper.circle(center=(Q0_X*.75*rN(), Q0_Y*1.5*rN()), r=25*rN(), fill=rC(), opacity=0.4, stroke=rC(), stroke_width='5')
+    eye1 = self.paper.circle(center=(Q0_X*.75*rN(), Q0_Y*1.5*rN()), r=25*rI(1,3), fill=rC(), opacity=0.4, stroke=rC(), stroke_width='5')
     eye2 = copy.deepcopy(eye1)
     eye2.translate(Q0_X*.25)
     # eye2.scale(0.5)
@@ -246,7 +247,7 @@ class Cartoon:
     # self.paper.add(mask)
     path = self.create_path()
     # self.paper.add(path)
-    pp = create_points_r(30, R, CX, CY)
+    pp = create_points_r(1000, R, CX, CY)
     # face = self.paper.path(d=d, fill=rC(), opacity=0.3, stroke='black', stroke_width='3')
     # face.push_arc(target=(CX,CY), rotation=30, r=(2,4), large_arc=False, angle_dir='-', absolute=True)
     # face.scale(rS(),rS())
