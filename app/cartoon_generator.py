@@ -5,6 +5,7 @@ import svgwrite
 from svgwrite.text import TSpan
 import copy
 import math
+import eye
 
 """ SIZE OF DRAWING """
 WIDTH = 1000
@@ -67,6 +68,19 @@ def get_d_string(tuples_li):
       str_li.append(elem)
   joined = " ".join(str_li)
   return joined
+
+
+""" CIRCLE """
+def create_circ_points(n, r, cx, cy):
+  path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
+  path.fill(rC(),opacity=0.4).stroke(rC(),width="3")
+  s = (2 * math.pi)/n
+  for i in range(n):
+    a = s * i
+    new_x = cx + r * math.cos(a)
+    new_y = cy + r * math.sin(a)
+    path.push(" %d,%d" % (new_x, new_y))
+  return path
 
 
 """ PAC MAN SHAPE """
@@ -223,20 +237,23 @@ class Cartoon:
     return path
 
   def create_eye_path(self):
-    eye1 = self.paper.circle(center=(Q0_X*.75*rN(), Q0_Y*1.5*rN()), r=25*rI(1,3), fill=rC(), opacity=0.4, stroke=rC(), stroke_width='5')
+    eye1 = eye.Eye(40, 20*rI(1,3), Q0_X*.75*rN(), Q0_Y*1.5*rN())
+    # eye1 = create_circ_points(40, 25*rI(1,3), Q0_X*.75*rN(), Q0_Y*1.5*rN())
+    # # eye1 = self.paper.circle(center=(Q0_X*.75*rN(), Q0_Y*1.5*rN()), r=25*rI(1,3), fill=rC(), opacity=0.4, stroke=rC(), stroke_width='5')
     eye2 = copy.deepcopy(eye1)
     eye2.translate(Q0_X*.25)
-    # eye2.scale(0.5)
-    pupil1 = self.paper.circle(center=(eye1['cx']*rN(), eye1['cy']*rN()), r=(eye1['r']/5), fill='grey', stroke='blue', stroke_width='2')
-    pupil2 = copy.deepcopy(pupil1)
-    pupil2.translate(Q0_X*.25)
-    return (eye1, eye2, pupil1, pupil2)
+    # # eye2.scale(0.5)
+    # pupil1 = self.paper.circle(center=(eye1['cx']*rN(), eye1['cy']*rN()), r=(eye1['r']/5), fill='grey', stroke='blue', stroke_width='2')
+    # pupil2 = copy.deepcopy(pupil1)
+    # pupil2.translate(Q0_X*.25)
+    return eye1, eye2
 
 
   def assemble(self):
     head = self.create_head()
     l_eye, r_eye = self.create_eyes()
-    eye1, eye2, pupil1, pupil2 = self.create_eye_path()
+    # eye1t, eye2, pupil1, pupil2 = self.create_eye_path()
+    eye1, eye2 = self.create_eye_path()
     mask = self.paper.mask(fill_rule="evenodd")
     caption_elem = self.create_caption()
     mouth = self.create_mouth()
@@ -244,10 +261,15 @@ class Cartoon:
     path = self.create_path()
     pp = create_points_r(1000, R, CX, CY)
     self.paper.add(pp)
-    self.paper.add(eye1)
-    self.paper.add(eye2)
-    self.paper.add(pupil1)
-    self.paper.add(pupil2)
+    self.paper.add(eye1.outline)
+    self.paper.add(eye1.pupil)
+    self.paper.add(eye2.outline)
+    self.paper.add(eye2.pupil)
+    print(eye1.__str__())
+    # self.paper.add(eye1t)
+    # self.paper.add(eye2)
+    # self.paper.add(pupil1)
+    # self.paper.add(pupil2)
     return self.paper.tostring()
 
 
