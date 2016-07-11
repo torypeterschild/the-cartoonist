@@ -5,6 +5,7 @@ from textblob import TextBlob
 import random, sys, os, json
 import svg_utils, shapes
 import cartoon_generator as cg
+import caption
 
 captionpersist = list()
 
@@ -12,17 +13,11 @@ captionpersist = list()
 @app.route("/index")
 def index():
   save_form = SaveForm()
-  z = cg.Cartoon()
-  print(z.__str__())
-  zz = z.bundle_noisy_paths()
-  t = svg_utils.inject_path_data(shapes.circle)
-  y = svg_utils.svgObject(shapes.circle)
-  n = y.make_noisy_svg()
   return render_template("cartoon.html",
     header="cartoonist",
     menu=True,
-    buttons=True,
-    svg=Markup(zz),
+    buttons=False,
+    svg=" ",
     save_form=save_form)
 
 
@@ -35,32 +30,32 @@ def input():
   with app.open_resource('static/corpus000.txt') as f:
     content = f.read()
 
-  blob = TextBlob(content.decode('utf-8'))
-  caption = " "  
-
-  sentence_list = list()
-
   if keyword_form.keyword.data is not None:
-    for sentence in blob.sentences:
-      words = sentence.split()
-      if keyword_form.keyword.data in words or keyword_form.keyword.data.lower() in words:
-        sentence_list.append(sentence.replace("\n", " "))
+    keyword = keyword_form.keyword.data 
+    cap = caption.Caption(content,keyword)
+    cap.make()
+    print(cap.__str__())
+    cartoon = cg.Cartoon(cap)
+    print(cartoon.__str__())
   else:
     return render_template("input.html",
       header="cartoonist",
       menu=True,
-      keyword_form=keyword_form)        
-  
-  if not sentence_list:
-    caption = "?#$*&! - that word is not in the corpus."
-  else:
-    caption = random.choice(sentence_list)
+      keyword_form=keyword_form)
+
+  print("\nTEST CAP LINES")
+  for i in cap.lines:
+    print(i)
+
+  svg_cartoon = cartoon.assemble()
 
   return render_template("cartoon.html",
     header="cartoonist",
-    caption=caption,
     menu=True,
+    save=True,
+    svgwrite=Markup(svg_cartoon),
     keyword_form=keyword_form)
+
 
 """ TODO: Render save-cartoon template like cartoon template
     in the same style as cartoon template """

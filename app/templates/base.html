@@ -8,7 +8,7 @@
     {% endif %}
     <link href="/static/styles.css" rel="stylesheet">
     <script language="javascript" type="text/javascript" src="/static/js/Snap.svg-0.4.1/dist/snap.svg-min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
   </head>
   <body>
     <h1>{{ header }}</h1>
@@ -17,6 +17,7 @@
       <a href="/index">home</a><a href="/input">enter keyword</a>
     </div>
     {% endif %}
+    {% block content %}{% endblock %}
     {% if buttons %}
     <div class="button-container">
       <ul>
@@ -36,10 +37,7 @@
       </ul>
     </div>
     {% endif %}
-    <div id="drawing">{% include "dog.svg" %}</div>
-    <div id="facedrawing">{% include "circle_trimmed.svg" %}</div>
-<!--     {{ svg }} -->
-    {% block content %}{% endblock %}
+    <div id="pythonSVGWRITE">{{ svgwrite }}</div>
     <script language="javascript" type="text/javascript" src="/static/js/draw.js"></script>
   </body>
 </html>
