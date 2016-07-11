@@ -5,7 +5,7 @@ import svgwrite
 from svgwrite.text import TSpan
 import copy
 import math
-import eye
+import eye, head
 import path_utilities as pu
 
 """ SIZE OF DRAWING """
@@ -116,10 +116,11 @@ class Cartoon:
     return svg_html
 
   def create_head(self):
-    noisy_head = get_noisy_path_str(shapes.head_dict[self.head])
-    head = self.paper.path(d=noisy_head,fill="blue",stroke="blue",fill_rule="evenodd")
-    head.translate(50,50)
-    return head
+    # noisy_head = get_noisy_path_str(shapes.head_dict[self.head])
+    # head = self.paper.path(d=noisy_head,fill="blue",stroke="blue",fill_rule="evenodd")
+    # head.translate(50,50)
+    head_ = head.Head(100, R, CX, CY)
+    return head_
 
   def create_eyes(self):
     noisy_eyes = get_noisy_path_str(shapes.eye_dict[self.eyes])
@@ -165,7 +166,7 @@ class Cartoon:
 
 
   def assemble(self):
-    head = self.create_head()
+    head_ = self.create_head()
     l_eye, r_eye = self.create_eyes()
     # eye1t, eye2, pupil1, pupil2 = self.create_eye_path()
     eye1, eye2 = self.create_eye_path()
@@ -174,18 +175,13 @@ class Cartoon:
     mouth = self.create_mouth()
     self.paper.add(caption_elem)
     path = self.create_path()
-    pp = pu.create_misshapen_head_x(100, R, CX, CY)
-    # pp = pu.create_pacman_head(1000, R, CX, CY)
-    self.paper.add(pp)
+    self.paper.add(head_.outline)
     self.paper.add(eye1.outline)
     self.paper.add(eye1.pupil)
     self.paper.add(eye2.outline)
     self.paper.add(eye2.pupil)
     print(eye1.__str__())
-    # self.paper.add(eye1t)
-    # self.paper.add(eye2)
-    # self.paper.add(pupil1)
-    # self.paper.add(pupil2)
+    print(head_.__str__())
     return self.paper.tostring()
 
 

@@ -104,9 +104,10 @@ def create_misshapen_head_x(n, r, cx, cy):
     new_x = cx + r * math.cos(a)
     new_y = cy + r * noise.rN() * math.sin(a)
     if a > math.pi*noise.rN() and a < math.pi*2*noise.rN():
-      new_x -= math.cos(a) * (r * 0.6)
+      new_x -= math.cos(a) * (r * 0.2)
+      new_y -= math.sin(a) * (r * 0.3)
     p = (new_x, new_y)
-    # path.push('L %d,%d' % (new_x,new_y))
+    path.push('L %d,%d' % (new_x,new_y))
     path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
   return path
 

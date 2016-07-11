@@ -1,7 +1,7 @@
 import svgwrite
 import path_utilities as pu
 import noise
-
+import random
 
 class Head:
   def __init__(self, n, r, cx, cy):
@@ -9,8 +9,14 @@ class Head:
     self.r = r
     self.cx = cx
     self.cy = cy
-    self.shape_id = noise.rI(0,5)
+    self.shape_id = random.choice([0, 1, 2])
     self.outline = pu.create_circ_points(n, r, cx, cy)
+    if self.shape_id is 0:
+      self.outline = pu.create_misshapen_head(n, r, cx, cy)
+    elif self.shape_id is 1:
+      self.outline = pu.create_misshapen_head_x(n, r, cx, cy)
+    elif self.shape_id is 2:
+      self.outline = pu.create_spiky_head(n, r, cx, cy)
 
   def translate(self, tx, ty=None):
     if ty is not None:
@@ -30,4 +36,4 @@ class Head:
     radius = "Radius: %d\n" % (self.r)
     center = "cx is %d, cy is %d\n" % (self.cx, self.cy)
     shape = "Shape is type: \n%s" % (self.shape_id)
-    return title + num_points + radius + center + pupil
+    return title + num_points + radius + center + shape
