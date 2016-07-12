@@ -9,7 +9,7 @@ class Head:
     self.r = r
     self.cx = cx
     self.cy = cy
-    self.shape_id = random.choice([0,1,2,3])
+    self.shape_id = random.choice([0,1,2])
     self.outline = pu.create_circ_points(n, r, cx, cy)
     if self.shape_id is 0:
       self.outline = pu.create_misshapen_head(n, r, cx, cy)
@@ -17,8 +17,8 @@ class Head:
       self.outline = pu.create_misshapen_head_x(n, r, cx, cy)
     elif self.shape_id is 2:
       self.outline = pu.create_spiky_head(n, r, cx, cy)
-    elif self.shape_id is 3:
-      self.outline = pu.create_fuzzy_head(n, r, cx, cy)
+    # elif self.shape_id is 3:
+    #   self.outline = pu.create_fuzzy_head(n, r, cx, cy)
 
   def translate(self, tx, ty=None):
     if ty is not None:
