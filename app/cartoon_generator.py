@@ -72,6 +72,8 @@ class Cartoon:
     self.paper.add(caption_elem)
     self.paper.add(self.head.outline)
     self.paper.add(eye1.outline_e)
+    hair = self.head.make_hair()
+    self.paper.add(hair)
     print("EYE1 TO STRING")
     lash_path = eye1.make_wild_lashes()
     # lash_path_r = copy.deepcopy(lash_path)
