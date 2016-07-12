@@ -30,9 +30,11 @@ class Eye:
     s = (2 * math.pi)/self.n
     for i in range(self.n):
       a = s * i
+      ad = math.degrees(a)
       xp = cx + rx * math.cos(a)
       yp = cy + ry * math.sin(a)
-      if a > math.pi*(5/4):
+      # if a > math.pi*(5/4):
+      if 200 < ad < 360:
         dx = xp
         dy = yp - noise.rI(1,15)
         lash_path.push('M %d,%d' % (xp,yp))
@@ -50,9 +52,33 @@ class Eye:
     s = (2 * math.pi)/self.n
     for i in range(self.n):
       a = s * i
+      ad = math.degrees(a)
       xp = cx + rx * math.cos(a)
       yp = cy + ry * math.sin(a)
-      if a > math.pi*(7/4):
+      # if a > math.pi*(7/4):
+      if 200 < ad < 360:
+        path.push('%d,%d' % (xp,yp))
+        path.push('L %d,%d' % (xp,yp))
+    # path.push('L %d,%d' % (cx+rx,cy))
+    path.fill('grey',opacity=0.7)
+    return path
+
+  def make_lids_left(self):
+    cx = self.outline_e['cx']
+    cy = self.outline_e['cy']
+    rx = self.outline_e['rx']
+    ry = self.outline_e['ry']
+    # path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
+    path = svgwrite.path.Path('M')
+    # path.fill('grey',opacity=0.7)
+    s = (2 * math.pi)/self.n
+    for i in range(self.n):
+      a = s * i
+      ad = math.degrees(a)
+      xp = cx + rx * math.cos(a)
+      yp = cy + ry * math.sin(a)
+      # if a > math.pi*(7/4):
+      if 180 < ad < 340:
         path.push('%d,%d' % (xp,yp))
         path.push('L %d,%d' % (xp,yp))
     # path.push('L %d,%d' % (cx+rx,cy))
