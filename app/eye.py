@@ -20,7 +20,7 @@ class Eye:
       r=(noise.rN()*self.rx/5), fill=noise.rC(), opacity=0.7, stroke=noise.rC(), 
       stroke_width=noise.rI(1,3))
 
-  def make_wild_lashes(self):
+  def make_wild_lashes(self, l=True):
     cx = self.outline_e['cx']
     cy = self.outline_e['cy']
     rx = self.outline_e['rx']
@@ -33,8 +33,14 @@ class Eye:
       ad = math.degrees(a)
       xp = cx + rx * math.cos(a)
       yp = cy + ry * math.sin(a)
-      # if a > math.pi*(5/4):
-      if 200 < ad < 360:
+      if l is False:
+        a_min = 270
+        a_max = 360
+      else:
+        a_min = 180
+        a_max = 270
+      if a_min < ad < a_max:
+      # if 270 < ad < 360:
         dx = xp
         dy = yp - noise.rI(1,15)
         lash_path.push('M %d,%d' % (xp,yp))
