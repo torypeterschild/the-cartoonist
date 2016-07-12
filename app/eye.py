@@ -14,10 +14,10 @@ class Eye:
     self.ry = r*noise.rN(0.7,1.3)
     self.outline = pu.create_circ_points(n, r, cx, cy)
     self.outline_e = svgwrite.shapes.Ellipse(center=(cx*noise.rN(),cy*noise.rN()),
-      r=(self.rx, self.ry), fill=noise.rC(), opacity=0.7, 
+      r=(self.rx, self.ry), fill=noise.rC(), opacity=0.4, 
       stroke=noise.rC(), stroke_width=noise.rI(1,3))
     self.pupil = svgwrite.shapes.Circle(center=(cx+noise.rN(-.5,.5)*self.rx,cy+noise.rN(.1,.5)*self.ry), 
-      r=(noise.rN()*self.rx/5), fill=noise.rC(), opacity=0.7, stroke=noise.rC(), 
+      r=(noise.rN()*self.rx/5), fill=noise.rC(), opacity=0.4, stroke=noise.rC(), 
       stroke_width=noise.rI(1,3))
 
   def make_wild_lashes(self, l=True):

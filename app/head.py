@@ -28,15 +28,19 @@ class Head:
       a = s * i
       ad = math.degrees(a)
       xp = self.cx + self.r * math.cos(a)
+      xp1 = self.cx + self.r
       yp = self.cy + self.r * math.sin(a)
       # if a > math.pi*(7/4):
-      if 240 < ad < 300:
+      hair_width = noise.rI(10,30)
+      if (270-hair_width) < ad < (270+hair_width):
         dx = xp
-        dy = yp - 30 * noise.rI(1,8)
+        dy = yp - 20 * noise.rI(1,5)
         path.push('M %d,%d' % (xp,yp))
-        # path.push('L %d,%d' % (dx,dy))
+        path.push('L %d,%d' % (dx,dy))
         path.push('M %d,%d' % (xp-5,yp))
-        # path.push('L %d,%d' % (dx-5,dy))
+        path.push('L %d,%d' % (dx-5,dy))
+        path.push("S %d,%d %d,%d " % (dx*noise.rN(),dy*noise.rN(),dx,dy))
+        path.push('M %d,%d' % (xp,yp))
         path.push("S %d,%d %d,%d " % (dx*noise.rN(),dy*noise.rN(),dx,dy))
     # path.push('L %d,%d' % (cx+rx,cy))
     path.fill('blue',opacity=0.7).stroke('grey')
