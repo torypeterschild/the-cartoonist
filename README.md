@@ -1,1 +1,1 @@
-Draw and animate a cartoon using SVG.
+Generate a cartoon with SVG paths.

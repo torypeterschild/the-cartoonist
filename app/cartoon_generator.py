@@ -5,6 +5,8 @@ import svgwrite
 from svgwrite.text import TSpan
 import copy
 import math
+import eye, head
+import path_utilities as pu
 
 """ SIZE OF DRAWING """
 WIDTH = 1000
@@ -67,74 +69,7 @@ def get_d_string(tuples_li):
       str_li.append(elem)
   joined = " ".join(str_li)
   return joined
-
-
-""" PAC MAN SHAPE """
-def create_points(n, r, cx, cy):
-  points = ['M']
-  s = (2 * math.pi)/n
-  for i in range(n):
-    if i == n/2:
-      dx = cx + r * .35
-      dy = cy - r * math.sin(s)
-      dp = (dx, dy)
-      points.append(dp)
-    a = s * i
-    new_x = cx + r * math.cos(a)
-    new_y = cy + r * math.sin(a) * rN()
-    p = (new_x, new_y)
-    points.append(p)
-  d = get_d_string(points)
-  return d  
-
-
-""" EXPERIMENT """
-def create_points_exp(n, r, cx, cy):
-  pp = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  pp.fill(rC(),opacity=0.5).stroke("grey",width="3")
-  # pp.push_arc(target=(CX,CY), rotation=30, r=(2,4), large_arc=False, angle_dir='-', absolute=True)
-  points = ['M']
-  s = (2 * math.pi)/n
-  for i in range(n):
-    a = s * i
-    if i == n/2:
-      dx = cx + r * math.cos(a)
-      dy = cy - r * math.sin(a)
-      # pp.push("M %d,%d " % (CX+R,CY))
-      pp.push("S %d,%d %d,%d " % (dx,dy,dx*rN(),dy*rN()))
-      # dp = (dx, dy)
-      # points.append(dp)
-    new_x = cx + r * math.cos(a)
-    new_y = cy + r * rN() * math.sin(a)
-    p = (new_x, new_y)
-    # pp.push(p)
-    pp.push("S %d,%d %d,%d " % (new_x*rN(),new_y*rN(),new_x,new_y))
-    points.append(p)
-  d = get_d_string(points)
-  return d, pp
-
-
-""" EXPERIMENT 2 """
-def create_points_r(n, r, cx, cy):
-  pp = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  pp.fill(rC(),opacity=0.3).stroke("grey",width="1")
-  # pp.push_arc(target=(CX,CY), rotation=30, r=(2,4), large_arc=False, angle_dir='-', absolute=True)
-  points = ['M']
-  s = (2 * math.pi)/n
-  rr = r
-  for i in range(n):
-    a = s * i
-    # use these numbers for home page, use -10,5 or -10,15 for real drawings
-    rr = rr + rI(-10,5)
-    new_x = cx + rr * math.cos(a)
-    new_y = cy + rr * rN() * math.sin(a)
-    p = (new_x, new_y)
-    pp.push('L %d,%d' % (new_x,new_y))
-    pp.push("S %d,%d %d,%d " % (new_x*rN(),new_y*rN(),new_x,new_y))
-    # pp.push("S %d,%d %d,%d " % (new_x*rN(),new_y*rN(),new_x,new_y))
-  #   points.append(p)
-  # d = get_d_string(points)
-  return pp
+ 
 
 
 class Cartoon:
@@ -181,10 +116,11 @@ class Cartoon:
     return svg_html
 
   def create_head(self):
-    noisy_head = get_noisy_path_str(shapes.head_dict[self.head])
-    head = self.paper.path(d=noisy_head,fill="blue",stroke="blue",fill_rule="evenodd")
-    head.translate(50,50)
-    return head
+    # noisy_head = get_noisy_path_str(shapes.head_dict[self.head])
+    # head = self.paper.path(d=noisy_head,fill="blue",stroke="blue",fill_rule="evenodd")
+    # head.translate(50,50)
+    head_ = head.Head(100, R, CX, CY)
+    return head_
 
   def create_eyes(self):
     noisy_eyes = get_noisy_path_str(shapes.eye_dict[self.eyes])
@@ -222,32 +158,30 @@ class Cartoon:
     print(path.commands)
     return path
 
-  def create_eye_path(self):
-    eye1 = self.paper.circle(center=(Q0_X*.75*rN(), Q0_Y*1.5*rN()), r=25*rI(1,3), fill=rC(), opacity=0.4, stroke=rC(), stroke_width='5')
+  def create_eye_path(self, head):
+    eye1 = eye.Eye(40, 20*rI(2,3), head.cx - .25*head.r, head.cy-.25*head.r)
     eye2 = copy.deepcopy(eye1)
-    eye2.translate(Q0_X*.25)
-    # eye2.scale(0.5)
-    pupil1 = self.paper.circle(center=(eye1['cx']*rN(), eye1['cy']*rN()), r=(eye1['r']/5), fill='grey', stroke='blue', stroke_width='2')
-    pupil2 = copy.deepcopy(pupil1)
-    pupil2.translate(Q0_X*.25)
-    return (eye1, eye2, pupil1, pupil2)
+    eye2.translate(head.r*.5)
+    return eye1, eye2
 
 
   def assemble(self):
-    head = self.create_head()
+    head_ = self.create_head()
     l_eye, r_eye = self.create_eyes()
-    eye1, eye2, pupil1, pupil2 = self.create_eye_path()
+    # eye1t, eye2, pupil1, pupil2 = self.create_eye_path()
+    eye1, eye2 = self.create_eye_path(head_)
     mask = self.paper.mask(fill_rule="evenodd")
     caption_elem = self.create_caption()
     mouth = self.create_mouth()
     self.paper.add(caption_elem)
     path = self.create_path()
-    pp = create_points_r(1000, R, CX, CY)
-    self.paper.add(pp)
-    self.paper.add(eye1)
-    self.paper.add(eye2)
-    self.paper.add(pupil1)
-    self.paper.add(pupil2)
+    self.paper.add(head_.outline)
+    self.paper.add(eye1.outline)
+    self.paper.add(eye1.pupil)
+    self.paper.add(eye2.outline)
+    self.paper.add(eye2.pupil)
+    print(eye1.__str__())
+    print(head_.__str__())
     return self.paper.tostring()
 
 
