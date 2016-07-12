@@ -133,3 +133,17 @@ def create_fuzzy_head(n, r, cx, cy):
     # path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
   return path
 
+
+"""
+  TOAST PATH
+"""
+# def create_path():
+#   d = ('M', Q0_X, Q0_Y)
+#   path = self.paper.path(d=d, fill=rC(), opacity=0.3, stroke='orange', stroke_width='3')
+#   path.push("S%d,%d %d,%d" % (X_MAX,Y_MIN,Q1_X,Q1_Y))
+#   path.push("C%d,%d %d,%d %d,%d" % (X_MAX*rN(),Y_MAX*rN(),X_MAX*rN(),Y_MAX*rN(),Q2_X*rN(),Q2_Y*rN()))
+#   path.push("C%d,%d %d,%d %d,%d" % (X_MIN*rN(),Y_MAX*rN(),X_MIN*rN(),Y_MAX*rN(),Q3_X*rN(),Q3_Y*rN()))
+#   path.push("C%d,%d %d,%d %d,%d" % (X_MIN*rN(),Y_MIN*rN(),X_MIN*rN(),Y_MIN*rN(),Q0_X,Q0_Y))
+#   print("\nCOMMANDS\n")
+#   print(path.commands)
+#   return path
