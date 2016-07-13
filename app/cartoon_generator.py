@@ -1,5 +1,5 @@
 import random, sys, os, copy, math
-import caption, eye, head, noise
+import caption, eye, head, mouth, noise
 import svgwrite
 from svgwrite.text import TSpan
 import path_utilities as pu
@@ -45,6 +45,12 @@ class Cartoon:
 
   def create_caption(self):
     i = CAPTION_Y
+    if self.head.shape_type == 0:
+      i += (self.head.r * .15)
+    elif self.head.shape_type == 1:
+      i -= (self.head.r * .5)
+    elif self.head.shape_type == 3 or self.head.shape_type == 2:
+      i += (self.head.r * .1)
     caption_elem = self.paper.text("", insert=(CAPTION_X, 0))
     for line in self.caption.lines:
       ts = TSpan(line, insert=(CAPTION_X, i), style = "font-size:50px;")

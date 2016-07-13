@@ -1,1 +1,1 @@
-Generate a cartoon with SVG paths.
+This program generates a cartoon with SVG paths. The user enters a keyword, which is used to create a caption.

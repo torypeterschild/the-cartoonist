@@ -1,6 +1,6 @@
 import svgwrite
 import path_utilities as pu
-import noise
+import noise, mouth, nose
 import random, math
 
 class Head:
@@ -11,19 +11,26 @@ class Head:
     self.cy = cy
     self.shape_id = random.choice([0,1,2])
     self.hair = random.random() > 0.5
-    self.outline = pu.create_circ_points(n, r, cx, cy)
-    if self.shape_id is 0:
-      self.outline = pu.create_misshapen_head(n, r, cx, cy)
-    elif self.shape_id is 1:
-      self.outline = pu.create_misshapen_head_x(n, r, cx, cy)
-    elif self.shape_id is 2:
-      self.outline = pu.create_spiky_head(n, r, cx, cy)
-    # elif self.shape_id is 3:
-    #   self.outline = pu.create_fuzzy_head(n, r, cx, cy)
+    self.mouth = random.random() > 0.5
+    self.nose = random.random() > 0.5
+    self.types = [pu.create_asym_blob(n, r, cx, cy), 
+      pu.create_misshapen_head(n, r, cx, cy),
+      pu.create_misshapen_head_x(n, r, cx, cy), 
+      pu.create_spiky_head(n, r, cx, cy)]
+    self.shape_type = noise.rI(0,3)
+    self.outline = self.types[self.shape_type]
     self.elements = [self.outline]
     if self.hair:
       h = self.make_hair()
       self.elements.append(h)
+    if self.mouth:
+      m = mouth.Mouth(self)
+      self.elements.append(m.outline)
+    if self.nose:
+      no = nose.Nose(self)
+      for e in no.elements:
+        e.translate(20)
+        self.elements.append(e)
 
   def make_hair(self):
     path = svgwrite.path.Path()
@@ -65,5 +72,5 @@ class Head:
     num_points = "%d points.\n" % (self.n)
     radius = "Radius: %d\n" % (self.r)
     center = "cx is %d, cy is %d\n" % (self.cx, self.cy)
-    shape = "Shape is type: \n%s" % (self.shape_id)
+    shape = "Shape is type %s: %s" % (self.shape_type, self.types[self.shape_type].__class__.__name__)
     return title + num_points + radius + center + shape
