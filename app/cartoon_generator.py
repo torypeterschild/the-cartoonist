@@ -1,12 +1,9 @@
-import random, sys, os
-import shapes, caption
+import random, sys, os, copy, math
+import caption, eye, head, noise
 import svgwrite
 from svgwrite.text import TSpan
-import copy
-import math
-import eye, head
 import path_utilities as pu
-import noise
+
 
 """ SIZE OF DRAWING """
 WIDTH = 1000
@@ -22,14 +19,6 @@ Y_MAX = HEIGHT * .6
 CX = (X_MIN + X_MAX)/2
 CY = (Y_MIN + Y_MAX)/2
 R = WIDTH/4
-Q0_X = CX
-Q0_Y = Y_MIN
-Q1_X = X_MAX
-Q1_Y = CY
-Q2_X = CX
-Q2_Y = Y_MAX
-Q3_X = X_MIN
-Q3_Y = CY
 
 """ CAPTION """
 CAPTION_X = CX - R
@@ -41,21 +30,18 @@ class Cartoon:
     self.paper = svgwrite.Drawing(size=(widthmm, heightmm),debug=True)
     self.paper.viewbox(width=WIDTH,height=HEIGHT)
     self.head = head.Head(100, R, CX, CY)
-    self.eyes = eye.Eyes(40, 20*noise.rN(2.0,3.0), self.head.cx - .25*self.head.r, self.head.cy-.25*self.head.r)
+    self.eyes = eye.Eyes(40, 20*noise.rN(2.0,3.0), self.head.cx - .25*self.head.r, 
+      self.head.cy-.25*self.head.r)
+    self.eyes.create()
     self.caption = caption
     self.svg = svgwrite.Drawing(size=(1000, 1000))
 
   def __str__(self):
-    descr = "\n-- CARTOON INSTANCE --\nHead is %s." % (self.head)
+    descr = "\n-- CARTOON INSTANCE --\n%s." % (self.head)
+    eyes = self.eyes.__str__()
     caption = self.caption.__str__()
     end = "\n-- END CARTOON INSTANCE --"
-    return descr + caption + end
-
-  def create_eyes(self, head):
-    eye1 = eye.Eyes(40, 20*noise.rN(2.0,3.0), head.cx - .25*head.r, head.cy-.25*head.r)
-    eye2 = copy.deepcopy(eye1)
-    eye2.translate(head.r*.5)
-    return eye1, eye2
+    return descr + eyes + caption + end
 
   def create_caption(self):
     i = CAPTION_Y
@@ -68,27 +54,15 @@ class Cartoon:
     return caption_elem
 
   def assemble(self):
-    # eye1, eye2 = self.create_eyes(self.head)
     caption_elem = self.create_caption()
     self.paper.add(caption_elem)
-    # self.paper.add(self.head.outline)
     for elem in self.head.elements:
       self.paper.add(elem)
-    # self.paper.add(eye1.outline_e)
-    # hair = self.head.make_hair()
-    # self.paper.add(hair)
-    # self.paper.add(eye1.left.outline)
-    # self.paper.add(eye1.right.outline)
-    # self.paper.add(eye1.left.pupil)
-    # self.paper.add(eye1.right.pupil)
-    self.eyes.create()
     for obj in self.eyes.eyeballs:
       self.paper.add(obj.outline)
       self.paper.add(obj.pupil)
     for elem in self.eyes.elements:
         self.paper.add(elem)
-    print(self.eyes.__str__())
-    print(self.head.__str__())
     return self.paper.tostring()
 
 

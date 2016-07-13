@@ -1,11 +1,7 @@
-import random, sys, os
-import svg_utils
-import shapes, caption
+import random, sys, os, copy, math
+import caption, noise
 import svgwrite
 from svgwrite.text import TSpan
-import copy
-import math
-import noise
 
 
 """ 
