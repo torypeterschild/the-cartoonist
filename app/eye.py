@@ -8,10 +8,13 @@ class Eyeball:
   def __init__(self, n=None, r=None, cx=None, cy=None, R=False, left=None):
     if R is False:
       self.n = n
-      self.cx = cx * noise.rN()
-      self.cy = cy * noise.rN()
+      self.cx = cx
+      self.cy = cy
       self.rx = r*noise.rN(0.7,1.1)
       self.ry = r*noise.rN(0.7,1.3)
+      self.a_min = noise.rI(180, 270)
+      self.a_max = noise.rI(270, 360)
+      self.length = self.a_max - self.a_min
       self.outline = svgwrite.shapes.Ellipse(center=(self.cx,self.cy),
         r=(self.rx, self.ry), fill=noise.rC(), opacity=0.4, 
         stroke=noise.rC(), stroke_width=noise.rI(1,3))
@@ -23,37 +26,32 @@ class Eyeball:
       self.side = "R"
       self.n = left.n
       self.outline = copy.deepcopy(left.outline)
+      self.a_max = 360 - (left.a_min - 180)
+      self.a_min = self.a_max - left.length
       self.pupil = copy.deepcopy(left.pupil)
       self.cx = left.outline['cx']
       self.cy = left.outline['cy']
       self.rx = left.outline['rx']
       self.ry = left.outline['ry']
-      # self.translate(3*self.rx)
 
   def make_triangle_lashes(self):
-    lash_path = svgwrite.path.Path('M %d,%d' % (self.cx-self.rx,self.cy))
+    lash_path = svgwrite.path.Path('M')
     lash_path.fill('none',opacity=0.4).stroke("grey",width="1")
     s = (2 * math.pi)/self.n
     for i in range(self.n):
       a = s * i
+      ad = math.degrees(a)
       xp = self.cx + self.rx * math.cos(a)
       yp = self.cy + self.ry * math.sin(a)
-      if a > math.pi*(5/4):
+      if self.a_min < ad < self.a_max:
         dx = xp
         dy = yp - 10
+        lash_path.push('%d,%d' % (xp,yp))
         lash_path.push('L %d,%d' % (xp,yp))
         lash_path.push('L %d,%d' % (dx,dy))
-    # if self.side is "R":
-    #   lash_path.translate(3*self.rx)
     return lash_path
 
   def make_wild_lashes(self):
-    if self.side is "R":
-      a_min = 270
-      a_max = 360
-    if self.side is "L":
-      a_min = 180
-      a_max = 270
     lash_path = svgwrite.path.Path('M %d,%d' % (self.cx-self.rx,self.cy))
     lash_path.fill('none',opacity=0.7).stroke("grey",width="1")
     s = (2 * math.pi)/self.n
@@ -62,24 +60,16 @@ class Eyeball:
       ad = math.degrees(a)
       xp = self.cx + self.rx * math.cos(a)
       yp = self.cy + self.ry * math.sin(a)
-      if a_min < ad < a_max:
+      if self.a_min < ad < self.a_max:
         dx = xp + noise.rI(3,10)
         dy = yp - noise.rI(3,15)
         if self.side is "L":
           dx = xp - noise.rI(3,10)
         lash_path.push('M %d,%d' % (xp,yp))
         lash_path.push('L %d,%d' % (dx,dy))
-    # if self.side is "R":
-    #   lash_path.translate(3*self.rx)
     return lash_path
 
   def make_straight_lashes(self):
-    if self.side is "R":
-      a_min = 200
-      a_max = 360
-    if self.side is "L":
-      a_min = 180
-      a_max = 340
     lash_path = svgwrite.path.Path('M %d,%d' % (self.cx-self.rx,self.cy))
     lash_path.fill('none',opacity=0.4).stroke("grey",width="1")
     s = (2 * math.pi)/self.n
@@ -88,22 +78,14 @@ class Eyeball:
       ad = math.degrees(a)
       xp = self.cx + self.rx * math.cos(a)
       yp = self.cy + self.ry * math.sin(a)
-      if a_min < ad < a_max:
+      if self.a_min < ad < self.a_max:
         dx = xp
         dy = yp - 10
         lash_path.push('M %d,%d' % (xp,yp))
         lash_path.push('L %d,%d' % (dx,dy))
-    # if self.side is "R":
-    #   lash_path.translate(3*self.rx)
     return lash_path
 
   def make_lids_only(self):
-    if self.side is "R":
-      a_min = 200
-      a_max = 360
-    if self.side is "L":
-      a_min = 180
-      a_max = 340
     path = svgwrite.path.Path('M')
     s = (2 * math.pi)/self.n
     for i in range(self.n):
@@ -111,12 +93,10 @@ class Eyeball:
       ad = math.degrees(a)
       xp = self.cx + self.rx * math.cos(a)
       yp = self.cy + self.ry * math.sin(a)
-      if a_min < ad < a_max:
+      if self.a_min < ad < self.a_max:
         path.push('%d,%d' % (xp,yp))
         path.push('L %d,%d' % (xp,yp))
     path.fill('grey',opacity=0.7)
-    # if self.side is "R":
-    #   path.translate(3*self.rx)
     return path
 
   def translate(self, tx, ty=None):

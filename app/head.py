@@ -31,7 +31,7 @@ class Head:
     if self.nose:
       no = nose.Nose(self)
       for e in no.elements:
-        e.translate(20)
+        # e.translate(20)
         self.elements.append(e)
     for elem in self.eyes.elements:
       self.elements.append(elem)
