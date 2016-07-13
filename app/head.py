@@ -19,7 +19,7 @@ class Head:
       pu.create_misshapen_head(n, r, cx, cy),
       pu.create_misshapen_head_x(n, r, cx, cy), 
       pu.create_spiky_head(n, r, cx, cy)]
-    self.shape_type = noise.rI(0,3)
+    self.shape_type = noise.rI(0,2)
     self.outline = self.types[self.shape_type]
     self.elements = [self.outline]
     if self.hair:
@@ -31,7 +31,6 @@ class Head:
     if self.nose:
       no = nose.Nose(self)
       for e in no.elements:
-        # e.translate(20)
         self.elements.append(e)
     for elem in self.eyes.elements:
       self.elements.append(elem)
