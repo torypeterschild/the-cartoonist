@@ -40,8 +40,9 @@ def create_asym_blob(n, r, cx, cy):
     if 180*noise.rN(0.1,0.9) < ad < 270*noise.rN(0.1,0.9):
       new_x += 2*a
       new_y += 5*a
-    path.push(" %d,%d" % (new_x, new_y))
-  path.push('%d,%d' % (cx+rx,cy))
+    path.push("L %d,%d" % (new_x, new_y))
+    path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
+  path.push('L %d,%d' % (cx+rx,cy))
   return path
 
 
