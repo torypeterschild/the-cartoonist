@@ -154,7 +154,7 @@ class Eyes:
     self.rx = r*noise.rN(0.7,1.1)
     self.ry = r*noise.rN(0.7,1.3)
     self.lashes = random.random() > 0.5
-    self.lash_type = noise.rI(0,2) - 1
+    self.lash_type = noise.rI(0,2)
     self.lids = random.random() > 0.5
     self.elements = []
     self.eyeballs = [self.left, self.right]

@@ -62,5 +62,5 @@ class Head:
     num_points = "%d points.\n" % (self.n)
     radius = "Radius: %d\n" % (self.r)
     center = "cx is %d, cy is %d\n" % (self.cx, self.cy)
-    shape = "Shape is type: \n%s" % (self.shape_id)
+    shape = "Shape is type %s: %s" % (self.shape_type, self.types[self.shape_type].__class__.__name__)
     return title + num_points + radius + center + shape
