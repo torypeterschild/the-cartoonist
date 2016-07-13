@@ -30,18 +30,14 @@ class Cartoon:
     self.paper = svgwrite.Drawing(size=(widthmm, heightmm),debug=True)
     self.paper.viewbox(width=WIDTH,height=HEIGHT)
     self.head = head.Head(100, R, CX, CY)
-    self.eyes = eye.Eyes(40, 20*noise.rN(2.0,3.0), self.head.cx - .25*self.head.r, 
-      self.head.cy-.25*self.head.r)
-    self.eyes.create()
     self.caption = caption
     self.svg = svgwrite.Drawing(size=(1000, 1000))
 
   def __str__(self):
     descr = "\n-- CARTOON INSTANCE --\n%s." % (self.head)
-    eyes = self.eyes.__str__()
     caption = self.caption.__str__()
     end = "\n-- END CARTOON INSTANCE --"
-    return descr + eyes + caption + end
+    return descr + caption + end
 
   def create_caption(self):
     i = CAPTION_Y
@@ -64,11 +60,6 @@ class Cartoon:
     self.paper.add(caption_elem)
     for elem in self.head.elements:
       self.paper.add(elem)
-    for obj in self.eyes.eyeballs:
-      self.paper.add(obj.outline)
-      self.paper.add(obj.pupil)
-    for elem in self.eyes.elements:
-        self.paper.add(elem)
     return self.paper.tostring()
 
 

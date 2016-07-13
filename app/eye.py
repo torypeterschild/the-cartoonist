@@ -28,7 +28,7 @@ class Eyeball:
       self.cy = left.outline['cy']
       self.rx = left.outline['rx']
       self.ry = left.outline['ry']
-      self.translate(3*self.rx)
+      # self.translate(3*self.rx)
 
   def make_triangle_lashes(self):
     lash_path = svgwrite.path.Path('M %d,%d' % (self.cx-self.rx,self.cy))
@@ -43,8 +43,8 @@ class Eyeball:
         dy = yp - 10
         lash_path.push('L %d,%d' % (xp,yp))
         lash_path.push('L %d,%d' % (dx,dy))
-    if self.side is "R":
-      lash_path.translate(3*self.rx)
+    # if self.side is "R":
+    #   lash_path.translate(3*self.rx)
     return lash_path
 
   def make_wild_lashes(self):
@@ -69,8 +69,8 @@ class Eyeball:
           dx = xp - noise.rI(3,10)
         lash_path.push('M %d,%d' % (xp,yp))
         lash_path.push('L %d,%d' % (dx,dy))
-    if self.side is "R":
-      lash_path.translate(3*self.rx)
+    # if self.side is "R":
+    #   lash_path.translate(3*self.rx)
     return lash_path
 
   def make_straight_lashes(self):
@@ -93,8 +93,8 @@ class Eyeball:
         dy = yp - 10
         lash_path.push('M %d,%d' % (xp,yp))
         lash_path.push('L %d,%d' % (dx,dy))
-    if self.side is "R":
-      lash_path.translate(3*self.rx)
+    # if self.side is "R":
+    #   lash_path.translate(3*self.rx)
     return lash_path
 
   def make_lids_only(self):
@@ -115,8 +115,8 @@ class Eyeball:
         path.push('%d,%d' % (xp,yp))
         path.push('L %d,%d' % (xp,yp))
     path.fill('grey',opacity=0.7)
-    if self.side is "R":
-      path.translate(3*self.rx)
+    # if self.side is "R":
+    #   path.translate(3*self.rx)
     return path
 
   def translate(self, tx, ty=None):
@@ -144,19 +144,20 @@ class Eyeball:
 
 
 class Eyes:
-  def __init__(self, n, r, cx, cy):
-    self.left = Eyeball(n, r, cx, cy)
+  def __init__(self, head):
+    self.head = head
+    self.eye_radius = 20*noise.rN(2.0,3.0)
+    self.cx = self.head.cx - .25*self.head.r
+    self.cy = self.head.cy - .25*self.head.r
+    self.left = Eyeball(self.head.n/2, self.eye_radius, 
+      self.cx, self.cy)
     self.right = Eyeball(R=True,left=self.left)
-    self.n = n
-    self.r = r
-    self.cx = cx
-    self.cy = cy
-    self.rx = r*noise.rN(0.7,1.1)
-    self.ry = r*noise.rN(0.7,1.3)
+    self.right.translate(0.5*self.head.r)
     self.lashes = random.random() > 0.5
     self.lash_type = noise.rI(0,2)
     self.lids = random.random() > 0.5
-    self.elements = []
+    self.elements = [self.left.outline, self.left.pupil, self.right.outline,
+      self.right.pupil]
     self.eyeballs = [self.left, self.right]
 
   def create(self):
@@ -164,9 +165,13 @@ class Eyes:
       lash_funcs = [e.make_straight_lashes(),e.make_wild_lashes(),e.make_triangle_lashes()]
       if self.lashes:
         lash = lash_funcs[self.lash_type]
+        if e.side is "R":
+          lash.translate(0.5*self.head.r)
         self.elements.append(lash)
       if self.lids:
         lid = e.make_lids_only()
+        if e.side is "R":
+          lid.translate(0.5*self.head.r)
         self.elements.append(lid)
 
   def translate(self, tx, ty=None):
@@ -191,10 +196,9 @@ class Eyes:
 
   def __str__(self):
     title = "\n--- EYES ---\n"
-    num_points = "%d points.\n" % (self.n)
-    radius = "Radius: %d\n" % (self.r)
+    radius = "Radius: %d\n" % (self.eye_radius)
     center = "cx is %d, cy is %d\n" % (self.cx, self.cy)
     lashes = "Lashes: %s\n" % self.lashes
     lids = "Lids: %s\n" % self.lids
-    return title + num_points + radius + center + lashes + lids + self.left.__str__() + self.right.__str__()
+    return title + radius + center + lashes + lids + self.left.__str__() + self.right.__str__()
 
