@@ -33,7 +33,6 @@ class Cartoon:
     self.eyes = eye.Eyes(40, 20*noise.rN(2.0,3.0), self.head.cx - .25*self.head.r, 
       self.head.cy-.25*self.head.r)
     self.eyes.create()
-    self.mouth = mouth.Mouth(self.head)
     self.caption = caption
     self.svg = svgwrite.Drawing(size=(1000, 1000))
 

@@ -1,6 +1,6 @@
 import svgwrite
 import path_utilities as pu
-import noise, mouth
+import noise, mouth, nose
 import random, math
 
 class Head:
@@ -12,6 +12,7 @@ class Head:
     self.shape_id = random.choice([0,1,2])
     self.hair = random.random() > 0.5
     self.mouth = random.random() > 0.5
+    self.nose = random.random() > 0.5
     self.types = [pu.create_asym_blob(n, r, cx, cy), 
       pu.create_misshapen_head(n, r, cx, cy),
       pu.create_misshapen_head_x(n, r, cx, cy), 
@@ -25,6 +26,11 @@ class Head:
     if self.mouth:
       m = mouth.Mouth(self)
       self.elements.append(m.outline)
+    if self.nose:
+      no = nose.Nose(self)
+      for e in no.elements:
+        e.translate(20)
+        self.elements.append(e)
 
   def make_hair(self):
     path = svgwrite.path.Path()
