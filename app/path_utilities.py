@@ -1,11 +1,7 @@
-import random, sys, os
-import svg_utils
-import shapes, caption
+import random, sys, os, copy, math
+import caption, noise
 import svgwrite
 from svgwrite.text import TSpan
-import copy
-import math
-import noise
 
 
 """ 
@@ -54,7 +50,7 @@ def create_pacman_head(n, r, cx, cy):
 """
 def create_spiky_head(n, r, cx, cy):
   path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  path.fill(noise.rC(),opacity=0.3).stroke("grey",width="1")
+  path.fill(noise.rC(),opacity=0.2).stroke("grey",width="1")
   s = (2 * math.pi)/n
   rr = r
   for i in range(n):
@@ -73,7 +69,7 @@ def create_spiky_head(n, r, cx, cy):
 """
 def create_misshapen_head(n, r, cx, cy):
   path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  path.fill(noise.rC(),opacity=0.3).stroke("grey",width="1")
+  path.fill(noise.rC(),opacity=0.2).stroke("grey",width="1")
   s = (2 * math.pi)/n
   rr = r
   for i in range(n):
@@ -94,7 +90,7 @@ def create_misshapen_head(n, r, cx, cy):
 """
 def create_misshapen_head_x(n, r, cx, cy):
   path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  path.fill(noise.rC(),opacity=0.3).stroke("grey",width="1")
+  path.fill(noise.rC(),opacity=0.2).stroke("grey",width="1")
   s = (2 * math.pi)/n
   rr = r
   for i in range(n):
@@ -116,7 +112,7 @@ def create_misshapen_head_x(n, r, cx, cy):
 """
 def create_fuzzy_head(n, r, cx, cy):
   path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-  path.fill(noise.rC(),opacity=0.3).stroke("grey",width="1")
+  path.fill(noise.rC(),opacity=0.2).stroke("grey",width="1")
   s = (2 * math.pi)/n
   for i in range(n):
     a = s * i
@@ -133,3 +129,17 @@ def create_fuzzy_head(n, r, cx, cy):
     # path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
   return path
 
+
+"""
+  TOAST PATH
+"""
+# def create_path():
+#   d = ('M', Q0_X, Q0_Y)
+#   path = self.paper.path(d=d, fill=rC(), opacity=0.3, stroke='orange', stroke_width='3')
+#   path.push("S%d,%d %d,%d" % (X_MAX,Y_MIN,Q1_X,Q1_Y))
+#   path.push("C%d,%d %d,%d %d,%d" % (X_MAX*rN(),Y_MAX*rN(),X_MAX*rN(),Y_MAX*rN(),Q2_X*rN(),Q2_Y*rN()))
+#   path.push("C%d,%d %d,%d %d,%d" % (X_MIN*rN(),Y_MAX*rN(),X_MIN*rN(),Y_MAX*rN(),Q3_X*rN(),Q3_Y*rN()))
+#   path.push("C%d,%d %d,%d %d,%d" % (X_MIN*rN(),Y_MIN*rN(),X_MIN*rN(),Y_MIN*rN(),Q0_X,Q0_Y))
+#   print("\nCOMMANDS\n")
+#   print(path.commands)
+#   return path

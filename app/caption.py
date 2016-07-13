@@ -1,7 +1,7 @@
 from textblob import TextBlob
-import random, sys, os
+import random, sys, os, math
 
-LINE_MAX = 5
+LINE_MAX = 6
 WORDS_MAX = 20
 ERROR = "?#$*&! - that word is not in the corpus."
 
@@ -23,8 +23,8 @@ class Caption:
     cap_tilt = "\nTilt is %s" % self.tilt
     lines = "\nLines are:"
     for i in range(len(self.lines)):
-      lines = lines + str(self.lines[i]) + "\n"
-    end = "\n-- END CAPTION INSTANCE --"  
+      lines = lines + "\n" + str(self.lines[i])
+    end = "\n-- END CAPTION INSTANCE --\n"  
     return descr + line_count + lines + cap_tilt + end
 
   def get_text(self):
@@ -54,7 +54,7 @@ class Caption:
 
   def set_n_lines(self):
     if self.word_count:
-      self.n_lines = self.word_count / LINE_MAX
+      self.n_lines = int(math.ceil(self.word_count / float(LINE_MAX)))
 
   # TODO: CLEAN THIS UP
   def split_into_lines(self):

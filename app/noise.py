@@ -17,7 +17,9 @@ def get_noisy_path_str(pure_ps):
   return noisy_ps
 
 
-def rN():
+def rN(min=None, max=None):
+  if min is not None and max is not None:
+    return random.uniform(min, max)
   return random.uniform(0.95,1.05)
 
 

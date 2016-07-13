@@ -2,8 +2,7 @@ from flask import render_template, flash, redirect, request, url_for, Markup
 from app import app
 from .forms import InputForm, SaveForm
 from textblob import TextBlob
-import random, sys, os, json
-import svg_utils, shapes
+import random, sys, os
 import cartoon_generator as cg
 import caption
 
@@ -34,7 +33,6 @@ def input():
     keyword = keyword_form.keyword.data 
     cap = caption.Caption(content,keyword)
     cap.make()
-    print(cap.__str__())
     cartoon = cg.Cartoon(cap)
     print(cartoon.__str__())
   else:
@@ -42,10 +40,6 @@ def input():
       header="cartoonist",
       menu=True,
       keyword_form=keyword_form)
-
-  print("\nTEST CAP LINES")
-  for i in cap.lines:
-    print(i)
 
   svg_cartoon = cartoon.assemble()
 

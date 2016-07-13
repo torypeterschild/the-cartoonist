@@ -1,7 +1,7 @@
 import svgwrite
 import path_utilities as pu
 import noise
-import random
+import random, math
 
 class Head:
   def __init__(self, n, r, cx, cy):
@@ -9,7 +9,8 @@ class Head:
     self.r = r
     self.cx = cx
     self.cy = cy
-    self.shape_id = random.choice([0,1,2,3])
+    self.shape_id = random.choice([0,1,2])
+    self.hair = random.random() > 0.5
     self.outline = pu.create_circ_points(n, r, cx, cy)
     if self.shape_id is 0:
       self.outline = pu.create_misshapen_head(n, r, cx, cy)
@@ -17,8 +18,35 @@ class Head:
       self.outline = pu.create_misshapen_head_x(n, r, cx, cy)
     elif self.shape_id is 2:
       self.outline = pu.create_spiky_head(n, r, cx, cy)
-    elif self.shape_id is 3:
-      self.outline = pu.create_fuzzy_head(n, r, cx, cy)
+    # elif self.shape_id is 3:
+    #   self.outline = pu.create_fuzzy_head(n, r, cx, cy)
+    self.elements = [self.outline]
+    if self.hair:
+      h = self.make_hair()
+      self.elements.append(h)
+
+  def make_hair(self):
+    path = svgwrite.path.Path()
+    s = (2 * math.pi)/self.n
+    for i in range(self.n):
+      a = s * i
+      ad = math.degrees(a)
+      xp = self.cx + self.r * math.cos(a)
+      xp1 = self.cx + self.r
+      yp = self.cy + self.r * math.sin(a)
+      hair_width = noise.rI(10,30)
+      if (270-hair_width) < ad < (270+hair_width):
+        dx = xp
+        dy = yp - 20 * noise.rI(1,5)
+        path.push('M %d,%d' % (xp,yp))
+        path.push('L %d,%d' % (dx,dy))
+        path.push('M %d,%d' % (xp-5,yp))
+        path.push('L %d,%d' % (dx-5,dy))
+        path.push("S %d,%d %d,%d " % (dx*noise.rN(),dy*noise.rN(),dx,dy))
+        path.push('M %d,%d' % (xp,yp))
+        path.push("S %d,%d %d,%d " % (dx*noise.rN(),dy*noise.rN(),dx,dy))
+    path.fill('blue',opacity=0.7).stroke('grey')
+    return path
 
   def translate(self, tx, ty=None):
     if ty is not None:
