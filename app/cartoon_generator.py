@@ -70,7 +70,6 @@ class Cartoon:
       self.paper.add(obj.pupil)
     for elem in self.eyes.elements:
         self.paper.add(elem)
-    self.paper.add(self.mouth.outline)
     return self.paper.tostring()
 
 
