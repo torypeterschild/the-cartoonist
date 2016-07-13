@@ -1,141 +1,173 @@
 import svgwrite
 import path_utilities as pu
 import noise
-import math
+import math, random, copy
 
 
-class Eye:
+class Eyeball:
+  def __init__(self, n=None, r=None, cx=None, cy=None, R=False, left=None):
+    if R is False:
+      self.n = n
+      self.cx = cx * noise.rN()
+      self.cy = cy * noise.rN()
+      self.rx = r*noise.rN(0.7,1.1)
+      self.ry = r*noise.rN(0.7,1.3)
+      self.outline = svgwrite.shapes.Ellipse(center=(self.cx,self.cy),
+        r=(self.rx, self.ry), fill=noise.rC(), opacity=0.4, 
+        stroke=noise.rC(), stroke_width=noise.rI(1,3))
+      self.pupil = svgwrite.shapes.Circle(center=(self.cx+noise.rN(-.5,.5)*self.rx,self.cy+noise.rN(.1,.5)*self.ry), 
+        r=(noise.rN()*self.rx/5), fill=noise.rC(), opacity=0.4, stroke=noise.rC(), 
+        stroke_width=noise.rI(1,3))
+      self.side = "L"
+    elif R is True:
+      self.side = "R"
+      self.n = left.n
+      self.outline = copy.deepcopy(left.outline)
+      self.pupil = copy.deepcopy(left.pupil)
+      self.cx = left.outline['cx']
+      self.cy = left.outline['cy']
+      self.rx = left.outline['rx']
+      self.ry = left.outline['ry']
+      self.translate(3*self.rx)
+
+  def make_triangle_lashes(self):
+    lash_path = svgwrite.path.Path('M %d,%d' % (self.cx-self.rx,self.cy))
+    lash_path.fill('none',opacity=0.4).stroke("grey",width="1")
+    s = (2 * math.pi)/self.n
+    for i in range(self.n):
+      a = s * i
+      xp = self.cx + self.rx * math.cos(a)
+      yp = self.cy + self.ry * math.sin(a)
+      if a > math.pi*(5/4):
+        dx = xp
+        dy = yp - 10
+        lash_path.push('L %d,%d' % (xp,yp))
+        lash_path.push('L %d,%d' % (dx,dy))
+    if self.side is "R":
+      lash_path.translate(3*self.rx)
+    return lash_path
+
+  def make_wild_lashes(self):
+    if self.side is "R":
+      a_min = 270
+      a_max = 360
+    if self.side is "L":
+      a_min = 180
+      a_max = 270
+    lash_path = svgwrite.path.Path('M %d,%d' % (self.cx-self.rx,self.cy))
+    lash_path.fill('none',opacity=0.7).stroke("grey",width="1")
+    s = (2 * math.pi)/self.n
+    for i in range(self.n):
+      a = s * i
+      ad = math.degrees(a)
+      xp = self.cx + self.rx * math.cos(a)
+      yp = self.cy + self.ry * math.sin(a)
+      if a_min < ad < a_max:
+        dx = xp + noise.rI(3,10)
+        dy = yp - noise.rI(3,15)
+        if self.side is "L":
+          dx = xp - noise.rI(3,10)
+        lash_path.push('M %d,%d' % (xp,yp))
+        lash_path.push('L %d,%d' % (dx,dy))
+    if self.side is "R":
+      lash_path.translate(3*self.rx)
+    return lash_path
+
+  def make_straight_lashes(self):
+    if self.side is "R":
+      a_min = 200
+      a_max = 360
+    if self.side is "L":
+      a_min = 180
+      a_max = 340
+    lash_path = svgwrite.path.Path('M %d,%d' % (self.cx-self.rx,self.cy))
+    lash_path.fill('none',opacity=0.4).stroke("grey",width="1")
+    s = (2 * math.pi)/self.n
+    for i in range(self.n):
+      a = s * i
+      ad = math.degrees(a)
+      xp = self.cx + self.rx * math.cos(a)
+      yp = self.cy + self.ry * math.sin(a)
+      if a_min < ad < a_max:
+        dx = xp
+        dy = yp - 10
+        lash_path.push('M %d,%d' % (xp,yp))
+        lash_path.push('L %d,%d' % (dx,dy))
+    if self.side is "R":
+      lash_path.translate(3*self.rx)
+    return lash_path
+
+  def make_lids_only(self):
+    if self.side is "R":
+      a_min = 200
+      a_max = 360
+    if self.side is "L":
+      a_min = 180
+      a_max = 340
+    path = svgwrite.path.Path('M')
+    s = (2 * math.pi)/self.n
+    for i in range(self.n):
+      a = s * i
+      ad = math.degrees(a)
+      xp = self.cx + self.rx * math.cos(a)
+      yp = self.cy + self.ry * math.sin(a)
+      if a_min < ad < a_max:
+        path.push('%d,%d' % (xp,yp))
+        path.push('L %d,%d' % (xp,yp))
+    path.fill('grey',opacity=0.7)
+    if self.side is "R":
+      path.translate(3*self.rx)
+    return path
+
+  def translate(self, tx, ty=None):
+    if ty is not None:
+      self.outline.translate(tx, ty)
+      self.pupil.translate(tx, ty)
+    else:
+      self.outline.translate(tx)
+      self.pupil.translate(tx)
+
+  def scale(self, sx, sy=None):
+    if sy is not None:
+      self.outline.scale(sx, sy)
+      self.pupil.scale(sx, sy)
+    else:
+      self.outline.scale(sx)
+      self.pupil.scale(sx)
+
+  def __str__(self):
+    title = "\n---%s EYEBALL ---\n" % self.side
+    side = "Side: %s\n" % self.side
+    numbers = "cx is %d.\ncy is %d.\nrx is %d.\nry is %d.\n" % (self.cx, 
+      self.cy, self.rx, self.ry)
+    return title + side + numbers
+
+
+class Eyes:
   def __init__(self, n, r, cx, cy):
+    self.left = Eyeball(n, r, cx, cy)
+    self.right = Eyeball(R=True,left=self.left)
     self.n = n
     self.r = r
     self.cx = cx
     self.cy = cy
     self.rx = r*noise.rN(0.7,1.1)
     self.ry = r*noise.rN(0.7,1.3)
-    self.outline = pu.create_circ_points(n, r, cx, cy)
-    self.outline_e = svgwrite.shapes.Ellipse(center=(cx*noise.rN(),cy*noise.rN()),
-      r=(self.rx, self.ry), fill=noise.rC(), opacity=0.4, 
-      stroke=noise.rC(), stroke_width=noise.rI(1,3))
-    self.pupil = svgwrite.shapes.Circle(center=(cx+noise.rN(-.5,.5)*self.rx,cy+noise.rN(.1,.5)*self.ry), 
-      r=(noise.rN()*self.rx/5), fill=noise.rC(), opacity=0.4, stroke=noise.rC(), 
-      stroke_width=noise.rI(1,3))
+    self.lashes = random.random() > 0.5
+    self.lash_type = noise.rI(0,2) - 1
+    self.lids = random.random() > 0.5
+    self.elements = []
+    self.eyeballs = [self.left, self.right]
 
-  def make_wild_lashes(self, l=True):
-    cx = self.outline_e['cx']
-    cy = self.outline_e['cy']
-    rx = self.outline_e['rx']
-    ry = self.outline_e['ry']
-    lash_path = svgwrite.path.Path('M %d,%d' % (cx-rx,cy))
-    lash_path.fill('none',opacity=0.7).stroke("grey",width="1")
-    s = (2 * math.pi)/self.n
-    for i in range(self.n):
-      a = s * i
-      ad = math.degrees(a)
-      xp = cx + rx * math.cos(a)
-      yp = cy + ry * math.sin(a)
-      if l is False:
-        a_min = 270
-        a_max = 360
-      else:
-        a_min = 180
-        a_max = 270
-      if a_min < ad < a_max:
-      # if 270 < ad < 360:
-        dx = xp
-        dy = yp - noise.rI(1,15)
-        lash_path.push('M %d,%d' % (xp,yp))
-        lash_path.push('L %d,%d' % (dx,dy))
-    return lash_path
-
-  def make_lids_only(self):
-    cx = self.outline_e['cx']
-    cy = self.outline_e['cy']
-    rx = self.outline_e['rx']
-    ry = self.outline_e['ry']
-    # path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
-    path = svgwrite.path.Path('M')
-    # path.fill('grey',opacity=0.7)
-    s = (2 * math.pi)/self.n
-    for i in range(self.n):
-      a = s * i
-      ad = math.degrees(a)
-      xp = cx + rx * math.cos(a)
-      yp = cy + ry * math.sin(a)
-      # if a > math.pi*(7/4):
-      if 200 < ad < 360:
-        path.push('%d,%d' % (xp,yp))
-        path.push('L %d,%d' % (xp,yp))
-    # path.push('L %d,%d' % (cx+rx,cy))
-    path.fill('grey',opacity=0.7)
-    return path
-
-  def make_lids_left(self):
-    cx = self.outline_e['cx']
-    cy = self.outline_e['cy']
-    rx = self.outline_e['rx']
-    ry = self.outline_e['ry']
-    # path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
-    path = svgwrite.path.Path('M')
-    # path.fill('grey',opacity=0.7)
-    s = (2 * math.pi)/self.n
-    for i in range(self.n):
-      a = s * i
-      ad = math.degrees(a)
-      xp = cx + rx * math.cos(a)
-      yp = cy + ry * math.sin(a)
-      # if a > math.pi*(7/4):
-      if 180 < ad < 340:
-        path.push('%d,%d' % (xp,yp))
-        path.push('L %d,%d' % (xp,yp))
-    # path.push('L %d,%d' % (cx+rx,cy))
-    path.fill('grey',opacity=0.7)
-    return path
-
-  def make_straight_lashes(self):
-    cx = self.outline_e['cx']
-    cy = self.outline_e['cy']
-    rx = self.outline_e['rx']
-    ry = self.outline_e['ry']
-    path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
-    path.fill('grey')
-    lash_path = svgwrite.path.Path('M %d,%d' % (cx-rx,cy))
-    lash_path.fill('none',opacity=0.4).stroke("grey",width="1")
-    s = (2 * math.pi)/self.n
-    for i in range(self.n):
-      a = s * i
-      xp = cx + rx * math.cos(a)
-      yp = cy + ry * math.sin(a)
-      path.push('L %d,%d' % (xp,yp))
-      if a > math.pi*(5/4):
-        dx = xp
-        dy = yp - 10
-        lash_path.push('M %d,%d' % (xp,yp))
-        lash_path.push('L %d,%d' % (dx,dy))
-    path.push('L %d,%d' % (cx+rx,cy))
-    return lash_path
-
-  def make_lids_and_lashes(self):
-    cx = self.outline_e['cx']
-    cy = self.outline_e['cy']
-    rx = self.outline_e['rx']
-    ry = self.outline_e['ry']
-    path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
-    path.fill('grey')
-    lash_path = svgwrite.path.Path('M %d,%d' % (cx-rx,cy))
-    lash_path.fill('none',opacity=0.4).stroke("grey",width="1")
-    s = (2 * math.pi)/self.n
-    for i in range(self.n):
-      a = s * i
-      xp = cx + rx * math.cos(a)
-      yp = cy + ry * math.sin(a)
-      path.push('L %d,%d' % (xp,yp))
-      if a > math.pi*(5/4):
-        dx = xp
-        dy = yp - 10
-        lash_path.push('L %d,%d' % (xp,yp))
-        lash_path.push('L %d,%d' % (dx,dy))
-    path.push('L %d,%d' % (cx+rx,cy))
-    return lash_path
+  def create(self):
+    for e in self.eyeballs:
+      lash_funcs = [e.make_straight_lashes(),e.make_wild_lashes(),e.make_triangle_lashes()]
+      if self.lashes:
+        lash = lash_funcs[self.lash_type]
+        self.elements.append(lash)
+      if self.lids:
+        lid = e.make_lids_only()
+        self.elements.append(lid)
 
   def translate(self, tx, ty=None):
     if ty is not None:
@@ -162,6 +194,7 @@ class Eye:
     num_points = "%d points.\n" % (self.n)
     radius = "Radius: %d\n" % (self.r)
     center = "cx is %d, cy is %d\n" % (self.cx, self.cy)
-    pupil = "Pupil attributes are: \n%s" % (self.pupil.tostring())
-    return title + num_points + radius + center + pupil
+    lashes = "Lashes: %s\n" % self.lashes
+    lids = "Lids: %s\n" % self.lids
+    return title + num_points + radius + center + lashes + lids + self.left.__str__() + self.right.__str__()
 

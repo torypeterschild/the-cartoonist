@@ -41,6 +41,7 @@ class Cartoon:
     self.paper = svgwrite.Drawing(size=(widthmm, heightmm),debug=True)
     self.paper.viewbox(width=WIDTH,height=HEIGHT)
     self.head = head.Head(100, R, CX, CY)
+    self.eyes = eye.Eyes(40, 20*noise.rN(2.0,3.0), self.head.cx - .25*self.head.r, self.head.cy-.25*self.head.r)
     self.caption = caption
     self.svg = svgwrite.Drawing(size=(1000, 1000))
 
@@ -51,7 +52,7 @@ class Cartoon:
     return descr + caption + end
 
   def create_eyes(self, head):
-    eye1 = eye.Eye(40, 20*noise.rI(2,3), head.cx - .25*head.r, head.cy-.25*head.r)
+    eye1 = eye.Eyes(40, 20*noise.rN(2.0,3.0), head.cx - .25*head.r, head.cy-.25*head.r)
     eye2 = copy.deepcopy(eye1)
     eye2.translate(head.r*.5)
     return eye1, eye2
@@ -67,32 +68,26 @@ class Cartoon:
     return caption_elem
 
   def assemble(self):
-    eye1, eye2 = self.create_eyes(self.head)
+    # eye1, eye2 = self.create_eyes(self.head)
     caption_elem = self.create_caption()
     self.paper.add(caption_elem)
-    self.paper.add(self.head.outline)
-    self.paper.add(eye1.outline_e)
-    hair = self.head.make_hair()
-    self.paper.add(hair)
-    print("EYE1 TO STRING")
-    lash_path = eye1.make_wild_lashes()
-    # lash_path_r = copy.deepcopy(lash_path)
-    lash_path_r = eye2.make_wild_lashes(l=False)
-    lash_path_r.translate(self.head.r*.5)
-    lid1 = eye1.make_lids_left()
-    # lid2 = copy.deepcopy(lid1)
-    lid2 = eye2.make_lids_only()
-    lid2.translate(self.head.r*.5)
-    print(eye1.outline_e.tostring())
-    self.paper.add(eye1.pupil)
-    self.paper.add(eye2.outline_e)
-    self.paper.add(eye2.pupil)
-    self.paper.add(lash_path)
-    self.paper.add(lash_path_r)
-    # self.paper.add(path)
-    self.paper.add(lid1)
-    self.paper.add(lid2)
-    print(eye1.__str__())
+    # self.paper.add(self.head.outline)
+    for elem in self.head.elements:
+      self.paper.add(elem)
+    # self.paper.add(eye1.outline_e)
+    # hair = self.head.make_hair()
+    # self.paper.add(hair)
+    # self.paper.add(eye1.left.outline)
+    # self.paper.add(eye1.right.outline)
+    # self.paper.add(eye1.left.pupil)
+    # self.paper.add(eye1.right.pupil)
+    self.eyes.create()
+    for obj in self.eyes.eyeballs:
+      self.paper.add(obj.outline)
+      self.paper.add(obj.pupil)
+    for elem in self.eyes.elements:
+        self.paper.add(elem)
+    print(self.eyes.__str__())
     print(self.head.__str__())
     return self.paper.tostring()
 

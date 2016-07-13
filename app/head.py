@@ -10,6 +10,7 @@ class Head:
     self.cx = cx
     self.cy = cy
     self.shape_id = random.choice([0,1,2])
+    self.hair = random.random() > 0.5
     self.outline = pu.create_circ_points(n, r, cx, cy)
     if self.shape_id is 0:
       self.outline = pu.create_misshapen_head(n, r, cx, cy)
@@ -19,10 +20,13 @@ class Head:
       self.outline = pu.create_spiky_head(n, r, cx, cy)
     # elif self.shape_id is 3:
     #   self.outline = pu.create_fuzzy_head(n, r, cx, cy)
+    self.elements = [self.outline]
+    if self.hair:
+      h = self.make_hair()
+      self.elements.append(h)
 
   def make_hair(self):
     path = svgwrite.path.Path()
-    # path.fill('grey',opacity=0.7)
     s = (2 * math.pi)/self.n
     for i in range(self.n):
       a = s * i
@@ -30,7 +34,6 @@ class Head:
       xp = self.cx + self.r * math.cos(a)
       xp1 = self.cx + self.r
       yp = self.cy + self.r * math.sin(a)
-      # if a > math.pi*(7/4):
       hair_width = noise.rI(10,30)
       if (270-hair_width) < ad < (270+hair_width):
         dx = xp
@@ -42,7 +45,6 @@ class Head:
         path.push("S %d,%d %d,%d " % (dx*noise.rN(),dy*noise.rN(),dx,dy))
         path.push('M %d,%d' % (xp,yp))
         path.push("S %d,%d %d,%d " % (dx*noise.rN(),dy*noise.rN(),dx,dy))
-    # path.push('L %d,%d' % (cx+rx,cy))
     path.fill('blue',opacity=0.7).stroke('grey')
     return path
 
