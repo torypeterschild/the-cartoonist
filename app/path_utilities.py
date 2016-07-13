@@ -27,16 +27,16 @@ def create_circ_points(n, r, cx, cy):
   Experiment to create asymmetrical curves
 """
 def create_asym_blob(n, r, cx, cy):
-  rx = r * noise.rN(0.7,1.3)
-  ry = r * noise.rN(0.7,1.3)
+  rx = r * noise.rN(0.7,1.0)
+  ry = r * noise.rN(0.7,1.0)
   path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
   path.fill(noise.rC(),opacity=0.2).stroke("grey",width="1")
   s = (2 * math.pi)/n
   for i in range(n):
     a = s * i
     ad = math.degrees(a)
-    new_x = cx + rx * math.cos(a)
-    new_y = cy + ry * math.sin(a)
+    new_x = cx + rx * math.cos(a) - i*.5
+    new_y = cy + ry * math.sin(a) + i*.5
     if 180*noise.rN(0.1,0.9) < ad < 270*noise.rN(0.1,0.9):
       new_x += 2*a
       new_y += 5*a

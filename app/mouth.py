@@ -35,7 +35,7 @@ class Mouth:
     if self.head.shape_type == 1:
       mcy -= (self.head.r * .35)
     path = pu.create_circ_points(self.head.n, mr, mcx, mcy)
-    path.fill(self.fill).stroke('grey', width='1')
+    path.fill(self.fill, opacity=0.3).stroke('grey', width='1')
     return path
 
   def curve(self):
@@ -54,7 +54,7 @@ class Mouth:
       cy2 -= (self.head.r * .3)
     path = svgwrite.path.Path('M %d,%d' % (start_x, start_y))
     path.push('C %d,%d %d,%d %d,%d' % (cx1, cy1, cx2, cy2, end_x, end_y))
-    path.fill(self.fill).stroke('grey', width='1')
+    path.fill(self.fill, opacity=0.3).stroke('grey', width='1')
     return path
 
 
