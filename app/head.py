@@ -11,13 +11,13 @@ class Head:
     self.cy = cy
     self.shape_id = random.choice([0,1,2])
     self.hair = random.random() > 0.5
-    self.outline = pu.create_circ_points(n, r, cx, cy)
-    if self.shape_id is 0:
-      self.outline = pu.create_misshapen_head(n, r, cx, cy)
-    elif self.shape_id is 1:
-      self.outline = pu.create_misshapen_head_x(n, r, cx, cy)
-    elif self.shape_id is 2:
-      self.outline = pu.create_spiky_head(n, r, cx, cy)
+    self.outline = pu.create_asym_blob(n, r, cx, cy)
+    # if self.shape_id is 0:
+    #   self.outline = pu.create_misshapen_head(n, r, cx, cy)
+    # elif self.shape_id is 1:
+    #   self.outline = pu.create_misshapen_head_x(n, r, cx, cy)
+    # elif self.shape_id is 2:
+    #   self.outline = pu.create_spiky_head(n, r, cx, cy)
     # elif self.shape_id is 3:
     #   self.outline = pu.create_fuzzy_head(n, r, cx, cy)
     self.elements = [self.outline]
