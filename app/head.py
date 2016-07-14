@@ -21,6 +21,10 @@ class Head:
       pu.create_spiky_head(n, r, cx, cy)]
     self.shape_type = noise.rI(0,2)
     self.outline = self.types[self.shape_type]
+    # self.outline = pu.create_circ_points(n,r,cx,cy)
+    # self.outline = svgwrite.shapes.Rect(insert=(self.cx-0.5*self.r,self.cy-self.r), size=(300,500),
+    #     rx=self.r*2, ry=self.r/2, fill=noise.rC(), opacity=0.9, 
+    #     stroke='grey', stroke_width='1')
     self.elements = [self.outline]
     if self.hair:
       h = self.make_hair()

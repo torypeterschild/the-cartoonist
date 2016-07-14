@@ -57,30 +57,24 @@ class Cartoon:
 
   def assemble(self):
     # self.paper.add(self.paper.rect(insert=(0, 0), size=('100%', '100%'), fill='white'))
-
     caption_elem = self.create_caption()
     self.paper.add(caption_elem)
     filter_t = self.paper.defs.add(self.paper.filter(id="FN", start=(0, 0), size=('100%', '100%'),
                filterUnits="userSpaceOnUse", color_interpolation_filters="sRGB"))
-    # filter_a = self.paper.defs.add(self.paper.filter(id="FL", start=(0, 0), size=('100%', '100%'),
-               # filterUnits="userSpaceOnUse"))
-    
+    filter_t.feGaussianBlur(stdDeviation="1", result="BLUR")
     filter_t.feTurbulence(x='0%', y='0%', width='100%',
                 height='100%', baseFrequency=0.03, numOctaves=4, seed=47,
                 stitchTiles='stitch', type='fractalNoise', result="NOISE")
     filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="23.5", result="DISPL")
-    # fc = filter_t.feComponentTransfer(in_="NOISE")
-    filter_t.feComponentTransfer(in_="DISPL", result="OPAQ").feFuncA(type_="linear", slope=".5")
-    filter_t.feMerge(["OPAQ"])
+    filter_t.feComponentTransfer(in_="DISPL", result="OPAQ").feFuncA(type_="linear", slope=".9")
 
-    
-    # fc.feFuncA(type_="linear", slope=0.2)
-    # op = filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="R", yChannelSelector="B", scale="18.5")
-    g_f = self.paper.add(self.paper.g(filter=filter_t.get_funciri()))
-    # g_f.add( self.paper.rect(insert=(50, 50), size=(50, 50), fill='aqua'))
+    filter_t.feMerge(["OPAQ", "BLUR"])
+    g_f = self.paper.g(filter=filter_t.get_funciri())
     for elem in self.head.elements:
-      self.paper.add(elem)
+      # self.paper.add(elem)
       g_f.add(elem)
+      # if elem is self.head.outline:
+        # self.paper.add(elem)
     self.paper.add(g_f)
 
 
