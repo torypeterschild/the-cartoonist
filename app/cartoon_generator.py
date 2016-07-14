@@ -56,10 +56,32 @@ class Cartoon:
     return caption_elem
 
   def assemble(self):
+    # self.paper.add(self.paper.rect(insert=(0, 0), size=('100%', '100%'), fill='white'))
+
     caption_elem = self.create_caption()
     self.paper.add(caption_elem)
+    filter_t = self.paper.defs.add(self.paper.filter(id="FN", start=(0, 0), size=('100%', '100%'),
+               filterUnits="userSpaceOnUse", color_interpolation_filters="sRGB"))
+    # filter_a = self.paper.defs.add(self.paper.filter(id="FL", start=(0, 0), size=('100%', '100%'),
+               # filterUnits="userSpaceOnUse"))
+    
+    filter_t.feTurbulence(x='0%', y='0%', width='100%',
+                height='100%', baseFrequency=0.03, numOctaves=4, seed=47,
+                stitchTiles='noStitch', type='fractalNoise', result="NOISE")
+    filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="28.5", result="DISPL")
+    # fc = filter_t.feComponentTransfer(in_="NOISE")
+    filter_t.feComponentTransfer(in_="DISPL").feFuncA(type_="linear", slope=.7)
+
+    
+    # fc.feFuncA(type_="linear", slope=0.2)
+    # op = filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="R", yChannelSelector="B", scale="18.5")
+    g_f = self.paper.add(self.paper.g(filter=filter_t.get_funciri()))
+    # g_f.add( self.paper.rect(insert=(50, 50), size=(50, 50), fill='aqua'))
     for elem in self.head.elements:
       self.paper.add(elem)
-    return self.paper.tostring()
+      g_f.add(elem)
+    self.paper.add(g_f)
 
+
+    return self.paper.tostring()
 
