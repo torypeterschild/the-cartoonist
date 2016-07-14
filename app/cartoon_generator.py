@@ -63,19 +63,33 @@ class Cartoon:
                filterUnits="userSpaceOnUse", color_interpolation_filters="sRGB"))
     filter_t.feGaussianBlur(stdDeviation="1", result="BLUR")
     filter_t.feTurbulence(x='0%', y='0%', width='100%',
-                height='100%', baseFrequency=0.03, numOctaves=4, seed=47,
+                height='100%', baseFrequency=.03, numOctaves=4, seed=47,
                 stitchTiles='stitch', type='fractalNoise', result="NOISE")
     filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="23.5", result="DISPL")
+
     filter_t.feComponentTransfer(in_="DISPL", result="OPAQ").feFuncA(type_="linear", slope=".9")
 
-    filter_t.feMerge(["OPAQ", "BLUR"])
+    filter_t.feMerge(["OPAQ"])
+
+    filter_x = self.paper.defs.add(self.paper.filter(id="Fx", start=(0, 0), size=('100%', '100%'),
+               filterUnits="userSpaceOnUse", color_interpolation_filters="sRGB"))
+    filter_x.feTurbulence(x='0%', y='0%', width='100%',
+                height='100%', baseFrequency=.04, numOctaves=4, seed=47,
+                stitchTiles='stitch', type='fractalNoise')
+    filter_x.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="13.5", result="DISPL2")
     g_f = self.paper.g(filter=filter_t.get_funciri())
+    g_x = self.paper.g(filter=filter_x.get_funciri())
     for elem in self.head.elements:
       # self.paper.add(elem)
-      g_f.add(elem)
-      # if elem is self.head.outline:
-        # self.paper.add(elem)
+      g_f.add(elem.stroke('grey'))
+      if elem is self.head.outline:
+        nofill = copy.deepcopy(elem)
+        g_x.add(nofill.fill('none').stroke('grey'))
+        # self.paper.add(nofill)
+  
     self.paper.add(g_f)
+    self.paper.add(g_x)
+
 
 
     return self.paper.tostring()
