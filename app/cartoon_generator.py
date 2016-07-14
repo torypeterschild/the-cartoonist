@@ -67,10 +67,11 @@ class Cartoon:
     
     filter_t.feTurbulence(x='0%', y='0%', width='100%',
                 height='100%', baseFrequency=0.03, numOctaves=4, seed=47,
-                stitchTiles='noStitch', type='fractalNoise', result="NOISE")
-    filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="28.5", result="DISPL")
+                stitchTiles='stitch', type='fractalNoise', result="NOISE")
+    filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="23.5", result="DISPL")
     # fc = filter_t.feComponentTransfer(in_="NOISE")
-    filter_t.feComponentTransfer(in_="DISPL").feFuncA(type_="linear", slope=.7)
+    filter_t.feComponentTransfer(in_="DISPL", result="OPAQ").feFuncA(type_="linear", slope=".5")
+    filter_t.feMerge(["OPAQ"])
 
     
     # fc.feFuncA(type_="linear", slope=0.2)
