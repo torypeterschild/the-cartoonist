@@ -27,9 +27,15 @@ def create_circ_points(n, r, cx, cy):
     Create rectangle head
 """
 def create_rect_head(n, r, cx, cy):
+    rx_ = r * (noise.rI(1,5))
+    ry_ = r / (noise.rI(1,10))
+    size_x = noise.rI(300,500)
+    size_y = noise.rI(300,500)
+    insert_x = cx - (0.5 * size_x)
+    insert_y = cy - (0.5 * size_y)
     rect = svgwrite.shapes.Rect(
-            insert=(cx-0.5*r,cy-r), 
-            size=(300,500), rx=r*2, ry=r/12, 
+            insert=(insert_x,insert_y), 
+            size=(size_x,size_y), rx=rx_, ry=ry_, 
             stroke="#363636", stroke_width="2")
     rect.fill(noise.rC(), opacity=0.2)
     return rect
@@ -53,7 +59,34 @@ def create_asym_blob(n, r, cx, cy):
             new_x += 2*a
             new_y += 5*a
         path.push("L %d,%d" % (new_x, new_y))
-        path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
+        path.push("S %d,%d %d,%d " % (
+            new_x*noise.rN(),
+            new_y*noise.rN(),
+            new_x,new_y))
+    path.push('L %d,%d' % (cx+rx,cy))
+    return path
+
+
+""" 
+    Experiment to create wild curves
+"""
+def create_ellipse(n, r, cx, cy):
+    rx = r * noise.rN(0.7,1.0)
+    ry = r * noise.rN(0.7,1.0)
+    path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
+    path.fill(noise.rC(),opacity=0.2).stroke("#363636",width="2")
+    s = (2 * math.pi)/n
+    for i in range(n):
+        a = s * i
+        ad = math.degrees(a)
+        new_x = cx + rx * math.cos(a)
+        new_y = cy + ry * math.sin(a)
+        path.push("L %d,%d" % (
+            new_x, new_y))
+        path.push("S %d,%d %d,%d " % (
+            new_x*noise.rN(),
+            new_y*noise.rN(),
+            new_x,new_y))
     path.push('L %d,%d' % (cx+rx,cy))
     return path
 

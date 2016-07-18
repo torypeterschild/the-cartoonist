@@ -18,10 +18,12 @@ class Head:
         self.types = [pu.create_asym_blob(n, r, cx, cy), 
             pu.create_misshapen_head(n, r, cx, cy),
             pu.create_misshapen_head_x(n, r, cx, cy),
-            pu.create_rect_head(n, r, cx, cy), 
+            pu.create_rect_head(n, r, cx, cy),
+            pu.create_ellipse(n, r, cx, cy), 
             pu.create_spiky_head(n, r, cx, cy)]
-        self.shape_type = noise.rI(0,3)
+        self.shape_type = noise.rI(0,4)
         self.outline = self.types[self.shape_type]
+        # self.outline = pu.create_crazy_shape(n, r, cx, cy)
         # self.outline = pu.create_circ_points(n,r,cx,cy)
         # self.outline = pu.create_rect_head(n, r, cx, cy)
         self.elements = [self.outline]
