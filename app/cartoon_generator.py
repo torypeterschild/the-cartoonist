@@ -66,11 +66,11 @@ class Cartoon:
     gr_outline = self.paper.g(filter=outline_filter.get_funciri())
     gr_features = self.paper.g(filter=feature_filter.get_funciri())
     for elem in self.head.elements:
-      self.paper.add(elem)
-      gr_outline.add(elem.stroke('grey', width='1'))
+      # self.paper.add(elem)
+      gr_features.add(elem.stroke('grey', width='1'))
       if elem is self.head.outline:
         nofill = copy.deepcopy(elem)
-        gr_features.add(nofill.fill('none').stroke('grey'))
+        gr_outline.add(nofill.fill('none').stroke('grey'))
         # self.paper.add(nofill)
   
     self.paper.add(gr_outline)

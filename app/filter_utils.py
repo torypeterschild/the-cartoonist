@@ -30,5 +30,5 @@ def make_feature_filter(dwg):
     height='100%', baseFrequency=.04, numOctaves=4, seed=47,
     stitchTiles='stitch', type='fractalNoise')
   feature_filt.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", 
-    yChannelSelector="A", scale="13.5", result="DISPL2")
+    yChannelSelector="A", scale="5.5", result="DISPL2")
   return feature_filt
