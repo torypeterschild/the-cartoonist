@@ -24,6 +24,18 @@ def create_circ_points(n, r, cx, cy):
 
 
 """ 
+    Create rectangle head
+"""
+def create_rect_head(n, r, cx, cy):
+    rect = svgwrite.shapes.Rect(
+            insert=(cx-0.5*r,cy-r), 
+            size=(300,500), rx=r*2, ry=r/12, 
+            stroke="#363636", stroke_width="2")
+    rect.fill(noise.rC(), opacity=0.2)
+    return rect
+
+
+""" 
     Experiment to create asymmetrical curves
 """
 def create_asym_blob(n, r, cx, cy):
@@ -86,6 +98,7 @@ def create_spiky_head(n, r, cx, cy):
         path.push('L %d,%d' % (new_x,new_y))
         path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
     return path
+
 
 """ 
     MISSHAPEN HEAD WITH LITTLE SPIKES 

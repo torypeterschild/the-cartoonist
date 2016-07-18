@@ -12,6 +12,7 @@ HEIGHT = 1000
 widthmm = "%fmm" % WIDTH
 heightmm = "%fmm" % HEIGHT
 
+
 """ SIZE OF HEAD OUTLINE """
 X_MIN = WIDTH * .25
 X_MAX = WIDTH * .75
@@ -20,6 +21,7 @@ Y_MAX = HEIGHT * .6
 CX = (X_MIN + X_MAX)/2
 CY = (Y_MIN + Y_MAX)/2
 R = WIDTH/4
+
 
 """ CAPTION """
 CAPTION_X = CX - R
@@ -67,11 +69,11 @@ class Cartoon:
         gr_features = self.paper.g(filter=feature_filter.get_funciri())
         for elem in self.head.elements:
             # self.paper.add(elem)
-            gr_features.add(elem.stroke('grey', width='1'))
+            gr_features.add(elem.stroke('grey', width='2'))
             if elem is self.head.outline:
                 nofill = copy.deepcopy(elem)
                 gr_outline.add(nofill.fill('none').stroke('grey'))
-                # self.paper.add(nofill)
+                self.paper.add(nofill)
     
         self.paper.add(gr_outline)
         self.paper.add(gr_features)
