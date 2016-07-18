@@ -81,7 +81,7 @@ class Cartoon:
     g_x = self.paper.g(filter=filter_x.get_funciri())
     for elem in self.head.elements:
       # self.paper.add(elem)
-      g_f.add(elem.stroke('grey'))
+      g_f.add(elem.stroke('grey', width='1'))
       if elem is self.head.outline:
         nofill = copy.deepcopy(elem)
         g_x.add(nofill.fill('none').stroke('grey'))

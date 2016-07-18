@@ -96,7 +96,7 @@ class Eyeball:
       if self.a_min < ad < self.a_max:
         path.push('%d,%d' % (xp,yp))
         path.push('L %d,%d' % (xp,yp))
-    path.fill('grey',opacity=0.7)
+    path.fill(noise.rC(),opacity=0.7)
     return path
 
   def translate(self, tx, ty=None):
