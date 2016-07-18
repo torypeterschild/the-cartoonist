@@ -30,18 +30,14 @@ class Cartoon:
     self.paper = svgwrite.Drawing(size=(widthmm, heightmm),debug=True)
     self.paper.viewbox(width=WIDTH,height=HEIGHT)
     self.head = head.Head(100, R, CX, CY)
-    self.eyes = eye.Eyes(40, 20*noise.rN(2.0,3.0), self.head.cx - .25*self.head.r, 
-      self.head.cy-.25*self.head.r)
-    self.eyes.create()
     self.caption = caption
     self.svg = svgwrite.Drawing(size=(1000, 1000))
 
   def __str__(self):
     descr = "\n-- CARTOON INSTANCE --\n%s." % (self.head)
-    eyes = self.eyes.__str__()
     caption = self.caption.__str__()
     end = "\n-- END CARTOON INSTANCE --"
-    return descr + eyes + caption + end
+    return descr + caption + end
 
   def create_caption(self):
     i = CAPTION_Y
@@ -60,15 +56,41 @@ class Cartoon:
     return caption_elem
 
   def assemble(self):
+    # self.paper.add(self.paper.rect(insert=(0, 0), size=('100%', '100%'), fill='white'))
     caption_elem = self.create_caption()
     self.paper.add(caption_elem)
-    for elem in self.head.elements:
-      self.paper.add(elem)
-    for obj in self.eyes.eyeballs:
-      self.paper.add(obj.outline)
-      self.paper.add(obj.pupil)
-    for elem in self.eyes.elements:
-        self.paper.add(elem)
-    return self.paper.tostring()
+    filter_t = self.paper.defs.add(self.paper.filter(id="FN", start=(0, 0), size=('100%', '100%'),
+               filterUnits="userSpaceOnUse", color_interpolation_filters="sRGB"))
+    filter_t.feGaussianBlur(stdDeviation="1", result="BLUR")
+    filter_t.feTurbulence(x='0%', y='0%', width='100%',
+                height='100%', baseFrequency=.03, numOctaves=4, seed=47,
+                stitchTiles='stitch', type='fractalNoise', result="NOISE")
+    filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="23.5", result="DISPL")
 
+    filter_t.feComponentTransfer(in_="DISPL", result="OPAQ").feFuncA(type_="linear", slope=".9")
+
+    filter_t.feMerge(["OPAQ"])
+
+    filter_x = self.paper.defs.add(self.paper.filter(id="Fx", start=(0, 0), size=('100%', '100%'),
+               filterUnits="userSpaceOnUse", color_interpolation_filters="sRGB"))
+    filter_x.feTurbulence(x='0%', y='0%', width='100%',
+                height='100%', baseFrequency=.04, numOctaves=4, seed=47,
+                stitchTiles='stitch', type='fractalNoise')
+    filter_x.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="13.5", result="DISPL2")
+    g_f = self.paper.g(filter=filter_t.get_funciri())
+    g_x = self.paper.g(filter=filter_x.get_funciri())
+    for elem in self.head.elements:
+      # self.paper.add(elem)
+      g_f.add(elem.stroke('grey', width='1'))
+      if elem is self.head.outline:
+        nofill = copy.deepcopy(elem)
+        g_x.add(nofill.fill('none').stroke('grey'))
+        # self.paper.add(nofill)
+  
+    self.paper.add(g_f)
+    self.paper.add(g_x)
+
+
+
+    return self.paper.tostring()
 

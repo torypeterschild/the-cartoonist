@@ -7,11 +7,12 @@ class Nose:
   def __init__(self, head):
     self.head = head
     self.fill = random.choice(['none', noise.rC()])
-    self.types = [] 
-    self.shape_type = noise.rI(0,2)
-    # self.outline = self.types[self.shape_type]
     self.elements = []
-    self.outline = self.nostrils()
+    self.shape_type = noise.rI(0,1)
+    if self.shape_type == 0:
+      self.outline = self.nostrils()
+    elif self.shape_type == 1:
+      self.outline = self.small_curve()
 
   def nostrils(self):
     cx1 = self.head.cx-10
@@ -25,7 +26,13 @@ class Nose:
     n2.fill('grey').stroke('grey', width='1')
     self.elements.append(n1)
     self.elements.append(n2)
-    return n1, n2
+
+  def small_curve(self):
+    adir = random.choice(['-', '+'])
+    path = svgwrite.path.Path('M %d,%d' % (self.head.cx-10,self.head.cy+10))
+    path.push_arc((self.head.cx+10, self.head.cy+10), 80, 15, angle_dir=adir, absolute=True)
+    path.fill('none').stroke('grey')
+    self.elements.append(path)
 
   def translate(self, tx, ty=None):
     if ty is not None:
