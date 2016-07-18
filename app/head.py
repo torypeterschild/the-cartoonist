@@ -10,9 +10,9 @@ class Head:
         self.cx = cx
         self.cy = cy
         self.shape_id = random.choice([0,1,2])
-        self.hair = random.random() > 0.2
+        self.hair = random.random() > 0.3
         self.mouth = random.random() > 0.5
-        self.nose = random.random() > 0.5
+        self.nose = random.random() > 0.3
         self.eyes = eye.Eyes(self)
         self.eyes.create()
         self.types = [pu.create_asym_blob(n, r, cx, cy), 

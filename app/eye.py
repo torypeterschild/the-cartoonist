@@ -140,9 +140,9 @@ class Eyes:
             self.cx, self.cy)
         self.right = Eyeball(R=True,left=self.left)
         self.right.translate(0.5*self.head.r)
-        self.lashes = random.random() > 0.5
+        self.lashes = random.random() > 0.3
         self.lash_type = noise.rI(0,2)
-        self.lids = random.random() > 0.5
+        self.lids = random.random() > 0.3
         self.elements = [self.left.outline, self.left.pupil, self.right.outline,
             self.right.pupil]
         self.eyeballs = [self.left, self.right]
