@@ -3,6 +3,7 @@ import caption, eye, head, mouth, noise
 import svgwrite
 from svgwrite.text import TSpan
 import path_utilities as pu
+import filter_utils as f
 
 
 """ SIZE OF DRAWING """
@@ -56,41 +57,24 @@ class Cartoon:
     return caption_elem
 
   def assemble(self):
-    # self.paper.add(self.paper.rect(insert=(0, 0), size=('100%', '100%'), fill='white'))
     caption_elem = self.create_caption()
     self.paper.add(caption_elem)
-    filter_t = self.paper.defs.add(self.paper.filter(id="FN", start=(0, 0), size=('100%', '100%'),
-               filterUnits="userSpaceOnUse", color_interpolation_filters="sRGB"))
-    filter_t.feGaussianBlur(stdDeviation="1", result="BLUR")
-    filter_t.feTurbulence(x='0%', y='0%', width='100%',
-                height='100%', baseFrequency=.03, numOctaves=4, seed=47,
-                stitchTiles='stitch', type='fractalNoise', result="NOISE")
-    filter_t.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="23.5", result="DISPL")
-
-    filter_t.feComponentTransfer(in_="DISPL", result="OPAQ").feFuncA(type_="linear", slope=".9")
-
-    filter_t.feMerge(["OPAQ"])
-
-    filter_x = self.paper.defs.add(self.paper.filter(id="Fx", start=(0, 0), size=('100%', '100%'),
-               filterUnits="userSpaceOnUse", color_interpolation_filters="sRGB"))
-    filter_x.feTurbulence(x='0%', y='0%', width='100%',
-                height='100%', baseFrequency=.04, numOctaves=4, seed=47,
-                stitchTiles='stitch', type='fractalNoise')
-    filter_x.feDisplacementMap(in_="SourceGraphic", xChannelSelector="A", yChannelSelector="A", scale="13.5", result="DISPL2")
-    g_f = self.paper.g(filter=filter_t.get_funciri())
-    g_x = self.paper.g(filter=filter_x.get_funciri())
+    shape_filt = f.make_shape_filter(self.paper)
+    outline_filter = self.paper.defs.add(shape_filt)
+    feature_filt = f.make_feature_filter(self.paper)
+    feature_filter = self.paper.defs.add(feature_filt)
+    gr_outline = self.paper.g(filter=outline_filter.get_funciri())
+    gr_features = self.paper.g(filter=feature_filter.get_funciri())
     for elem in self.head.elements:
-      # self.paper.add(elem)
-      g_f.add(elem.stroke('grey', width='1'))
+      self.paper.add(elem)
+      gr_outline.add(elem.stroke('grey', width='1'))
       if elem is self.head.outline:
         nofill = copy.deepcopy(elem)
-        g_x.add(nofill.fill('none').stroke('grey'))
+        gr_features.add(nofill.fill('none').stroke('grey'))
         # self.paper.add(nofill)
   
-    self.paper.add(g_f)
-    self.paper.add(g_x)
-
-
+    self.paper.add(gr_outline)
+    self.paper.add(gr_features)
 
     return self.paper.tostring()
 
