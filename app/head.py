@@ -1,6 +1,6 @@
 import svgwrite
 import path_utilities as pu
-import noise, mouth, nose, eye
+import noise, mouth, nose, eye, hair
 import random, math
 
 class Head:
@@ -23,13 +23,10 @@ class Head:
             pu.create_spiky_head(n, r, cx, cy)]
         self.shape_type = noise.rI(0,4)
         self.outline = self.types[self.shape_type]
-        # self.outline = pu.create_crazy_shape(n, r, cx, cy)
-        # self.outline = pu.create_circ_points(n,r,cx,cy)
-        # self.outline = pu.create_rect_head(n, r, cx, cy)
         self.elements = [self.outline]
         if self.hair:
-            h = self.make_hair()
-            self.elements.append(h)
+            h = hair.Hair(self)
+            self.elements.append(h.outline)
         if self.mouth:
             m = mouth.Mouth(self)
             self.elements.append(m.outline)
@@ -40,28 +37,6 @@ class Head:
         for elem in self.eyes.elements:
             self.elements.append(elem)
 
-    def make_hair(self):
-        path = svgwrite.path.Path()
-        s = (2 * math.pi)/self.n
-        for i in range(self.n):
-            a = s * i
-            ad = math.degrees(a)
-            xp = self.cx + self.r * math.cos(a)
-            xp1 = self.cx + self.r
-            yp = self.cy + self.r * math.sin(a)
-            hair_width = noise.rI(10,30)
-            if (270-hair_width) < ad < (270+hair_width):
-                dx = xp
-                dy = yp - 20 * noise.rI(1,5)
-                path.push('M %d,%d' % (xp,yp))
-                path.push('L %d,%d' % (dx,dy))
-                path.push('M %d,%d' % (xp-5,yp))
-                path.push('L %d,%d' % (dx-5,dy))
-                path.push("S %d,%d %d,%d " % (dx*noise.rN(),dy*noise.rN(),dx,dy))
-                path.push('M %d,%d' % (xp,yp))
-                path.push("S %d,%d %d,%d " % (dx*noise.rN(),dy*noise.rN(),dx,dy))
-        path.fill('blue',opacity=0.7).stroke('grey')
-        return path
 
     def translate(self, tx, ty=None):
         if ty is not None:
@@ -80,8 +55,9 @@ class Head:
         num_points = "%d points.\n" % (self.n)
         radius = "Radius: %d\n" % (self.r)
         center = "cx is %d, cy is %d\n" % (self.cx, self.cy)
-        shape = "Shape is type %s: %s" % (
+        shape = "Shape is type %s: %s\n" % (
             self.shape_type, 
             self.types[self.shape_type].__class__.__name__)
+        hair = "Hair: %s\n" % self.hair
         eyes = self.eyes.__str__()
-        return title + num_points + radius + center + shape + eyes
+        return title + num_points + radius + center + shape + hair + eyes
