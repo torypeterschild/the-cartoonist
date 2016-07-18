@@ -85,7 +85,8 @@ class Eyeball:
         lash_path.push('L %d,%d' % (dx,dy))
     return lash_path
 
-  def make_lids_only(self):
+  def make_lids_only(self, color):
+    f = noise.rC()
     path = svgwrite.path.Path('M')
     s = (2 * math.pi)/self.n
     for i in range(self.n):
@@ -96,7 +97,7 @@ class Eyeball:
       if self.a_min < ad < self.a_max:
         path.push('%d,%d' % (xp,yp))
         path.push('L %d,%d' % (xp,yp))
-    path.fill(noise.rC(),opacity=0.7)
+    path.fill(color,opacity=0.7)
     return path
 
   def translate(self, tx, ty=None):
@@ -139,6 +140,7 @@ class Eyes:
     self.elements = [self.left.outline, self.left.pupil, self.right.outline,
       self.right.pupil]
     self.eyeballs = [self.left, self.right]
+    self.lid_color = noise.rC()
 
   def create(self):
     for e in self.eyeballs:
@@ -149,7 +151,7 @@ class Eyes:
           lash.translate(0.5*self.head.r)
         self.elements.append(lash)
       if self.lids:
-        lid = e.make_lids_only()
+        lid = e.make_lids_only(self.lid_color)
         if e.side is "R":
           lid.translate(0.5*self.head.r)
         self.elements.append(lid)
