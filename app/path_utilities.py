@@ -38,7 +38,7 @@ def create_rect_head(n, r, cx, cy):
             size=(size_x,size_y), rx=rx_, ry=ry_, 
             stroke="#363636", stroke_width="2")
     rect.fill(noise.rC(), opacity=0.2)
-    return rect
+    return rect, (0.5 * size_x), (0.5 * size_y)
 
 
 """ 
@@ -64,7 +64,7 @@ def create_asym_blob(n, r, cx, cy):
             new_y*noise.rN(),
             new_x,new_y))
     path.push('L %d,%d' % (cx+rx,cy))
-    return path
+    return path, rx, ry
 
 
 """ 
@@ -88,12 +88,13 @@ def create_ellipse(n, r, cx, cy):
             new_y*noise.rN(),
             new_x,new_y))
     path.push('L %d,%d' % (cx+rx,cy))
-    return path
+    return path, rx, ry
 
 
 """ 
     PAC MAN SHAPE
     TODO: update to create path object instead of string
+    NOT IN USE
 """
 def create_pacman_head(n, r, cx, cy):
     points = ['M']
@@ -115,6 +116,7 @@ def create_pacman_head(n, r, cx, cy):
 
 """ 
     HEAD WITH LITTLE SPIKES 
+    NOT IN USE
 """
 def create_spiky_head(n, r, cx, cy):
     path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
@@ -152,7 +154,7 @@ def create_misshapen_head(n, r, cx, cy):
         p = (new_x, new_y)
         path.push('L %d,%d' % (new_x,new_y))
         path.push("S %d,%d %d,%d " % (new_x*noise.rN(),new_y*noise.rN(),new_x,new_y))
-    return path
+    return path, r, r
 
 
 """ 
@@ -162,14 +164,14 @@ def create_misshapen_head_x(n, r, cx, cy):
     path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
     path.fill(noise.rC(),opacity=0.2).stroke("#363636",width="2")
     s = (2 * math.pi)/n
-    rr = r
     for i in range(n):
         a = s * i
+        ad = math.degrees(a)
         # NOTE: use these numbers for home page, use -10,5 or -10,15 for real drawings
-        rr = rr + noise.rI(-5,5)
+        # rr = rr + noise.rI(-5,5)
         new_x = cx + r * math.cos(a)
         new_y = cy + r * noise.rN() * math.sin(a)
-        if a > math.pi*noise.rN() and a < math.pi*2*noise.rN():
+        if 180 < ad < 360:
             new_x -= math.cos(a) * (r * 0.2)
             new_y -= math.sin(a) * (r * 0.3)
         p = (new_x, new_y)
@@ -177,11 +179,12 @@ def create_misshapen_head_x(n, r, cx, cy):
         path.push("S %d,%d %d,%d " % (new_x*noise.rN(),
             new_y*noise.rN(),
             new_x,new_y))
-    return path
+    return path, r, r
 
 
 """
     FUZZY CIRCLE
+    NOT IN USE
 """
 def create_fuzzy_head(n, r, cx, cy):
     path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))

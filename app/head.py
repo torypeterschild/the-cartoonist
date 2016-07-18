@@ -10,7 +10,7 @@ class Head:
         self.cx = cx
         self.cy = cy
         self.shape_id = random.choice([0,1,2])
-        self.hair = random.random() > 0.5
+        self.hair = random.random() > 0.2
         self.mouth = random.random() > 0.5
         self.nose = random.random() > 0.5
         self.eyes = eye.Eyes(self)
@@ -19,10 +19,10 @@ class Head:
             pu.create_misshapen_head(n, r, cx, cy),
             pu.create_misshapen_head_x(n, r, cx, cy),
             pu.create_rect_head(n, r, cx, cy),
-            pu.create_ellipse(n, r, cx, cy), 
-            pu.create_spiky_head(n, r, cx, cy)]
+            pu.create_ellipse(n, r, cx, cy)]
         self.shape_type = noise.rI(0,4)
-        self.outline = self.types[self.shape_type]
+        self.outline, self.rx, self.ry = self.types[self.shape_type]
+        # self.outline = self.info[0]
         self.elements = [self.outline]
         if self.hair:
             h = hair.Hair(self)

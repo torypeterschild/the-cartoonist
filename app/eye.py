@@ -125,7 +125,7 @@ class Eyeball:
     def __str__(self):
         title = "\n--- %s EYEBALL ---\n" % self.side
         side = "Side: %s\n" % self.side
-        numbers = "cx is %d.\ncy is %d.\nrx is %d.\nry is %d.\n" % (self.cx, 
+        numbers = "cx is %d.\ncy is %d.\nrx is %d.\nry is %d\n." % (self.cx, 
             self.cy, self.rx, self.ry)
         return title + side + numbers
 
