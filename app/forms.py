@@ -3,8 +3,8 @@ from wtforms import StringField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
 class InputForm(Form):
-  keyword = StringField("keyword", validators=[DataRequired()])
+    keyword = StringField("keyword", validators=[DataRequired()])
 
 
 class SaveForm(Form):
-  save = SubmitField("save")
+    save = SubmitField("save")
