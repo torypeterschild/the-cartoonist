@@ -3,6 +3,7 @@ import path_utilities as pu
 import noise
 import random, math
 
+
 class Mouth:
     def __init__(self, head):
         self.head = head
@@ -56,7 +57,6 @@ class Mouth:
         path.push('C %d,%d %d,%d %d,%d' % (cx1, cy1, cx2, cy2, end_x, end_y))
         path.fill(self.fill, opacity=0.3).stroke('grey', width='1')
         return path
-
 
     def translate(self, tx, ty=None):
         if ty is not None:

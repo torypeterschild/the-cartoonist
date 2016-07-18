@@ -1,6 +1,7 @@
 import random, sys, os, json, re
 import numpy as np
 
+
 """ 
     Generate noise array to add to original array
     pure_array: array with no noise

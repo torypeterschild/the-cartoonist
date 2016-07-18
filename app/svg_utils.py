@@ -2,6 +2,7 @@ import random, sys, os, json, re
 import numpy as np
 import noise
 
+
 COMMANDS = set('MmZzLlHhVvCcSsQqTtAa')
 INSTR_RE = re.compile("([MmZzLlHhVvCcSsQqTtAa])")
 COMPLETE_COMMAND_RE = re.compile("([a-zA-Z][^a-zA-Z]*)")

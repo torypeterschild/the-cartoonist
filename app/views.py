@@ -6,7 +6,9 @@ import random, sys, os
 import cartoon_generator as cg
 import caption
 
+
 captionpersist = list()
+
 
 @app.route("/")
 @app.route("/index")

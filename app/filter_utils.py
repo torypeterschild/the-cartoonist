@@ -1,7 +1,6 @@
 import svgwrite
 
 
-
 """ 
     Make filter for outline of head 
 """
