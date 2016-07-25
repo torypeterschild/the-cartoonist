@@ -7,7 +7,7 @@ import random, math
 class Mouth:
     def __init__(self, head):
         self.head = head
-        self.fill = random.choice(['none', noise.rC()])
+        self.fill = 'white'
         self.types = [self.curve(),
             self.slant(),
             self.circle()] 
