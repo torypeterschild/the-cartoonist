@@ -1,5 +1,6 @@
 from textblob import TextBlob
 import random, sys, os, math
+import parser
 
 
 LINE_MAX = 6
@@ -12,6 +13,8 @@ class Caption:
         self.text = None
         self.content = content
         self.keyword = keyword
+        # self.
+        # self.ngram_dict = parser.build_ngram_dict(self.blob.split())
         self.words = None
         self.word_count = None
         self.n_lines = None
@@ -28,22 +31,38 @@ class Caption:
         end = "\n-- END CAPTION INSTANCE --\n"  
         return descr + line_count + lines + cap_tilt + end
 
+    # def get_text(self):
+    #     blob = TextBlob(self.content.decode('utf-8'))
+    #     sentence_list = list()
+    #     if self.keyword:
+    #         for sentence in blob.sentences:
+    #             words = sentence.split()
+    #             if self.keyword in words or self.keyword.lower() in words:
+    #                 if len(words) < WORDS_MAX:
+    #                     sentence_list.append(sentence.replace("\n", " "))
+    #     if not sentence_list:
+    #         self.text = ERROR
+    #     else:
+    #         self.text = random.choice(sentence_list)
+
     def get_text(self):
-        blob = TextBlob(self.content.decode('utf-8'))
         sentence_list = list()
+        blob = TextBlob(self.content.decode('utf-8'))
+        words_ = blob.split()
+        d = parser.build_ngram_dict(words_)
         if self.keyword:
-            for sentence in blob.sentences:
-                words = sentence.split()
-                if self.keyword in words or self.keyword.lower() in words:
-                    if len(words) < WORDS_MAX:
-                        sentence_list.append(sentence.replace("\n", " "))
-                # TEMPORARY
-                # elif len(words) < WORDS_MAX:
-                #   sentence_list.append(sentence.replace("\n", " "))
-        if not sentence_list:
-            self.text = ERROR
+            s = parser.build_sentence(d)
+            # if len(s.split()) < WORDS_MAX:
+            self.text = s
+            # for sentence in blob.sentences:
+            #     words = sentence.split()
+            #     if self.keyword in words or self.keyword.lower() in words:
+            #         if len(words) < WORDS_MAX:
+            #             sentence_list.append(sentence.replace("\n", " "))
+        # if not sentence_list:
+        #     self.text = ERROR
         else:
-            self.text = random.choice(sentence_list)
+            self.text = ERROR
 
     def set_words(self):
         if self.text:

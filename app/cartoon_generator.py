@@ -74,7 +74,7 @@ class Cartoon:
                 nofill = copy.deepcopy(elem)
                 nofill2 = copy.deepcopy(elem)
                 gr_outline.add(nofill.fill('none').stroke('grey', opacity=0.7))
-                gr_outline.add(nofill2.fill(noise.rC()).stroke('none'))
+                gr_outline.add(nofill2.fill('none').stroke('none'))
                 # self.paper.add(nofill)
     
         self.paper.add(gr_outline)

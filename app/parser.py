@@ -1,4 +1,4 @@
-from textblob import TextBlob
+from textblob import TextBlob, Word
 import random, sys
 from pprint import pprint
 
@@ -29,19 +29,10 @@ def build_ngram_dict(words):
     return ngram_dict
 
 
-def build_sentence(d, start):
+def build_sentence(d):
     # Make a list of all possible starts and then select randomly
     starts = [key for key in d.keys() if key[0][0].isupper() and key[0][-1] not in EOS]
-    for s in starts:
-        if start.title() == s[0]:
-            print("%s in %s" % (start, s[0]))
-            print("START %s" % start)
-            key = s
-            break
-    else:
-        print("START %s" % start)
-        print("START NOT IN STARTS")
-        key = random.choice(starts)
+    key = random.choice(starts)
 
     sent = []
     first, second = key
@@ -63,7 +54,14 @@ def build_sentence(d, start):
             break
         key = (second, third)
         first, second = key
-    return " ".join(sent)
+
+    sentence = " ".join(sent)
+
+    if ":" in sentence:
+        clauses = sentence.split(":")
+        sentence = clauses[1]
+        
+    return sentence
 
 
 # def main():
@@ -80,5 +78,5 @@ def build_sentence(d, start):
 #     print()
 #     s = build_sentence(d)
 #     print(s)
-    if s in content.decode('utf-8'):
-        print("\nBummer! This sentence is just a copy of one in the corpus.")
+    # if s in content.decode('utf-8'):
+    #     print("\nBummer! This sentence is just a copy of one in the corpus.")

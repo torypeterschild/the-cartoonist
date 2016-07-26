@@ -28,7 +28,7 @@ def input():
     if keyword_form.validate_on_submit():
         flash("Keyword is '%s'" % (keyword_form.keyword.data))
 
-    with app.open_resource('static/corpus000.txt') as f:
+    with app.open_resource('static/overheard.txt') as f:
         content = f.read()
 
     if keyword_form.keyword.data is not None:
