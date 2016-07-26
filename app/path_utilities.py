@@ -13,7 +13,7 @@ from svgwrite.text import TSpan
 """
 def create_circ_points(n, r, cx, cy):
     path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-    path.fill(noise.rC(),opacity=0.4).stroke(noise.rC(),width=noise.rI(0,3))
+    path.fill(noise.rC()).stroke(noise.rC(),width=noise.rI(0,3))
     s = (2 * math.pi)/n
     for i in range(n):
         a = s * i
@@ -37,7 +37,7 @@ def create_rect_head(n, r, cx, cy):
             insert=(insert_x,insert_y), 
             size=(size_x,size_y), rx=rx_, ry=ry_, 
             stroke="#363636", stroke_width="2")
-    rect.fill(noise.rC(), opacity=0.2)
+    rect.fill(noise.rC())
     return rect, (0.5 * size_x), (0.5 * size_y)
 
 
@@ -48,7 +48,7 @@ def create_asym_blob(n, r, cx, cy):
     rx = r * noise.rN(0.7,1.0)
     ry = r * noise.rN(0.7,1.0)
     path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
-    path.fill(noise.rC(),opacity=0.2).stroke("#363636",width="2")
+    path.fill(noise.rC()).stroke("#363636",width="2")
     s = (2 * math.pi)/n
     for i in range(n):
         a = s * i
@@ -74,7 +74,7 @@ def create_ellipse(n, r, cx, cy):
     rx = r * noise.rN(0.7,1.0)
     ry = r * noise.rN(0.7,1.0)
     path = svgwrite.path.Path('M %d,%d' % (cx+rx,cy))
-    path.fill(noise.rC(),opacity=0.2).stroke("#363636",width="2")
+    path.fill(noise.rC()).stroke("#363636",width="2")
     s = (2 * math.pi)/n
     for i in range(n):
         a = s * i
@@ -120,7 +120,7 @@ def create_pacman_head(n, r, cx, cy):
 """
 def create_spiky_head(n, r, cx, cy):
     path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-    path.fill(noise.rC(),opacity=0.2).stroke("#363636",width="2")
+    path.fill(noise.rC()).stroke("#363636",width="2")
     s = (2 * math.pi)/n
     rr = r
     for i in range(n):
@@ -140,7 +140,7 @@ def create_spiky_head(n, r, cx, cy):
 """
 def create_misshapen_head(n, r, cx, cy):
     path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-    path.fill(noise.rC(),opacity=0.2).stroke("#363636",width="2")
+    path.fill(noise.rC()).stroke("#363636",width="2")
     s = (2 * math.pi)/n
     rr = r
     for i in range(n):
@@ -162,7 +162,7 @@ def create_misshapen_head(n, r, cx, cy):
 """
 def create_misshapen_head_x(n, r, cx, cy):
     path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-    path.fill(noise.rC(),opacity=0.2).stroke("#363636",width="2")
+    path.fill(noise.rC()).stroke("#363636",width="2")
     s = (2 * math.pi)/n
     for i in range(n):
         a = s * i
@@ -188,7 +188,7 @@ def create_misshapen_head_x(n, r, cx, cy):
 """
 def create_fuzzy_head(n, r, cx, cy):
     path = svgwrite.path.Path('M %d,%d' % (cx+r,cy))
-    path.fill(noise.rC(),opacity=0.2).stroke("#363636",width="2")
+    path.fill(noise.rC()).stroke("#363636",width="2")
     s = (2 * math.pi)/n
     for i in range(n):
         a = s * i

@@ -21,11 +21,11 @@ def make_shape_filter(dwg):
 
     shape_filt.feDisplacementMap(
         in_="SourceGraphic", xChannelSelector="A", 
-        yChannelSelector="A", scale="23.5", result="DISPL")
+        yChannelSelector="A", scale="33.5", result="DISPL")
 
     shape_filt.feComponentTransfer(
         in_="DISPL", result="OPAQ").feFuncA(
-        type_="linear", slope=".9")
+        type_="linear", slope="1")
 
     shape_filt.feMerge(["OPAQ"])
 
@@ -69,7 +69,7 @@ def make_fractal_filter(dwg):
     fractal_filt.feTurbulence(
         x='0%', y='0%', width='100%',
         height='100%', baseFrequency=.01, 
-        numOctaves=5, seed=47, stitchTiles='stitch', 
+        numOctaves=4, seed=47, stitchTiles='stitch', 
         type='fractalNoise', result="FRACT")
 
     fractal_filt.feComposite(
