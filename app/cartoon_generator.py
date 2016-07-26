@@ -65,8 +65,13 @@ class Cartoon:
         outline_filter = self.paper.defs.add(shape_filt)
         feature_filt = f.make_feature_filter(self.paper)
         feature_filter = self.paper.defs.add(feature_filt)
+        fractal_filt = f.make_fractal_filter(self.paper)
+        fractal_filter = self.paper.defs.add(fractal_filt)
         gr_outline = self.paper.g(filter=outline_filter.get_funciri())
         gr_features = self.paper.g(filter=feature_filter.get_funciri())
+        gr_fractal = self.paper.g(filter=fractal_filter.get_funciri())
+        self.paper.add(self.paper.rect(insert=(100, 100), size=(200, 200),
+                    filter=fractal_filter.get_funciri()))
         for elem in self.head.elements:
             # self.paper.add(elem)
             gr_features.add(elem.stroke('grey', width='1', opacity=0.8))
