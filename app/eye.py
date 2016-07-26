@@ -17,7 +17,7 @@ class Eyeball:
             self.length = self.a_max - self.a_min
             self.outline = svgwrite.shapes.Ellipse(
                 center=(self.cx,self.cy),
-                r=(self.rx, self.ry), fill=noise.rC(), 
+                r=(self.rx, self.ry), fill='white', 
                 opacity=0.4, stroke=noise.rC(), 
                 stroke_width=noise.rI(1,3))
             self.pupil = svgwrite.shapes.Circle(
