@@ -74,7 +74,8 @@ class Cartoon:
                     filter=fractal_filter.get_funciri()))
         for elem in self.head.elements:
             # self.paper.add(elem)
-            gr_features.add(elem.stroke('grey', width='1', opacity=0.8))
+            elem['filter'] = fractal_filter.get_funciri()
+            gr_features.add(elem.stroke('dimgrey', width='3', opacity=0.8))
             if elem is self.head.outline:
                 nofill = copy.deepcopy(elem)
                 nofill2 = copy.deepcopy(elem)
