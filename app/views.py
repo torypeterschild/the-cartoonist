@@ -73,8 +73,7 @@ def savecartoon():
     print(svg_cartoon)
  
     return render_template("savecartoon.html",
-        svgwrite=svg_cartoon,
-        captionsave=" ")
+        svgwrite=Markup(svg_cartoon))
 
 
 @app.errorhandler(404)

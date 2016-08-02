@@ -15,6 +15,14 @@ body {
     overflow: visible;
 }
 
+button {
+    background:none!important;
+    border:none; 
+    padding:0!important;
+    font: inherit;
+    color: #afafaf;
+}
+
 section {
     position: relative;
     overflow: hidden;
