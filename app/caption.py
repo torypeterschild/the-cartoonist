@@ -9,10 +9,10 @@ ERROR = "?#$*&! - that word is not in the corpus."
 
 
 class Caption:
-    def __init__(self, content, keyword):
+    def __init__(self, content):
         self.text = None
         self.content = content
-        self.keyword = keyword
+        # self.keyword = keyword
         self.words = None
         self.word_count = None
         self.n_lines = None

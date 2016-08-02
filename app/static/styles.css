@@ -12,17 +12,78 @@ body {
     background: white;
     max-height: 100%;
     max-width: 100%;
+    overflow: visible;
+}
+
+section {
+    position: relative;
+    /*z-index: 1;  needed for setting pseudo-element z-index */
     overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
-body a {
-    margin: 10px;
-    font-size: 10pt;
-    text-decoration: none;
-}
-
-a:visited {
+section a {
+    position: relative;
+    display: inline-block;
+    outline: none;
     color: #212121;
+    vertical-align: bottom;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+section a::before,
+section a::after {
+    pointer-events: none;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+}
+
+.link-braces a {
+    padding: 0 0.35em;
+    /*font-weight: 500;*/
+    -webkit-transition: color 0.2s;
+    transition: color 0.2s;
+}
+
+.link-braces a:hover {
+    color: #9c9a9b;
+}
+
+.link-braces a::before,
+.link-braces a::after {
+    position: absolute;
+    top: 0;
+    font-weight: 100;
+    font-size: 120%;
+    line-height: 1;
+    opacity: 0;
+    -webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.link-braces a::before {
+    left: -0.1em;
+    content: '[';
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+.link-braces a::after {
+    right: -0.1em;
+    content: ']';
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+.link-braces a:hover::before,
+.link-braces a:hover::after {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
 }
 
 h1 {
@@ -36,7 +97,7 @@ svg {
     height: 100%;
     margin-left: 0px;
     padding: 0;
-/*    transform: scale(0.60);*/
+    /*    transform: scale(0.60);*/
     display: inline;
     opacity: 1;
 }
@@ -92,16 +153,16 @@ img {
 }
 
 #savetest p {
-  margin-top: -30px;
-  display: none;
-  align-content: right !important;
-  text-align: right!important;
-  float: right !important;
-  margin-right: 50px !important;
+    margin-top: -30px;
+    display: none;
+    align-content: right !important;
+    text-align: right!important;
+    float: right !important;
+    margin-right: 50px !important;
 }
 
 #savecartoon {
-  align-content: right;
+    align-content: right;
 }
 
 #facedrawing {
@@ -123,49 +184,50 @@ img {
     width: 100%;
     height: 100%;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 12pt;
-    margin: 10px;
+    font-size: 10pt;
+    margin: 20px;
     display: inline-block;
+    overflow: visible;
 }
 
 #caption, #save, #captionsave {
     display: none;
 }
 
-.button-container ul{
-  list-style: none;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
+/*.button-container ul{
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}*/
 
 
 ul li{
-  color: #212121;
-  display: inline;
-  position: relative;
-  float: left;
+    color: #212121;
+    display: inline;
+    position: relative;
+    float: left;
     border-bottom: none;
 }
 
 ul li input[type=radio]{
-  position: absolute;
-  visibility: hidden;
+    position: absolute;
+    visibility: hidden;
 }
 
 ul li label{
-  opacity: 0.2;
-  display: block;
-  position: relative;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 10pt;
-  padding: 15px 25px 25px 40px;
-  margin: 10px auto;
-  height: 15px;
-  z-index: 9;
-  cursor: pointer;
-  -webkit-transition: all 0.25s linear;
+    opacity: 0.2;
+    display: block;
+    position: relative;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+    padding: 15px 25px 25px 40px;
+    margin: 10px auto;
+    height: 15px;
+    z-index: 9;
+    cursor: pointer;
+    -webkit-transition: all 0.25s linear;
 }
 
 ul li:hover label{
@@ -174,64 +236,51 @@ ul li:hover label{
 }
 
 ul li .check{
-  opacity: 0.2;
-  display: block;
-  position: absolute;
-  border: 3px solid #00d2c8;
-  border-radius: 100%;
-  height: 3px;
-  width: 3px;
-  top: 30px;
-  left: 20px;
+    opacity: 0.2;
+    display: block;
+    position: absolute;
+    border: 3px solid #00d2c8;
+    border-radius: 100%;
+    height: 3px;
+    width: 3px;
+    top: 30px;
+    left: 20px;
     z-index: 5;
     transition: border .25s linear;
     -webkit-transition: border .25s linear;
 }
 
 ul li:hover .check {
-  border: 5px solid #00d2c8;
-  opacity: 1;
+    border: 5px solid #00d2c8;
+    opacity: 1;
 }
 
 ul li .check::before {
-  display: block;
-  position: absolute;
+    display: block;
+    position: absolute;
     content: '';
-  border-radius: 100%;
-  height: 3px;
-  width: 3px;
-  top: 0px;
+    border-radius: 100%;
+    height: 3px;
+    width: 3px;
+    top: 0px;
     left: 0px;
-  margin: auto;
+    margin: auto;
     transition: background 0.25s linear;
     -webkit-transition: background 0.25s linear;
 }
 
 input[type=radio]:checked ~ .check {
-  border: 3px solid #00d2c8;
-  opacity: 1;
+    border: 3px solid #00d2c8;
+    opacity: 1;
 }
 
 input[type=radio]:checked ~ .check::before{
-  background: #afafaf;
+    background: #afafaf;
 }
 
 input[type=radio]:checked ~ label{
-  color: #00d2c8;
-  opacity: 1;
-}
-
-.dogCartoon:checked ~ div {  
-  -webkit-animation: slide $duration infinite;
-  animation: slide $duration infinite;  
-}
-
-.faceCartoon:checked ~ div {
-/*  left: 35%;
-  width: 30%;*/
-  
-  -webkit-animation: width $duration infinite;
-  animation: width $duration infinite;  
+    color: #00d2c8;
+    opacity: 1;
 }
 
 .hidden {
@@ -239,16 +288,16 @@ input[type=radio]:checked ~ label{
 }
 
 #pythonSVG svg {
-  overflow: visible;
+    overflow: visible;
 }
 
 #pythonSVGWRITE svg {
-  overflow: visible;
-  display: block;
+    overflow: visible;
+    display: block;
 }
 
 #pythonSVGWRITE {
-  height: 500px;
-  display: block;
+    height: 500px;
+    display: block;
 }
 
