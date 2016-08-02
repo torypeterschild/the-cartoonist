@@ -20,37 +20,6 @@ captionpersist = list()
 #         buttons=False,
 #         save_form=save_form)
 
-
-# @app.route("/input", methods=['GET', 'POST'])
-# def input():
-#     keyword_form = InputForm()
-#     if keyword_form.validate_on_submit():
-#         flash("Keyword is '%s'" % (keyword_form.keyword.data))
-
-#     with app.open_resource('static/corpus000.txt') as f:
-#         content = f.read()
-
-#     if keyword_form.keyword.data is not None:
-#         keyword = keyword_form.keyword.data 
-#         cap = caption.Caption(content,keyword)
-#         cap.make()
-#         cartoon = cg.Cartoon(cap)
-#         # print(cartoon.__str__())
-#     else:
-#         return render_template("input.html",
-#             header="cartoonist",
-#             menu=True,
-#             keyword_form=keyword_form)
-
-#     svg_cartoon = cartoon.assemble()
-
-#     return render_template("cartoon.html",
-#         header="cartoonist",
-#         menu=True,
-#         save=True,
-#         svgwrite=Markup(svg_cartoon),
-#         keyword_form=keyword_form)
-
 @app.route("/")
 @app.route("/index")
 def render():
