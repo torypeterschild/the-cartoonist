@@ -36,7 +36,7 @@ def input():
         cap = caption.Caption(content,keyword)
         cap.make()
         cartoon = cg.Cartoon(cap)
-        print(cartoon.__str__())
+        # print(cartoon.__str__())
     else:
         return render_template("input.html",
             header="cartoonist",

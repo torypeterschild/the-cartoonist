@@ -65,18 +65,31 @@ class Cartoon:
         outline_filter = self.paper.defs.add(shape_filt)
         feature_filt = f.make_feature_filter(self.paper)
         feature_filter = self.paper.defs.add(feature_filt)
+        fractal_filt = f.make_fractal_filter(self.paper)
+        fractal_filter = self.paper.defs.add(fractal_filt)
         gr_outline = self.paper.g(filter=outline_filter.get_funciri())
         gr_features = self.paper.g(filter=feature_filter.get_funciri())
+        gr_fractal = self.paper.g(filter=fractal_filter.get_funciri())
+        # self.paper.add(self.paper.rect(insert=(100, 100), size=(200, 200), fill='white',
+        #             filter=fractal_filter.get_funciri()))
         for elem in self.head.elements:
             # self.paper.add(elem)
-            gr_features.add(elem.stroke('grey', width='2', opacity=0.8))
-            if elem is self.head.outline:
+            if (elem is self.head.eyes.eyeballs[0].outline or 
+                    elem is self.head.eyes.eyeballs[1].outline):
+                gr_features.add(elem.stroke('dimgrey', width='1', opacity=1.0).fill('white', opacity=1.0))
+            elif elem is self.head.outline:
+                # elem.fill('white')
+                elem['filter'] = fractal_filter.get_funciri()
+                gr_outline.add(elem.fill(opacity=0.5))
                 nofill = copy.deepcopy(elem)
-                gr_outline.add(nofill.fill('none').stroke('grey', opacity=0.7))
-                # self.paper.add(nofill)
-    
+                nofill2 = copy.deepcopy(elem)
+            else:   
+                gr_features.add(elem.stroke('dimgrey', width='2'))
+                # gr_fractal.add(elem.stroke('dimgrey', width='3').fill('white'))
+        self.paper.add(gr_fractal)
         self.paper.add(gr_outline)
         self.paper.add(gr_features)
+        
 
         return self.paper.tostring()
 
