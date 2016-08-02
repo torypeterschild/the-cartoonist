@@ -70,22 +70,18 @@ class Cartoon:
         gr_outline = self.paper.g(filter=outline_filter.get_funciri())
         gr_features = self.paper.g(filter=feature_filter.get_funciri())
         gr_fractal = self.paper.g(filter=fractal_filter.get_funciri())
-        # self.paper.add(self.paper.rect(insert=(100, 100), size=(200, 200), fill='white',
-        #             filter=fractal_filter.get_funciri()))
         for elem in self.head.elements:
-            # self.paper.add(elem)
             if (elem is self.head.eyes.eyeballs[0].outline or 
                     elem is self.head.eyes.eyeballs[1].outline):
-                gr_features.add(elem.stroke('dimgrey', width='1', opacity=1.0).fill('white', opacity=1.0))
+                gr_features.add(elem.stroke('dimgrey', width='1', 
+                    opacity=1.0).fill('white', opacity=1.0))
             elif elem is self.head.outline:
-                # elem.fill('white')
                 elem['filter'] = fractal_filter.get_funciri()
                 gr_outline.add(elem.fill(opacity=0.5))
                 nofill = copy.deepcopy(elem)
                 nofill2 = copy.deepcopy(elem)
             else:   
                 gr_features.add(elem.stroke('dimgrey', width='2'))
-                # gr_fractal.add(elem.stroke('dimgrey', width='3').fill('white'))
         self.paper.add(gr_fractal)
         self.paper.add(gr_outline)
         self.paper.add(gr_features)

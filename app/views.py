@@ -18,7 +18,6 @@ def index():
         header="cartoonist",
         menu=True,
         buttons=False,
-        svg=" ",
         save_form=save_form)
 
 
@@ -59,7 +58,6 @@ def input():
 def save_cartoon():
     global captionpersist
     real_caption = None
-    # if request.method == 'POST':
     data = request.get_data()
     print("DATA IS %s" % data)
     print(type(data))
