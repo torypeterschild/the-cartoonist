@@ -3,3 +3,4 @@ app/*.pyc
 *.pyc
 config.py
 app/templates/index.html
+app/static/overheard.txt

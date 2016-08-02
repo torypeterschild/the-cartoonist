@@ -83,12 +83,7 @@ class Cartoon:
                 gr_outline.add(elem.fill(opacity=0.5))
                 nofill = copy.deepcopy(elem)
                 nofill2 = copy.deepcopy(elem)
-                # nofill['filter'] = fractal_filter.get_funciri()
-                # gr_outline.add(nofill.stroke('grey'))
-                # gr_outline.add(nofill2.fill('none').stroke('none'))
-                # self.paper.add(nofill)
             else:   
-                # elem['filter'] = fractal_filter.get_funciri()
                 gr_features.add(elem.stroke('dimgrey', width='2'))
                 # gr_fractal.add(elem.stroke('dimgrey', width='3').fill('white'))
         self.paper.add(gr_fractal)
