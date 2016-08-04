@@ -39,7 +39,7 @@ def screenshot():
     if request.method == "POST":
         svg = request.form['svg_data']
         print(request)
-    return render_template('savecartoon.html', svgwrite=Markup(svg))
+    return render_template('cartoon.html', svgwrite=Markup(svg))
 
 
 @app.errorhandler(404)
