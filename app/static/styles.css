@@ -219,6 +219,7 @@ svg {
 #pythonSVGWRITE {
     height: 600px;
     display: block;
+    border: transparent solid 30px;
 }
 
 #pythonSVGWRITE svg {
