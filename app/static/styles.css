@@ -191,6 +191,7 @@ svg {
     padding: 0;
     display: inline;
     opacity: 1;
+    overflow: visible;
 }
 
 #save-with-post {
@@ -217,12 +218,15 @@ svg {
 }
 
 #pythonSVGWRITE {
-    height: 600px;
+    height: 650px;
+    /*height: 50%;*/
     display: block;
+    overflow: visible;
     border: transparent solid 30px;
 }
 
 #pythonSVGWRITE svg {
+    height: 100%;
     overflow: visible;
     display: block;
 }
