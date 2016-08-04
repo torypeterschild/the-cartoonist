@@ -8,5 +8,6 @@ class InputForm(Form):
 
 
 class SaveForm(Form):
+    svg_id = HiddenField("svg_id")
     svg_data = HiddenField("svg_data")
     save = SubmitField("save")

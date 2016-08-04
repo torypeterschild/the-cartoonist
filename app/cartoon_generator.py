@@ -18,7 +18,7 @@ X_MIN = WIDTH * .25
 X_MAX = WIDTH * .75
 Y_MIN = HEIGHT * .2
 Y_MAX = HEIGHT * .6
-CX = (X_MIN + X_MAX)/4
+CX = (X_MIN + X_MAX)/3
 CY = (Y_MIN + Y_MAX)/2
 R = WIDTH/4
 

@@ -34,12 +34,14 @@ def index():
     return resp
 
 
-@app.route('/screenshot', methods=['POST'])
-def screenshot():
+@app.route('/screenshot/', methods=['POST'])
+@app.route('/screenshot/<path:name>', methods=['POST'])
+def screenshot(name=None):
     if request.method == "POST":
         svg = request.form['svg_data']
-        print(request)
-    return render_template('cartoon.html', svgwrite=Markup(svg))
+        # name = request.form['svg_id']
+        print(name)
+    return render_template('cartoon.html', svgwrite=Markup(svg), name=name)
 
 
 @app.errorhandler(404)
