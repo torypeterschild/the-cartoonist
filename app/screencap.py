@@ -1,4 +1,4 @@
-from selenium import webdriver, DepotManager
+from selenium import webdriver
 
 driver = webdriver.PhantomJS()
 driver.set_window_size(1024, 768) # set the window size that you need 
