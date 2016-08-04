@@ -1,11 +1,4 @@
 
-/* Global variables */
-var svgDiv = document.querySelector("#pythonSVG");
-var paper = new Snap("#drawn");
-console.log("Paper");
-console.log(paper);
-
-
 /*--------
   HELPERS
  --------*/
@@ -50,21 +43,22 @@ $('#SVGsave').click(function(){
 });
 
 /* Renders cartoon and caption in save-cartoon template */
-$('#savecartoon').click(function(){
-  var value = $("#caption").text()
-  console.log("VALUE IS " + value);
-  $.ajax({
-    type: "POST",
-    url: "/save-cartoon",
-    data: JSON.stringify(value),
-    success: function(msg){
-      console.log("success");
-    },
-    failure: function(msg){
-      console.log("failure");
-    }
-  });
-});
+// $('#savecartoon').click(function(){
+//   // var capt = $("#caption").text();
+//   var drawing = $('#pythonSVGWRITE').html();
+//   console.log("VALUE IS " + drawing);
+//   $.ajax({
+//     type: "POST",
+//     url: "/savecartoon",
+//     data: JSON.stringify(drawing),
+//     success: function(msg){
+//       console.log("success");
+//     },
+//     failure: function(msg){
+//       console.log("failure");
+//     }
+//   });
+// });
 
 /* TODO: REFACTOR SAVE FUNCTIONALITY */
 /* Generate caption on save-cartoon.html page */

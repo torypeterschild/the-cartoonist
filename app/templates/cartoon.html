@@ -4,12 +4,17 @@
 {% block content %}
 
   {% if save %}
-    <div id="savetest">
-      <form name="savetestform" action="/save-cartoon" method="post">
-      <p>
-        <button id="savecartoon" type="submit">save cartoon</button>
-      </p>
-      </form>
+    <div id="save-with-post">
+      <form name="savetestform" action="/screenshot" method="post">
+      {{ save_form.hidden_tag() }}
+      {{ save_form.svg_data }}
+      <section class="link-braces">
+        <button id="savecartoon" name="save" type="submit" value="done">&DownArrowBar;</button>
+      </section>
+          {% for error in save_form.svg_data.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+    </form>
     </div>
     <div id="save">
     <p>
