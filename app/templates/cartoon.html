@@ -5,8 +5,9 @@
 
   {% if save %}
     <div id="save-with-post">
-      <form name="savetestform" action="/screenshot" method="post">
+      <form name="savetestform" action="/screenshot/+mycartoon" method="post">
       {{ save_form.hidden_tag() }}
+      {{ save_form.svg_id }}
       {{ save_form.svg_data }}
       <section class="link-braces">
         <button id="savecartoon" name="save" type="submit" value="done">&DownArrowBar;</button>
