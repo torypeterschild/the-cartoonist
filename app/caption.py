@@ -12,7 +12,6 @@ class Caption:
     def __init__(self, content):
         self.text = None
         self.content = content
-        # self.keyword = keyword
         self.words = None
         self.word_count = None
         self.n_lines = None

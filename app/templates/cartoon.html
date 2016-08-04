@@ -5,11 +5,16 @@
 
   {% if save %}
     <div id="save-with-post">
-      <form name="savetestform" action="/savecartoon" method="post">
+      <form name="savetestform" action="/screenshot" method="post">
+      {{ save_form.hidden_tag() }}
+      {{ save_form.svg_data }}
       <section class="link-braces">
-        <button id="savecartoon" type="submit" class="link-braces">&DownArrowBar;</button>
+        <button id="savecartoon" name="save" type="submit" value="done">&DownArrowBar;</button>
       </section>
-      </form>
+          {% for error in save_form.svg_data.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+    </form>
     </div>
     <div id="save">
     <p>
