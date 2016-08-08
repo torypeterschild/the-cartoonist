@@ -93,10 +93,12 @@ svg {
   }
   /* Space out the masthead */
   .header {
+    padding-bottom: 20px;
     margin-bottom: 30px;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
+    margin-top: 20px;
     border-bottom: 0;
   }
 }
