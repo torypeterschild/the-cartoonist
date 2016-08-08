@@ -8,33 +8,34 @@ import filter_utils as f
 
 """ SIZE OF DRAWING """
 WIDTH = 1000
-HEIGHT = 1000
+HEIGHT = 800
 widthmm = "%fmm" % WIDTH
 heightmm = "%fmm" % HEIGHT
 
 
 """ SIZE OF HEAD OUTLINE """
-X_MIN = WIDTH * .25
-X_MAX = WIDTH * .75
-Y_MIN = HEIGHT * .2
+X_MIN = WIDTH * .15
+X_MAX = WIDTH * .85
+Y_MIN = HEIGHT * .3
 Y_MAX = HEIGHT * .6
-CX = (X_MIN + X_MAX)/3
+CX = (X_MIN + X_MAX)/2
 CY = (Y_MIN + Y_MAX)/2
-R = WIDTH/4
+R = HEIGHT/3.25
 
 
 """ CAPTION """
-CAPTION_X = CX - R
+CAPTION_X = CX - (R * 1.3)
 CAPTION_Y = CY + (R * 1.3)
 
 
 class Cartoon:
     def __init__(self, caption):
         self.paper = svgwrite.Drawing(size=(widthmm, heightmm),debug=True)
-        self.paper.viewbox(width=WIDTH,height=HEIGHT)
         self.head = head.Head(100, R, CX, CY)
         self.caption = caption
-        self.svg = svgwrite.Drawing(size=(1000, 1000))
+        y_size = CAPTION_Y + (self.caption.n_lines * 50)
+        self.svg = svgwrite.Drawing(size=(1000, y_size))
+        self.final_height = None
 
     def __str__(self):
         descr = "\n-- CARTOON INSTANCE --\n%s." % (self.head)
@@ -55,6 +56,7 @@ class Cartoon:
             ts = TSpan(line, insert=(CAPTION_X, i), style = "font-size:50px;")
             caption_elem.add(ts)
             i = i + 50
+        self.final_height = i
         caption_elem.rotate(self.caption.tilt)
         return caption_elem
 
@@ -87,6 +89,11 @@ class Cartoon:
         self.paper.add(gr_fractal)
         self.paper.add(gr_outline)
         self.paper.add(gr_features)
+        if self.head.hair:
+            miny = 30
+        else:
+            miny = 20
+        self.paper.viewbox(minx=0, miny=miny, width=WIDTH,height=self.final_height)
         
         return self.paper.tostring()
 

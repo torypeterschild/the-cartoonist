@@ -3,9 +3,9 @@ Cartoonist
 
 **Note**: Cartoonist is a work in progress.
 
-Cartoonist will eventually be a program that generates a cartoon and a caption based on a single word of user input. Currently, input is treated as a keyword and the caption is a randomly selected sentence containing the keyword that exists in the working corpus.
+Cartoonist is a program that generates an original cartoon and a caption. It creates a combination of SVG paths to form a face and builds a caption using Markov chaining.
 
-The goal is to use Markov chains for text generation, and to then use sentiment analysis on the generated caption to decide how certain features will be drawn — i.e., the angle and direction of eyebrow slant, shape of mouth, etc.
+The eventual goal is to use sentiment analysis on the generated caption to decide how certain features will be drawn — i.e., the angle and direction of eyebrow slant, shape of mouth, etc.
 
 ##How it works
 
@@ -13,11 +13,11 @@ Cartoonist uses `svgwrite` to generate the outline of the head as well as the fa
 
 ##How to use it
 
-Once the main features have been added, the Flask app will be deployed for all to use... Stay tuned!
+You can play with a working version of Cartoonist at [torypeterschild.io](http://torypeterschild.io/).
 
 ##Install
 
-Before deployment, you can clone to use locally:
+You can also clone to use locally:
 
     $ git clone https://github.com/torypeterschild/the-cartoonist.git
     $ cd the-cartoonist
@@ -28,12 +28,11 @@ Before deployment, you can clone to use locally:
 ##Status
 
 ###What works
-- Caption generation using keyword
+- Caption generation using Markov chains
 - Cartoon drawing generation using `svgwrite`
 
 ###What doesn't work
 - Saving the cartoon (working on this)
-- Original text generation (next up)
 - Everything else
 
 
