@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Cartoonist App</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="/">Home</a></li>
+            {% if drawn %}
+            <li role="presentation"><a href="/display">Redraw</a></li>
+            {% endif %}
+            <li role="presentation"><a href="https://github.com/torypeterschild/the-cartoonist">Github Repo</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Cartoonist</h3>
+      </div>
+
+      {% block content %}{% endblock %}
+
+      {% if home %}
+      <div class="jumbotron">
+        <h3>Goofy drawings</h3>
+        <p class="lead">Cartoonist programmatically generates original cartoons. Faces are created with several SVG paths, and captions are built using Markov chaining.</p>
+        <p><strong>Note:</strong> Cartoonist is a work in progress.</p>
+        <p><a class="btn btn-lg btn-success" href="/display" role="button">Generate</a></p>
+      </div>
+      {% endif %}
+
+
+      <footer class="footer">
+        <p>&copy; 2016 Tory Peterschild</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
