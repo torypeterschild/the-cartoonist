@@ -1,6 +1,12 @@
 from selenium import webdriver
+from pyvirtualdisplay import Display
 
-driver = webdriver.PhantomJS()
-driver.set_window_size(1024, 768) # set the window size that you need 
-driver.get('https://github.com/torypeterschild/the-cartoonist')
-driver.save_screenshot('github.png')
+display = Display(visible=0, size=(1000, 1000))
+display.start()
+
+browser = webdriver.Firefox()
+browser.get('http://torypeterschild.io/')
+browser.save_screenshot('screenie.png')
+browser.quit()
+
+display.stop()
