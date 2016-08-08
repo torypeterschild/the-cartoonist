@@ -31,7 +31,8 @@ def index():
     #     save=True,
     #     save_form=save_form,
     #     svgwrite=drawing_markup))
-    resp = make_response(render_template("index.html"))
+    resp = make_response(render_template("index.html",
+        home=True))
     return resp
 
 
@@ -63,7 +64,9 @@ def display():
     #     svg = request.form['svg_data']
     #     # name = request.form['svg_id']
     #     print(name)
-    return render_template('display.html', svgwrite=drawing_markup)
+    return render_template('display.html',
+        drawn=True,
+        svgwrite=drawing_markup)
 
 
 @app.errorhandler(404)
