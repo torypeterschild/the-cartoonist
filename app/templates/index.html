@@ -33,14 +33,14 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="/">Home</a></li>
+            <li role="presentation"><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
             {% if drawn %}
-            <li role="presentation"><a href="/display">Redraw</a></li>
+            <li role="presentation"><a href="/display"><span class="glyphicon glyphicon-retweet"></span> </a></li>
             {% endif %}
-            <li role="presentation"><a href="https://github.com/torypeterschild/the-cartoonist">Github Repo</a></li>
+            <li role="presentation"><a href="https://github.com/torypeterschild/the-cartoonist" target="_blank">[ repo  <span class="glyphicon glyphicon-new-window"></span> ]</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">Cartoonist</h3>
+        <h3 class="text-muted">cartoonist</h3>
       </div>
 
       {% block content %}{% endblock %}
@@ -50,7 +50,7 @@
         <h2>Programmatic Doodling</h2>
         <p class="lead">This is a little app that generates cartoons. Each face is created with several SVG paths, and captions are built using Markov chaining.</p>
         <h4>Note: Cartoonist is a work in progress.</h4>
-        <p><a class="btn btn-lg btn-success" href="/display" role="button">Generate</a></p>
+        <p><a class="btn btn-lg btn-success" href="/display" role="button">onward  <span class="glyphicon glyphicon-hand-right"></span></a></p>
       </div>
       {% endif %}
 
