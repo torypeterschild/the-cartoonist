@@ -25,7 +25,7 @@ R = HEIGHT/3.25
 
 """ CAPTION """
 CAPTION_X = CX - (R * 1.3)
-CAPTION_Y = CY + (R * 1.2)
+CAPTION_Y = CY + (R * 1.3)
 
 
 class Cartoon:

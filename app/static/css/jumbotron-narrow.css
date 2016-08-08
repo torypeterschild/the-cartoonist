@@ -35,12 +35,14 @@ body {
   background-color: transparent;
   padding: 0;
   overflow: visible;
+  height: auto!important;
+  width: auto!important;
 }
 
 svg {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   padding: 0;
   overflow: visible;
 }
@@ -51,6 +53,7 @@ text {
 
 /* Custom page footer */
 .footer {
+  margin-top: 10px;
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
