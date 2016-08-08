@@ -35,6 +35,7 @@ class Cartoon:
         self.caption = caption
         y_size = CAPTION_Y + (self.caption.n_lines * 50)
         self.svg = svgwrite.Drawing(size=(1000, y_size))
+        self.final_height = None
 
     def __str__(self):
         descr = "\n-- CARTOON INSTANCE --\n%s." % (self.head)
@@ -55,6 +56,7 @@ class Cartoon:
             ts = TSpan(line, insert=(CAPTION_X, i), style = "font-size:50px;")
             caption_elem.add(ts)
             i = i + 50
+        self.final_height = i
         caption_elem.rotate(self.caption.tilt)
         return caption_elem
 
@@ -87,7 +89,11 @@ class Cartoon:
         self.paper.add(gr_fractal)
         self.paper.add(gr_outline)
         self.paper.add(gr_features)
-        self.paper.viewbox(minx=0, miny=30, width=WIDTH,height=HEIGHT+30)
+        if self.head.hair:
+            miny = 30
+        else:
+            miny = 20
+        self.paper.viewbox(minx=0, miny=miny, width=WIDTH,height=self.final_height)
         
         return self.paper.tostring()
 
