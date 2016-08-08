@@ -42,13 +42,9 @@ body {
 svg {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   padding: 0;
   overflow: visible;
-}
-
-text {
-  margin-bottom: 10px;
 }
 
 /* Custom page footer */
@@ -72,7 +68,6 @@ text {
 /* Main marketing message and sign up button */
 .jumbotron {
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
 }
 .jumbotron .btn {
   padding: 10px 20px;
