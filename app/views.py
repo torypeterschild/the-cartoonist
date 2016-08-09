@@ -18,19 +18,12 @@ def index():
     cap = caption.Caption(content)
     cap.make()
     cartoon = cg.Cartoon(cap)
-    # print(cartoon.__str__())
 
     svg_cartoon = cartoon.assemble()
     drawing_markup = Markup(svg_cartoon)
 
     save_form = SaveForm(svg_data=drawing_markup)
 
-    # resp = make_response(render_template("cartoon.html",
-    #     header="cartoonist",
-    #     menu=True,
-    #     save=True,
-    #     save_form=save_form,
-    #     svgwrite=drawing_markup))
     resp = make_response(render_template("index.html",
         home=True))
     return resp
@@ -41,8 +34,6 @@ def index():
 def screenshot(name=None):
     if request.method == "POST":
         svg = request.form['svg_data']
-        # name = request.form['svg_id']
-        print(name)
     return render_template('cartoon.html', svgwrite=Markup(svg), name=name)
 
 
@@ -55,15 +46,10 @@ def display():
     cap = caption.Caption(content)
     cap.make()
     cartoon = cg.Cartoon(cap)
-    # print(cartoon.__str__())
 
     svg_cartoon = cartoon.assemble()
     drawing_markup = Markup(svg_cartoon)
 
-    # if request.method == "POST":
-    #     svg = request.form['svg_data']
-    #     # name = request.form['svg_id']
-    #     print(name)
     return render_template('display.html',
         drawn=True,
         svgwrite=drawing_markup)
