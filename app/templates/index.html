@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" sizes="32x32" href="/static/img/favicon.ico">
+    <script src="https://use.fontawesome.com/8a8d79d973.js"></script>
 
     <title>Cartoonist App</title>
 
@@ -33,11 +34,11 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation"><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li role="presentation"><a href="/"><i class="fa fa-home fa-lg"></i></a></li>
             {% if drawn %}
-            <li role="presentation"><a href="/display"><span class="glyphicon glyphicon-retweet"></span> </a></li>
+            <li role="presentation"><a href="/display"><i class="fa fa-retweet fa-lg"></i></a></li>
             {% endif %}
-            <li role="presentation"><a href="https://github.com/torypeterschild/the-cartoonist" target="_blank">[ repo  <span class="glyphicon glyphicon-link"></span> ]</a></li>
+            <li role="presentation"><a href="https://github.com/torypeterschild/the-cartoonist" target="_blank"><i class="fa fa-github fa-lg"></i></a></li>
           </ul>
         </nav>
         <h3 class="text-muted">cartoonist</h3>
@@ -50,7 +51,7 @@
         <h2>Programmatic Doodling</h2>
         <p class="lead">A little app that generates cartoons. Each face is created with a number of SVG paths, and captions are built using Markov chaining (which is why they are sometimes wonderful and other times senseless).</p>
         <h4>Note: Cartoonist is a work in progress.</h4>
-        <p><a class="btn btn-lg btn-success" href="/display" role="button">onward  <span class="glyphicon glyphicon-hand-right"></span></a></p>
+        <p><a class="btn btn-lg btn-success" href="/display" role="button">onward  <i class="fa fa-hand-o-right"></i></a></p>
       </div>
       {% endif %}
 
