@@ -44,13 +44,23 @@ You can play with a live (beta) version of Cartoonist at [torypeterschild.io](ht
 
 ## Examples
 
-<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap4.png" width="350" align="right">
-
-<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap1.png" width="350">
-
-<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap2.png" width="350" align="right">
-
-<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap3.png" width="350">
+<table>
+<caption>2x2 images in a table</caption>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="right"><img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap4.png" alt="" /></td>
+<td align="left"><img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap3.png" alt="" /></td>
+</tr>
+<tr class="even">
+<td align="right"><img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap2.png" alt="" /></td>
+<td align="left"><img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap1.png" alt="" /></td>
+</tr>
+</tbody>
+</table>
 
 
 ##License
