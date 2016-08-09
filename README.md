@@ -44,10 +44,10 @@ You can play with a live (beta) version of Cartoonist at [torypeterschild.io](ht
 
 ## Examples
 
-<table bgcolor="#FFFFFF" border="0">
+<table bgcolor="#FFFFFF" style="border:none;">
 <colgroup>
-<col width="20%" />
-<col width="20%" />
+<col width="30%" />
+<col width="30%" />
 </colgroup>
 <tbody>
 <tr class="odd">
