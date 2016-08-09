@@ -4,4 +4,3 @@ app/*.pyc
 config.py
 app/static/overheard.txt
 *.log
-*.png
