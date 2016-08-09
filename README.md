@@ -44,7 +44,7 @@ You can play with a live (beta) version of Cartoonist at [torypeterschild.io](ht
 
 ## Examples
 
-<table bgcolor="#FFFFFF">
+<table bgcolor="#FFFFFF" border="0">
 <colgroup>
 <col width="20%" />
 <col width="20%" />
