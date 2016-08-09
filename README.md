@@ -44,9 +44,12 @@ You can play with a live (beta) version of Cartoonist at [torypeterschild.io](ht
 
 ## Examples
 
-![cartoon1](https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap1.png =250px "Do you catch my drift")
+<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap1.png" width="250">
 
-![cartoon2](https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap2.png =250px "Go on, tell me")
+<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap2.png" width="250">
+
+<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap3.png" width="250">
+
 
 ##License
 
