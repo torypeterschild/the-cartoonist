@@ -44,6 +44,8 @@ You can play with a live (beta) version of Cartoonist at [torypeterschild.io](ht
 
 ## Examples
 
+<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap4.png" width="350" align="right">
+
 <img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap1.png" width="350">
 
 <img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap2.png" width="350" align="right">
