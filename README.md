@@ -44,11 +44,11 @@ You can play with a live (beta) version of Cartoonist at [torypeterschild.io](ht
 
 ## Examples
 
-<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap1.png" width="250">
+<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap1.png" width="500">
 
-<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap2.png" width="250">
+<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap2.png" width="500">
 
-<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap3.png" width="250">
+<img src="https://github.com/torypeterschild/the-cartoonist/blob/master/app/static/screencaps/screencap3.png" width="500">
 
 
 ##License
