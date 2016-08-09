@@ -15,7 +15,7 @@ Captions are generated using a Python implementation of a [Markov Text Generator
 
 Markov Text Generators generate original, superficially real-looking sentences based on a given source text. Each word is selected based on how often it follows the previous word, and the results are chained together to form a sentence.
 
-The following was generated with this program using George Saunder's Pastoralia as source text:
+The following was generated with this program using George Saunders's Pastoralia as source text:
 
 > Around two there is no goat, just killed, sits in our shoes, you always
 > said good, good fishing, son, and when you say it, I’m already deep into
