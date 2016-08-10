@@ -15,19 +15,6 @@ body {
     overflow: visible;
 }
 
-/*button {
-    position: relative;
-    display: inline;
-    vertical-align: bottom;
-    background:none!important;
-    border:none; 
-    padding:0!important;
-    font-size: 16pt;
-    color: #afafaf;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    white-space: nowrap;
-}*/
-
 section {
     position: relative;
     overflow: visible;
@@ -229,5 +216,9 @@ svg {
     height: 100%;
     overflow: visible;
     display: block;
+}
+
+.fa-random {
+    text-color: blue!important;
 }
 
