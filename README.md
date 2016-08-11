@@ -26,7 +26,7 @@ The following was generated with this program using George Saunders's Pastoralia
 
 ##How to use it
 
-You can play with a live (beta) version of Cartoonist at [torypeterschild.io](http://torypeterschild.io/).
+You can play with a live (beta) version of Cartoonist at [cartoons.torypeterschild.io](http://cartoons.torypeterschild.io/).
 
 ## Requires ##
 * [TextBlob](http://textblob.readthedocs.io/en/dev/index.html) for Markov chaining
