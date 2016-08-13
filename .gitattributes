@@ -1,5 +1,8 @@
 app/static/js/jquery-3.0.0.min.js linguist-vendored
+app/static/js/jquery.js linguist-vendored
+app/static/js/ie10-viewport-bug-workaround.js linguist-vendored
 app/static/js/bootstrap.min.js linguist-vendored
+app/static/js/bootstrap.js linguist-vendored
 app/static/css/bootstrap.min.css linguist-vendored
 app/static/css/bootstrap.css linguist-vendored
 app/static/css/jumbotron-narrow.css linguist-vendored
