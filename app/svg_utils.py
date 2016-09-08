@@ -2,6 +2,7 @@ import random, sys, os, json, re
 import numpy as np
 import noise
 
+""" NOTE: DON'T NEED THIS MODULE ANYMORE -- USING SVGWRITE INSTEAD """
 
 COMMANDS = set('MmZzLlHhVvCcSsQqTtAa')
 INSTR_RE = re.compile("([MmZzLlHhVvCcSsQqTtAa])")

@@ -22,6 +22,8 @@ def index():
     svg_cartoon = cartoon.assemble()
     drawing_markup = Markup(svg_cartoon)
 
+    """ NOTE: DON'T NEED THE ABOVE IN THIS FUNC -- ONLY NEED IN DISPLAY """
+
     save_form = SaveForm(svg_data=drawing_markup)
 
     resp = make_response(render_template("index.html",
