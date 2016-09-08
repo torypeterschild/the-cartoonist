@@ -37,7 +37,6 @@ class Head:
         for elem in self.eyes.elements:
             self.elements.append(elem)
 
-
     def translate(self, tx, ty=None):
         if ty is not None:
             self.outline.translate(tx, ty)
