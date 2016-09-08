@@ -12,20 +12,6 @@ import caption
 @app.route("/index")
 def index():
 
-    with app.open_resource('static/corpus000.txt') as f:
-        content = f.read()
-
-    cap = caption.Caption(content)
-    cap.make()
-    cartoon = cg.Cartoon(cap)
-
-    svg_cartoon = cartoon.assemble()
-    drawing_markup = Markup(svg_cartoon)
-
-    """ NOTE: DON'T NEED THE ABOVE IN THIS FUNC -- ONLY NEED IN DISPLAY """
-
-    save_form = SaveForm(svg_data=drawing_markup)
-
     resp = make_response(render_template("index.html",
         home=True))
     return resp
