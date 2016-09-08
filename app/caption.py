@@ -31,7 +31,7 @@ class Caption:
         return descr + line_count + lines + cap_tilt + end
 
     def get_text(self):
-        """ NOTE: THIS SHOULD NOT REBUILD DICT EVERY TIME """
+        """ NOTE: THIS SHOULD NOT REBUILD DICT EVERY TIME -- REFACTOR """
         blob = TextBlob(self.content.decode('utf-8'))
         words_ = blob.split()
         d = parser.build_ngram_dict(words_)
