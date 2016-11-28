@@ -1,17 +1,11 @@
 language: python
 python:
   - 2.7
+  - nightly
 
 # command to install dependencies
 install:
-  - travis_retry pip install flask
-  - travis_retry pip install flask_sqlalchemy
-  - travis_retry pip install textblob
-  - travis_retry pip install svgwrite
-  - travis_retry pip install flask_wtf
-  - travis_retry pip install wtforms
-  - travis_retry pip install numpy
-  - travis_retry pip install sqlalchemy
+  - pip install -r requirements.txt
 
 # command to run tests
 script: ./tests.py

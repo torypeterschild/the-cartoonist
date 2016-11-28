@@ -1,0 +1,8 @@
+flask
+flask_sqlalchemy
+textblob
+svgwrite
+flask_wtf
+wtforms
+numpy
+sqlalchemy
