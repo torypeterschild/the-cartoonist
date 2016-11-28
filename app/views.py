@@ -1,11 +1,11 @@
 from flask import render_template, flash, redirect, request, url_for, Markup, make_response
-from app import app
+from app import app, db
 from .forms import InputForm, SaveForm
+from .models import Cartoon
 from textblob import TextBlob
 import random, sys, os, json
 import cartoon_generator as cg
 import caption
-
 
 
 @app.route("/")
@@ -25,6 +25,22 @@ def screenshot(name=None):
     return render_template('cartoon.html', svgwrite=Markup(svg), name=name)
 
 
+@app.route('/cartoon/<id>')
+def display_this(id):
+    cartoon_ = Cartoon.query.filter_by(id=id).first()
+    if cartoon_ == None:
+        flash('Cartoon %s not found.' % id)
+        xml = ('Cartoon %s not found.' % id)
+    else:
+        xml = cartoon_.xml
+
+    mk = Markup(xml)
+
+    return render_template('display.html',
+        drawn=True,
+        svgwrite=mk)
+
+
 @app.route('/display')
 def display():
 
@@ -36,6 +52,11 @@ def display():
     cartoon = cg.Cartoon(cap)
 
     svg_cartoon = cartoon.assemble()
+
+    this_cartoon = Cartoon(svg_cartoon)
+    db.session.add(this_cartoon)
+    db.session.commit()
+
     drawing_markup = Markup(svg_cartoon)
 
     return render_template('display.html',
@@ -46,3 +67,4 @@ def display():
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template("404.html"), 404
+
