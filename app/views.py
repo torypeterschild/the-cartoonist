@@ -29,8 +29,7 @@ def screenshot(name=None):
 def display_this(id):
     cartoon_ = Cartoon.query.filter_by(id=id).first()
     if cartoon_ == None:
-        flash('Cartoon %s not found.' % id)
-        xml = ('Cartoon %s not found.' % id)
+        xml = ('<img src="/static/img/not-found.gif"><br>Cartoon %s not found.' % id)
     else:
         xml = cartoon_.xml
 
