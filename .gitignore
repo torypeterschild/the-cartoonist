@@ -5,3 +5,5 @@ config.py
 app/static/overheard.txt
 *.log
 db_repository/versions/*.py
+.coverage
+test.db
